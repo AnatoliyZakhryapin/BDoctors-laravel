@@ -14,11 +14,15 @@ class SponsorshipSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        for ($i = 0; $i < 10; $i++) {
+        $types = ['un giorno', 'due giorni', 'una settimana'];
+        $prices = [2.99, 5.99, 9.99];
+        $durations = [24, 72, 144]; 
+
+        foreach ($types as $key => $type) {
             Sponsorship::create([
-                'type' => $faker->randomElement(['un giorno', 'due giorni', 'una settimana']),
-                'price' => $faker->randomElement([2.99, 5.99, 9.99]),
-                'duration' => $faker->randomElement([24, 72, 144]),
+                'type' => $type,
+                'price' => $prices[$key],
+                'duration' => $durations[$key],
             ]);
         }
     }
