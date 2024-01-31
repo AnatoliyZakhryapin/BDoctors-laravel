@@ -1,6 +1,8 @@
 <?php
 
 namespace Database\Seeders;
+
+use App\Models\Doctor;
 use App\Models\Review;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -12,10 +14,16 @@ class ReviewSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
+        // Recuperiamo tutti i dotori
+        $doctors = Doctor::all();
+        // Creamo un array con solo id di ogni collezione per passare questo dato a randoElement()
+        $doctors_ids = $doctors->pluck('id');
+
         for ($i = 0; $i < 20; $i++) {
                 Review::create([
                 'name' => $faker->name,
                 'message' => $faker->text,
+                'doctor_id' => $faker->randomElement($doctors_ids),
             ]);
         }
     }
