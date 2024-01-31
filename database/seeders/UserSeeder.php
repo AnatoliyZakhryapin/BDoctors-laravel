@@ -19,10 +19,10 @@ class UserSeeder extends Seeder
             $new_user->name = $faker->name();
             $new_user->surname = $faker->lastName();
             $new_user->email = $faker->email();
-            $new_user->password = Hash::make($faker->password());
+            $new_user->password = Hash::make($faker->word());
             $new_user->save();
         }
-        
+
         $user = User::create([
             'name' => 'admin',
             'surname' => 'admin',
