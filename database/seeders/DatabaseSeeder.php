@@ -17,13 +17,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            SpecializationSeeder::class,
+            SponsorshipSeeder::class,
+            VoteSeeder::class,
             UserSeeder::class,
             DoctorSeeder::class,
             MessageSeeder::class,
             ReviewSeeder::class,
-            SpecializationSeeder::class,
-            SponsorshipSeeder::class,
-            VoteSeeder::class,
             ]);
         // \App\Models\User::factory(10)->create();
 
