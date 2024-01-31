@@ -8,9 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Doctor extends Model
 {
     use HasFactory;
+    ADD-Relation-between-doctors-and-messages
+
+    public function messages(){
+        return $this->hasMany(Message::class);
+    }
     
     public function sponsorships()
     {
         return $this->belongsToMany(Sponsorship::class);
+    main
     }
 }
