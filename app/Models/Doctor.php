@@ -28,4 +28,9 @@ class Doctor extends Model
     {
         return $this->belongsToMany(Sponsorship::class);
     }
+
+    public function specializations()
+    {
+        return $this->belongsToMany(Specialization::class);
+    }
 }
