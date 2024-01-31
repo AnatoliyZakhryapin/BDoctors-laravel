@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Doctor extends Model
 {
     use HasFactory;
+    
+    public function sponsorships()
+    {
+        return $this->belongsToMany(Sponsorship::class);
+    }
 }

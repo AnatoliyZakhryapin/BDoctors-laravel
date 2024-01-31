@@ -19,11 +19,11 @@ class SponsorshipSeeder extends Seeder
         $durations = [24, 72, 144]; 
 
         foreach ($types as $key => $type) {
-            Sponsorship::create([
-                'type' => $type,
-                'price' => $prices[$key],
-                'duration' => $durations[$key],
-            ]);
+            $new_sponsorship = new Sponsorship();
+            $new_sponsorship->type = $type;
+            $new_sponsorship->price = $prices[$key];
+            $new_sponsorship->duration = $durations[$key];
+            $new_sponsorship->save();
         }
     }
 }
