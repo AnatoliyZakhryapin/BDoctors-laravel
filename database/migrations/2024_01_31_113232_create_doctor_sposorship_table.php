@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('doctor_sposorship', function (Blueprint $table) {
+        Schema::create('doctor_sponsorship', function (Blueprint $table) {
             $table->unsignedBigInteger('doctor_id');
             $table->unsignedBigInteger('sponsorship_id');
             $table->foreign('doctor_id')->references('id')->on('doctors')->cascadeOnDelete();
             $table->foreign('sponsorship_id')->references('id')->on('sponsorships')->cascadeOnDelete();
-            $table->primary('doctor_id', 'sponsorships_id');
+            $table->primary(['doctor_id', 'sponsorship_id']); // Use an array for primary key columns
         });
     }
 
