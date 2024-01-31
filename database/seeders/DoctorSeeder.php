@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Doctor;
+use App\Models\Specialization;
 use App\Models\User;
 use App\Models\Sponsorship;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -25,6 +26,9 @@ class DoctorSeeder extends Seeder
         $sponsorships = Sponsorship::all();
         $sponsorships_id = $sponsorships->pluck('id');
 
+        $specializations = Specialization::all();
+        $specializations_id = $specializations->pluck('id');
+
         for ($i = 0; $i < 11; $i++) {
             $new_doctor = new Doctor();
             $new_doctor->curriculum = $faker->imageUrl(360, 360, 'animals', true, 'dogs', true);
@@ -38,6 +42,8 @@ class DoctorSeeder extends Seeder
             $new_doctor->save();
 
             $new_doctor->sponsorships()->attach($faker->randomElements($sponsorships_id, null));
+
+            $new_doctor->specializations()->attach($faker->randomElements($specializations_id, null));
         }
     }
 }
