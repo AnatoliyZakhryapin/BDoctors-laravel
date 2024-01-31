@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     {
         for($i = 0; $i < 10; $i++){
             $new_user = new User();
-            $new_user->name = $faker->name();
+            $new_user->name = $faker->firstName();
             $new_user->surname = $faker->lastName();
             $new_user->email = $faker->email();
             $new_user->password = Hash::make($faker->word());
