@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('votes', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 20)->nullable();
-            $table->tinyInteger('value')->nullable();
+            $table->string('name', 20);
+            $table->tinyInteger('value');
             $table->timestamps();
         });
     }
