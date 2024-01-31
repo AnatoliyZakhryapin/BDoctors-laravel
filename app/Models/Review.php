@@ -9,4 +9,8 @@ class Review extends Model
 {
     use HasFactory;
     protected $fillable = ['name', 'message'];
+
+    public function doctor(){
+        return $this->belongsTo(Doctor::class);
+    }
 }

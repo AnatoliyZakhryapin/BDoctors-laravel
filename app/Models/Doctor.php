@@ -9,6 +9,10 @@ class Doctor extends Model
 {
     use HasFactory;
 
+    public function reviews(){
+        return $this->hasMany(Review::class);
+    }
+
     public function messages(){
         return $this->hasMany(Message::class);
     }
