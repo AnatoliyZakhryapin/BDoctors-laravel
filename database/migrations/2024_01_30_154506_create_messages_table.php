@@ -18,7 +18,8 @@ return new class extends Migration {
             $table->string('phone_number', 20);
             $table->string('email', 255);
             $table->text('message');
-
+            $table->unsignedBigInteger('doctor_id');
+            $table->foreign('doctor_id')->references('id')->on('doctors');
             $table->timestamps();
         });
     }
