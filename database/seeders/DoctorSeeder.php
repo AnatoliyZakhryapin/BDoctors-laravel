@@ -16,8 +16,8 @@ class DoctorSeeder extends Seeder
     {
         for($i = 0; $i < 11; $i++){
             $new_doctor = new Doctor();
-            $new_doctor->curriculum = $faker->image(null, 360, 360, 'animals', true, true, 'cats', true);
-            $new_doctor->photo = $faker->image(null, 360, 360, 'animals', true, true, 'cats', true);
+            $new_doctor->curriculum = $faker->imageUrl(360, 360, 'animals', true, 'dogs', true);
+            $new_doctor->photo = $faker->imageUrl(360, 360, 'animals', true, 'dogs', true);
             $new_doctor->address = $faker->address();
             $new_doctor->phone_number = $faker->phoneNumber();
             $new_doctor->medical_services = $faker->words(5, true);
