@@ -27,7 +27,7 @@ class DoctorSeeder extends Seeder
             $new_doctor->medical_services = $faker->words(5, true);
             $new_doctor->save();
 
-            $new_doctor->sponsorships()->attach($faker->randomElement($sponsorships_id));
+            $new_doctor->sponsorships()->attach($faker->randomElements($sponsorships_id, null));
         }
     }
 }
