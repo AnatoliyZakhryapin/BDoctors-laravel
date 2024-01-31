@@ -21,12 +21,11 @@ class DoctorSeeder extends Seeder
         $users = User::all();
         $userIds = $users->pluck('id');
 
-        for ($i = 0; $i < 11; $i++) {
-    {   
+
         $sponsorships = Sponsorship::all();
         $sponsorships_id = $sponsorships->pluck('id');
 
-        for($i = 0; $i < 11; $i++){
+        for ($i = 0; $i < 11; $i++) {
             $new_doctor = new Doctor();
             $new_doctor->curriculum = $faker->imageUrl(360, 360, 'animals', true, 'dogs', true);
             $new_doctor->photo = $faker->imageUrl(360, 360, 'animals', true, 'dogs', true);
@@ -42,3 +41,4 @@ class DoctorSeeder extends Seeder
         }
     }
 }
+
