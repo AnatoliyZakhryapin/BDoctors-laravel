@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('sponsorships', function (Blueprint $table) {
             $table->id();
-            $table->string('type', 20)->nullable();
-            $table->decimal('price', 6, 2)->nullable();
-            $table->integer('duration')->nullable(); 
+            $table->string('type', 20);
+            $table->decimal('price', 6, 2);
+            $table->integer('duration'); 
             $table->timestamps();
         });
     }
