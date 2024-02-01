@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Message;
 use App\Http\Requests\StoreMessageRequest;
 use App\Http\Requests\UpdateMessageRequest;
@@ -13,7 +14,8 @@ class MessageController extends Controller
      */
     public function index()
     {
-        //
+        $messages = Message::all();
+       return view('admin.messages.index', compact('messages'));
     }
 
     /**
@@ -37,7 +39,7 @@ class MessageController extends Controller
      */
     public function show(Message $message)
     {
-        //
+        return view('admin.messages.show', compact('message'));
     }
 
     /**
@@ -61,6 +63,8 @@ class MessageController extends Controller
      */
     public function destroy(Message $message)
     {
-        //
+        $message->delete();
+
+        return redirect()->route('admin.messages.index');
     }
 }
