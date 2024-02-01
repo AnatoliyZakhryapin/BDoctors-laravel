@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Doctor;
-use App\Models\User;
+use App\Models\Specialization;
 use App\Http\Requests\StoreDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
 
@@ -23,7 +23,9 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        //
+        $specializations = Specialization::orderBy('name', 'ASC')->get();
+
+        return view('admin.doctors.create', compact('specializations'));
     }
 
     /**
@@ -31,7 +33,11 @@ class DoctorController extends Controller
      */
     public function store(StoreDoctorRequest $request)
     {
-        //
+        $data = $request->all();
+
+        $doctor = Doctor::create($data);
+
+        return redirect()->route('admin.doctors.show', $doctor);
     }
 
     /**
@@ -63,6 +69,8 @@ class DoctorController extends Controller
      */
     public function destroy(Doctor $doctor)
     {
-        //
+        $doctor->delete();
+
+        return redirect()->route('admin.doctors.index');
     }
 }
