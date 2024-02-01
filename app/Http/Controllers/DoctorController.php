@@ -75,8 +75,15 @@ class DoctorController extends Controller
      */
     public function destroy(Doctor $doctor)
     {
-        // $doctor->delete();
+        $doctor = Doctor::find($doctor->id);
 
-        // return redirect()->route('admin.doctors.index');
+        if ($doctor) {
+            $doctor->user()->delete();
+            $doctor->reviews()->delete();
+            $doctor->messages()->delete();
+            $doctor->delete();
+        }
+
+        return redirect()->route('admin.doctors.index');
     }
 }
