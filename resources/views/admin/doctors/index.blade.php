@@ -17,7 +17,7 @@
                 <tbody>
                     @foreach ($doctors as $doctor)
                     <tr>
-                        <th scope="row">{{ $doctor->id }}</th>
+                        <th scope="row"><a href="{{ route('admin.doctors.show', $doctor) }}">{{ $doctor->id }}</a></th>
                         <td>{{ $doctor->user->name }}</td>
                         <td>{{ $doctor->user->surname }}</td>
                         <td>{{ $doctor->address }}</td>
