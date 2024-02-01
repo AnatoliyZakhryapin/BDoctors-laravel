@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Doctor;
-use App\Models\User;
+use App\Models\Specialization;
 use App\Http\Requests\StoreDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
 
@@ -23,7 +23,9 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        //
+        $specializations = Specialization::orderBy('name', 'ASC')->get();
+
+        return view('admin.doctors.create', compact('specializations'));
     }
 
     /**
@@ -31,7 +33,11 @@ class DoctorController extends Controller
      */
     public function store(StoreDoctorRequest $request)
     {
-        //
+        $data = $request->all();
+
+        $doctor = Doctor::create($data);
+
+        return redirect()->route('admin.doctors.show', $doctor);
     }
 
     /**
@@ -47,7 +53,9 @@ class DoctorController extends Controller
      */
     public function edit(Doctor $doctor)
     {
-        //
+        $specializations = Specialization::orderBy('name', 'ASC')->get();
+
+        return view('admin.doctors.edit', compact('doctor', 'specializations'));
     }
 
     /**
@@ -55,7 +63,11 @@ class DoctorController extends Controller
      */
     public function update(UpdateDoctorRequest $request, Doctor $doctor)
     {
-        //
+        $data = $request->all();
+
+        $doctor->update($data);
+
+        return redirect()->route('admin.doctors.show', $doctor);
     }
 
     /**
@@ -63,6 +75,15 @@ class DoctorController extends Controller
      */
     public function destroy(Doctor $doctor)
     {
-        //
+        $doctor = Doctor::find($doctor->id);
+
+        if ($doctor) {
+            $doctor->user()->delete();
+            $doctor->reviews()->delete();
+            $doctor->messages()->delete();
+            $doctor->delete();
+        }
+
+        return redirect()->route('admin.doctors.index');
     }
 }

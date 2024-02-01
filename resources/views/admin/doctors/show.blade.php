@@ -2,10 +2,26 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1>Show doctors</h1>
-            </div>
-        </div>
+        <h1>Dott. {{ $doctor->user->name }} {{ $doctor->user->surname }}</h1>
+        <img src="{{ $doctor->photo }}" alt="">
+        <p>{{ $doctor->address }}</p>
+        <p>{{ $doctor->phone_number }}</p>
+        <ul>
+            @foreach ($doctor->specializations as $specialization)
+                <li>{{ $specialization->name }}</li>
+            @endforeach
+        </ul>
+        <p>{{ $doctor->medical_services }}</p>
+        <a href="{{ route('admin.doctors.edit', $doctor) }}" class="btn">Modifica profilo</a>
+        <form action="{{ route('admin.doctors.destroy', $doctor) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <input type="submit" value="Elimina profilo">
+        </form>
+        {{-- <form action="{{ route('admin.users.destroy', $doctor->user) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <input type="submit" value="Elimina profilo">
+        </form> --}}
     </div>
 @endsection
