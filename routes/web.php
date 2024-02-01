@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\ReviewController;
 use App\Models\Message;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('doctors', DoctorController::class);
     Route::resource('messages', MessageController::class);
+    Route::resource('reviews', ReviewController::class);
 });
 
 require __DIR__ . '/auth.php';
