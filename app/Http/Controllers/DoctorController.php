@@ -53,7 +53,9 @@ class DoctorController extends Controller
      */
     public function edit(Doctor $doctor)
     {
-        //
+        $specializations = Specialization::orderBy('name', 'ASC')->get();
+
+        return view('admin.doctors.edit', compact('doctor', 'specializations'));
     }
 
     /**
@@ -61,7 +63,11 @@ class DoctorController extends Controller
      */
     public function update(UpdateDoctorRequest $request, Doctor $doctor)
     {
-        //
+        $data = $request->all();
+
+        $doctor->update($data);
+
+        return redirect()->route('admin.doctors.show', $doctor);
     }
 
     /**
