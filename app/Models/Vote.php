@@ -10,4 +10,9 @@ class Vote extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'value'];
+
+    public function review()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

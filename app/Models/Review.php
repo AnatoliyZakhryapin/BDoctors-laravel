@@ -10,7 +10,12 @@ class Review extends Model
     use HasFactory;
     protected $fillable = ['name', 'message'];
 
-    public function doctor(){
+    public function doctor()
+    {
         return $this->belongsTo(Doctor::class);
+    }
+    public function vote()
+    {
+        return $this->belongsTo(Vote::class);
     }
 }
