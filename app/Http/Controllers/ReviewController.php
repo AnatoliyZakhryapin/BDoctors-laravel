@@ -13,7 +13,8 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        //
+       $reviews = Review::all();
+       return view('admin.reviews.index', compact('reviews'));
     }
 
     /**
@@ -37,7 +38,7 @@ class ReviewController extends Controller
      */
     public function show(Review $review)
     {
-        //
+        return view('admin.reviews.show', compact('review'));
     }
 
     /**
@@ -61,6 +62,8 @@ class ReviewController extends Controller
      */
     public function destroy(Review $review)
     {
-        //
+        $review->delete();
+
+        return redirect()->route('admin.reviews.index');
     }
 }

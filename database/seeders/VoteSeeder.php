@@ -22,6 +22,5 @@ class VoteSeeder extends Seeder
                 'value' => $values[$key],
             ]);
         }
-
     }
 }
