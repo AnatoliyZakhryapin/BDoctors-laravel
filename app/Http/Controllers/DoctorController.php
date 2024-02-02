@@ -78,7 +78,6 @@ class DoctorController extends Controller
         $doctor = Doctor::find($doctor->id);
 
         if ($doctor) {
-            $doctor->user()->delete();
             $doctor->reviews()->delete();
             $doctor->messages()->delete();
             $doctor->delete();
