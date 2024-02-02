@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Review;
 use Illuminate\Http\Request;
@@ -9,14 +10,15 @@ use App\Http\Requests\StoreReviewRequest;
 
 class ReviewController extends Controller
 {
-   public function index()
-   {
-    $reviews = Review::all();
+    public function index(Request $request)
+    {
+        $data = $request->all();
+        $reviews =  Review::where('doctor_id', $data)->get();
 
-    return response()->json([
-        'success' => true,
-        'results' => $reviews,
-    ]);
+        return response()->json([
+            'success' => true,
+            'results' => $reviews,
+        ]);
    }
 
    public function store(StoreReviewRequest $request)
