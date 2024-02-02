@@ -35,7 +35,6 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('doctors', DoctorController::class);
     Route::resource('messages', MessageController::class);
-    Route::get('/reviews/{doctorId}', [ReviewController::class, 'index'])->name('reviews.index');
     Route::resource('reviews', ReviewController::class);
 });
 

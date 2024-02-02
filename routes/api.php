@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\DoctorController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\ReviewController;
 use Illuminate\Http\Request;
@@ -25,3 +26,5 @@ Route::post('/messages', [MessageController::class, 'store']);
 
 Route::get('/reviews', [ReviewController::class, 'index']);
 Route::post('/reviews', [ReviewController::class, 'store']);
+
+Route::get('/doctors', [DoctorController::class, 'index']);
