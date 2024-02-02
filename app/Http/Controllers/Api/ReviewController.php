@@ -25,8 +25,8 @@ class ReviewController extends Controller
         
         return response()->json([
             'status' => true,
-            'message' => "Product Created successfully!",
-            'product' => $review
+            'message' => "Review send successfully!",
+            'results' => $review
         ], 200);
     }
 }
