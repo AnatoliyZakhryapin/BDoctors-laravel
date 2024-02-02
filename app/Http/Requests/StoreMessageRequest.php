@@ -3,6 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 
 class StoreMessageRequest extends FormRequest
 {
@@ -21,8 +25,26 @@ class StoreMessageRequest extends FormRequest
      */
     public function rules(): array
     {
+        // Regole di validazione
         return [
-            //
+            'name' => 'required|max:100',
+            'surname' => 'required|max:100',
+            'phone_number' => 'required|max:20',
+            'email' => 'required|max:255',
+            'message' => 'required',
+            'doctor_id' => 'required|numeric|exists:doctors,id'
         ];
+    }
+
+    // Funzione per creare la risposta nel caso in cui non si supera la validazione
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'status' => false,
+                'message' => "I dati inseriti non sono corretti!",
+                'errors' => $validator->errors(),
+            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
+        );
     }
 }

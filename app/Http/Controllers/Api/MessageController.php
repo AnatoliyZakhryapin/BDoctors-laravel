@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMessageRequest;
 use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class MessageController extends Controller
 {
@@ -14,12 +15,7 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $messages = Message::all();
-
-        return response()->json([
-            'success' => true,
-            'results' => $messages,
-        ]);
+        //
     }
 
     /**
@@ -27,44 +23,15 @@ class MessageController extends Controller
      */
     public function store(StoreMessageRequest $request)
     {
+        // Salvataggio del nuovo messagio
         $message = Message::create($request->all());
-
-        // $data_prova = [
-        //     'name' => 'Prova name',
-        //     'surname' => 'Prova Surname',
-        //     'phone_number' => '123456789',
-        //     'email' => 'prova@prova.com',
-        //     'message' => 'blablabla',
-        //     'doctor_id' => '22'
-        // ];
-        // $jsonString = '{
-        //     "name": "Prova name",
-        //     "surname": "Prova Surname",
-        //     "phone_number": "123456789",
-        //     "email": "prova@prova.com",
-        //     "message": "blablabla",
-        //     "doctor_id": 22
-        // }';
-
-        // $dataCollection = collect(json_decode($jsonString, true));
-        // $request->validate([
-        //     'name' => 'required|max:100',
-        //     'surname' => 'required|max:100',
-        //     'phone_number' => 'required|max:20',
-        //     'email' => 'required|max:255',
-        //     'message' => 'required',
-        //     'doctor_id' => 'required'
-        // ]);
-
-        // $data = $request->all();
-  
-        // $data = $request->all();
-        // $data = $dataCollection;
+        
+        $results = $message;
 
         return response()->json([
             'status' => true,
-            'message' => "Message Created successfully!",
-            'product' => $message
+            'message' => "Messaggio creato con successo!",
+            'results' => $results
         ], 200);
     }
 
