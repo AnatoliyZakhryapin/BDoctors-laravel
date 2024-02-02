@@ -28,7 +28,7 @@
             <div class="mb-3">
                 <p>Seleziona le tue specializzazioni</p>
                 @foreach($specializations as $specialization)
-                    <input type="checkbox" @checked(in_array($specialization->id, old('specializations', []))) id="{{ $specialization->name }}" name="specializations[]" value="{{ $specialization->id }}">
+                    <input type="checkbox" @checked(in_array($specialization->id, old('specializations', $doctor->specializations->pluck('id')->all()))) id="{{ $specialization->name }}" name="specializations[]" value="{{ $specialization->id }}">
                     <label for="{{ $specialization->name }}">{{ $specialization->name }}</label>
                 @endforeach
             </div>
