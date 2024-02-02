@@ -43,7 +43,7 @@ class DoctorSeeder extends Seeder
 
             $new_doctor->sponsorships()->attach($faker->randomElements($sponsorships_id, null));
 
-            $new_doctor->specializations()->attach($faker->randomElements($specializations_id, null));
+            $new_doctor->specializations()->attach($faker->randomElements($specializations_id, 5));
         }
     }
 }
