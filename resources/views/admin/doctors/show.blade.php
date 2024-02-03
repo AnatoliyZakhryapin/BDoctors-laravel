@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h1>Dott. {{ $doctor->user->name }} {{ $doctor->user->surname }}</h1>
-        <img src="{{ $doctor->photo }}" alt="">
+        <img style="width: 200px; height: 200px" src="{{ asset($doctor->photo) }}" alt="">
         <p>{{ $doctor->address }}</p>
         <p>{{ $doctor->phone_number }}</p>
         <ul>
