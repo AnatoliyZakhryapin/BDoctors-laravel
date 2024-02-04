@@ -6,6 +6,7 @@ use App\Models\Doctor;
 use App\Models\Specialization;
 use App\Http\Requests\StoreDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
+use Illuminate\Support\Facades\Auth;
 
 class DoctorController extends Controller
 {
@@ -45,7 +46,17 @@ class DoctorController extends Controller
      */
     public function show(Doctor $doctor)
     {
-        return view('admin.doctors.show', compact('doctor'));
+        // Ottieni l'utente attualmente loggato
+        $logged_user = Auth::user();
+
+        // Verifica se il dottore fornito come parametro è associato all'utente loggato
+        if ($doctor->user_id == $logged_user->id) {
+            // Se il dottore è associato all'utente loggato, visualizza la vista del singolo dottore
+            return view('admin.doctors.show', compact('doctor'));
+        } else {
+            // Se il dottore non è associato all'utente loggato, visualizza una vista di errore
+            return view('errors.error');
+        }
     }
 
     /**
@@ -53,9 +64,15 @@ class DoctorController extends Controller
      */
     public function edit(Doctor $doctor)
     {
-        $specializations = Specialization::orderBy('name', 'ASC')->get();
+        $logged_user = Auth::user();
+        if ($doctor->user_id == $logged_user->id) {
 
-        return view('admin.doctors.edit', compact('doctor', 'specializations'));
+            $specializations = Specialization::orderBy('name', 'ASC')->get();
+
+            return view('admin.doctors.edit', compact('doctor', 'specializations'));
+        } else {
+            return view('errors.error');
+        }
     }
 
     /**
@@ -75,14 +92,19 @@ class DoctorController extends Controller
      */
     public function destroy(Doctor $doctor)
     {
-        $doctor = Doctor::find($doctor->id);
+        // Ottieni l'utente attualmente loggato
+        $logged_user = Auth::user();
 
-        if ($doctor) {
-            $doctor->reviews()->delete();
-            $doctor->messages()->delete();
-            $doctor->delete();
+        // Verifica se il dottore fornito come parametro è associato all'utente loggato
+        if ($doctor->user_id == $logged_user->id) {
+        // Se il dottore è associato all'utente loggato, ottieni tutte le specializzazioni ordinate per nome
+        $specializations = Specialization::orderBy('name', 'ASC')->get();
+
+       // Visualizza la vista per la modifica del singolo dottore, passando il dottore e le specializzazioni come variabili compatte
+       return view('admin.doctors.edit', compact('doctor', 'specializations'));
+        } else {
+        // Se il dottore non è associato all'utente loggato, visualizza una vista di errore
+        return view('errors.error');
         }
-
-        return redirect()->route('admin.doctors.index');
     }
 }
