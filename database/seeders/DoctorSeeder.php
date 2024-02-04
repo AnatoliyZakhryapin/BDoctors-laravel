@@ -19,8 +19,9 @@ class DoctorSeeder extends Seeder
      */
     public function run(Faker $faker): void
     {
-
+        // Recupera tutti gli utenti dal database
         $users = User::all();
+        // Estrae gli ID degli utenti e crea un array di ID
         $userIds = $users->pluck('id');
 
 
@@ -96,8 +97,9 @@ class DoctorSeeder extends Seeder
             $new_doctor->address = $addresses[$i];
             $new_doctor->phone_number = $phoneNumbers[$i];
             $new_doctor->medical_services = $medicalServices[$i];
-
-            $new_doctor->user_id = $userIds->random();
+            
+            // Assegna l'ID di un utente specifico a un nuovo dottore
+            $new_doctor->user_id = $userIds[$i];
 
             $new_doctor->save();
 
@@ -107,4 +109,3 @@ class DoctorSeeder extends Seeder
         }
     }
 }
-
