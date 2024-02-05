@@ -17,12 +17,13 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        // Ottieni l'utente attualmente loggato
-        $logged_user = Auth::user();
-        // Recupera il dottore associato all'utente loggato.
-        // Restituisce un array di lunghezza 1 (relazione one-to-one)
-        $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
-        return view('admin.doctors.index', compact('doctors'));
+        // // Ottieni l'utente attualmente loggato
+        // $logged_user = Auth::user();
+        // // Recupera il dottore associato all'utente loggato.
+        // // Restituisce un array di lunghezza 1 (relazione one-to-one)
+        // $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
+        // return view('admin.doctors.index', compact('doctors'));
+        return redirect()->route('admin.dashboard.index');
     }
 
     /**
