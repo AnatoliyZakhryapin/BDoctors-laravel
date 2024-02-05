@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\StatisticController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Doctor;
 use Illuminate\Support\Facades\Auth;
@@ -45,6 +46,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('messages', MessageController::class);
     Route::resource('reviews', ReviewController::class);
     Route::resource('dashboard', DashboardController::class);
+    Route::resource('statistics', StatisticController::class);
 });
 
 require __DIR__ . '/auth.php';
