@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Doctor;
+use App\Models\Message;
+use Illuminate\Support\Facades\Auth;
 
 class StatisticController extends Controller
 {
@@ -12,7 +15,17 @@ class StatisticController extends Controller
      */
     public function index()
     {
-        return view('admin.statistics.index');
+        // Ottieni l'utente attualmente loggato
+        $logged_user = Auth::user();
+        // Recupera il dottore associato all'utente loggato.
+        // Restituisce un array di lunghezza 1 (relazione one-to-one)
+        $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
+        $doctor = $doctors[0];
+        // Recupera i messaggi associati al dottore loggato
+        $messages = Message::where('doctor_id', '=', $doctor->id)->get();
+        // Restituisce la vista dell'elenco dei messaggi per l'amministratore,
+        // passando l'array di messaggi come variabile compatta
+        return view('admin.statistics.index', compact('doctor', 'messages'));
     }
 
     /**

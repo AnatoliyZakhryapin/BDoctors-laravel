@@ -26,7 +26,7 @@ class MessageController extends Controller
         $messages = Message::where('doctor_id', '=', $doctor->id)->get();
         // Restituisce la vista dell'elenco dei messaggi per l'amministratore,
         // passando l'array di messaggi come variabile compatta
-        return view('admin.messages.index', compact('messages'));
+        return view('admin.messages.index', compact('messages', 'doctor'));
     }
 
     /**
@@ -61,7 +61,7 @@ class MessageController extends Controller
         // Verifica se il dottore loggato è il destinatario del messaggio
         if ($doctor->id == $message->doctor_id) {
             // Se il dottore loggato è il destinatario, visualizza la vista del singolo messaggio
-            return view('admin.messages.show', compact('message'));
+            return view('admin.messages.show', compact('message', 'doctor'));
         } else {
             // Se il dottore loggato non è il destinatario, visualizza una vista di errore
             return view('errors.error');
