@@ -37,7 +37,12 @@
                     <label for="{{ $specialization->name }}">{{ $specialization->name }}</label>
                 @endforeach
             </div>
-            <input type="submit" value="Modifica">
+            <div class="d-flex gap-2">
+                <a href="{{ route('admin.dashboard.index')}}">
+                    <button type="button" class="btn btn-secondary">Close</button>
+                </a>
+              <input type="submit" class="btn btn-primary" value="Edit">
+            </div>
         </form>
         @if ($errors->any())
             <div class="alert alert-danger">
