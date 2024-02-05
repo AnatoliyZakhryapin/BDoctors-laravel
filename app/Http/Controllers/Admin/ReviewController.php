@@ -16,17 +16,25 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        // restituisce lo user loggato
+        // Ottieni l'utente attualmente loggato
         $logged_user = Auth::user();
-        // restituisce il dottore collegato allo user loggato 
-        // resituisce array di lunghezza 1 (relazione one to one)
-        $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
-        $doctor = $doctors[0];
-        // Recupera le recensioni associate al dottore loggato
-        $reviews = Review::where('doctor_id', '=', $doctor->id)->get();
-        // Restituisce la vista dell'elenco delle recensioni per l'amministratore,
-        // passando l'array di recensioni come variabile compatta
-        return view('admin.reviews.index', compact('reviews', 'doctor'));
+
+        // Se utente logato ha il profilo 
+        if ($logged_user->doctor) {
+            // restituisce il dottore collegato allo user loggato 
+            // resituisce array di lunghezza 1 (relazione one to one)
+            $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
+            $doctor = $doctors[0];
+            // Recupera le recensioni associate al dottore loggato
+            $reviews = Review::where('doctor_id', '=', $doctor->id)->get();
+            // Restituisce la vista dell'elenco delle recensioni per l'amministratore,
+            // passando l'array di recensioni come variabile compatta
+            return view('admin.reviews.index', compact('reviews', 'doctor'));
+        }
+        // Altrimenti ti riporta sul Dashboard
+        else {
+            return redirect()->route('admin.dashboard.index');
+        }
     }
 
     /**
@@ -49,23 +57,30 @@ class ReviewController extends Controller
      * Display the specified resource.
      */
     public function show(Review $review)
-    {
+    {  
         // Ottieni l'utente attualmente loggato
         $logged_user = Auth::user();
 
-        // Recupera i medici associati all'utente loggato in base all'ID dell'utente
-        $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
-        // Presumendo che ci sia almeno un medico associato all'utente,
-        // recupera il primo medico dalla collezione
-        $doctor = $doctors[0];
+        // Se utente logato ha il profilo 
+        if ($logged_user->doctor) {
+            // Recupera i medici associati all'utente loggato in base all'ID dell'utente
+            $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
+            // Presumendo che ci sia almeno un medico associato all'utente,
+            // recupera il primo medico dalla collezione
+            $doctor = $doctors[0];
 
-        // Verifica se la recensione specificata appartiene al medico loggato
-        if ($review->doctor_id == $doctor->id) {
-            // Se la recensione appartiene al medico loggato, visualizza la vista di dettaglio della recensione
-            return view('admin.reviews.show', compact('review', 'doctor'));
-        } else {
-            // Se la recensione non appartiene al medico loggato, visualizza una vista di errore
-            return view('errors.error');
+            // Verifica se la recensione specificata appartiene al medico loggato
+            if ($review->doctor_id == $doctor->id) {
+                // Se la recensione appartiene al medico loggato, visualizza la vista di dettaglio della recensione
+                return view('admin.reviews.show', compact('review', 'doctor'));
+            } else {
+                // Se la recensione non appartiene al medico loggato, visualizza una vista di errore
+                return view('errors.error');
+            }
+        }
+        // Altrimenti ti riporta sul Dashboard
+        else {
+            return redirect()->route('admin.dashboard.index');
         }
     }
 

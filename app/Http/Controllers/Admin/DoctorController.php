@@ -30,20 +30,18 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        if (Auth::check()) {
-            // Ottieni l'utente attualmente loggato
-            $logged_user = Auth::user();
+        // Ottieni l'utente attualmente loggato
+        $logged_user = Auth::user();
 
-            // Se utente logato non ha il profilo te lo fa creare 
-            if (!$logged_user->doctor) {
-                $specializations = Specialization::orderBy('name', 'ASC')->get();
+        // Se utente logato non ha il profilo te lo fa creare 
+        if (!$logged_user->doctor) {
+            $specializations = Specialization::orderBy('name', 'ASC')->get();
 
-                return view('admin.doctors.create', compact('specializations'));
-            } 
-            // Altrimenti ti riporta sul Dashboard
-                else {
-                return redirect()->route('admin.dashboard.index');
-            }
+            return view('admin.doctors.create', compact('specializations'));
+        }
+        // Altrimenti ti riporta sul Dashboard
+        else {
+            return redirect()->route('admin.dashboard.index');
         }
     }
 
@@ -60,7 +58,7 @@ class DoctorController extends Controller
         $logged_user_id = $logged_user->id;
 
         $data['user_id'] = $logged_user_id;
-        // dd($data);
+   
         $doctor = Doctor::create($data);
 
 
