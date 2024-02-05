@@ -13,10 +13,10 @@
         </ul>
         <p>{{ $doctor->medical_services }}</p>
         <a href="{{ route('admin.doctors.edit', $doctor) }}" class="btn">Modifica profilo</a>
-        <form action="{{ route('admin.doctors.destroy', $doctor) }}" method="POST">
+        <form action="{{ route('admin.doctors.destroy', $doctor) }}" method="POST" onsubmit="return confirm('Sei sicuro di voler eliminare il profilo?');">
             @csrf
             @method('DELETE')
-            <button type="submit" value="Elimina profilo">Elimina</button>
+            <button class="btn btn-danger" type="submit" value="Elimina profilo">Elimina</button>
         </form>
         {{-- <form action="{{ route('admin.users.destroy', $doctor->user) }}" method="POST">
             @csrf
