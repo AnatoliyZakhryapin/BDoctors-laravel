@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Doctor;
+use App\Http\Controllers\Controller;
 use App\Models\Specialization;
 use App\Http\Requests\StoreDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
@@ -15,7 +16,11 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        $doctors = Doctor::all();
+        // Ottieni l'utente attualmente loggato
+        $logged_user = Auth::user();
+        // Recupera il dottore associato all'utente loggato.
+        // Restituisce un array di lunghezza 1 (relazione one-to-one)
+        $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
         return view('admin.doctors.index', compact('doctors'));
     }
 
