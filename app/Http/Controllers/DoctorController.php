@@ -82,7 +82,21 @@ class DoctorController extends Controller
     {
         $data = $request->all();
 
+        // Se non e stata selezionata nuova foto va presa quella vecchia dal DB        
+        if(!$data['photo']){
+            $data['photo']= $doctor->photo;
+        }
+
         $doctor->update($data);
+
+        // Se value del form non e vuoto ti sostituisce i valori del DB con quelli del form
+        if($request->has('specializations')) {
+            $doctor->specializations()->sync($request->specializations);
+        } 
+        // Se il valore del form e vuoto ti va a cancellare tutti relazione nel DB
+            else {
+            $doctor->specializations()->detach();
+        }
 
         return redirect()->route('admin.doctors.show', $doctor);
     }
