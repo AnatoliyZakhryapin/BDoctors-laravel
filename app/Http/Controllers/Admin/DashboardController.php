@@ -17,15 +17,21 @@ class DashboardController extends Controller
     {
         // Ottieni l'utente attualmente loggato
         $logged_user = Auth::user();
-        // Recupera il dottore associato all'utente loggato.
-        // Restituisce un array di lunghezza 1 (relazione one-to-one)
-        $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
-        $doctor = $doctors[0];
-        // Recupera i messaggi associati al dottore loggato
-        $messages = Message::where('doctor_id', '=', $doctor->id)->get();
-        // Restituisce la vista dell'elenco dei messaggi per l'amministratore,
-        // passando l'array di messaggi come variabile compatta
-        return view('admin/dashboard', compact('doctor', 'messages'));
+
+        if (!$logged_user->doctor) {
+            return view('admin/dashboard', compact('logged_user'));
+        } else {
+            // Recupera il dottore associato all'utente loggato.
+            // Restituisce un array di lunghezza 1 (relazione one-to-one)
+            $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
+            $doctor = $doctors[0];
+
+            // Recupera i messaggi associati al dottore loggato
+            $messages = Message::where('doctor_id', '=', $doctor->id)->get();
+            // Restituisce la vista dell'elenco dei messaggi per l'amministratore,
+            // passando l'array di messaggi come variabile compatta
+            return view('admin/dashboard', compact('doctor', 'messages'));
+        }
     }
 
     /**

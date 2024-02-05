@@ -43,18 +43,24 @@
                             <a class="nav-link" href="http://localhost:5174">{{ __('Home') }}</a>
                         </li>
                         @if(!Auth::guest())
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.doctors.edit', $doctor) }}">Edit Profile</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.messages.index') }}">My Messages</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.reviews.index') }}">My Reviews</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.statistics.index') }}">Statistics</a>
-                            </li>
+                            @if(isset($doctor))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.doctors.edit', $doctor) }}">Edit Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.messages.index') }}">My Messages</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.reviews.index') }}">My Reviews</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.statistics.index') }}">Statistics</a>
+                                </li>
+                            @else
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.doctors.create') }}">Creare Profile</a>
+                                </li>
+                            @endif
                         @endif
                     </ul>
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Specialization;
 use App\Http\Requests\StoreDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
+use App\Models\Message;
 use Illuminate\Support\Facades\Auth;
 
 class DoctorController extends Controller
@@ -29,9 +30,21 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        $specializations = Specialization::orderBy('name', 'ASC')->get();
+        if (Auth::check()) {
+            // Ottieni l'utente attualmente loggato
+            $logged_user = Auth::user();
 
-        return view('admin.doctors.create', compact('specializations'));
+            // Se utente logato non ha il profilo te lo fa creare 
+            if (!$logged_user->doctor) {
+                $specializations = Specialization::orderBy('name', 'ASC')->get();
+
+                return view('admin.doctors.create', compact('specializations'));
+            } 
+            // Altrimenti ti riporta sul Dashboard
+                else {
+                return redirect()->route('admin.dashboard.index');
+            }
+        }
     }
 
     /**
@@ -41,7 +54,15 @@ class DoctorController extends Controller
     {
         $data = $request->all();
 
+        // Ottieni l'utente attualmente loggato
+        $logged_user = Auth::user();
+
+        $logged_user_id = $logged_user->id;
+
+        $data['user_id'] = $logged_user_id;
+        // dd($data);
         $doctor = Doctor::create($data);
+
 
         return redirect()->route('admin.doctors.show', $doctor);
     }
@@ -88,18 +109,18 @@ class DoctorController extends Controller
         $data = $request->all();
 
         // Se non e stata selezionata nuova foto va presa quella vecchia dal DB        
-        if(!$data['photo']){
-            $data['photo']= $doctor->photo;
+        if (!$data['photo']) {
+            $data['photo'] = $doctor->photo;
         }
 
         $doctor->update($data);
 
         // Se value del form non e vuoto ti sostituisce i valori del DB con quelli del form
-        if($request->has('specializations')) {
+        if ($request->has('specializations')) {
             $doctor->specializations()->sync($request->specializations);
-        } 
+        }
         // Se il valore del form e vuoto ti va a cancellare tutti relazione nel DB
-            else {
+        else {
             $doctor->specializations()->detach();
         }
 
@@ -118,7 +139,7 @@ class DoctorController extends Controller
         if ($doctor->user_id == $logged_user->id) {
             // Elimina anche i messaggi del dottore
             $doctor->messages()->delete();
-            
+
             // Elimina le recensioni del dottore
             $doctor->reviews()->delete();
 
@@ -126,7 +147,7 @@ class DoctorController extends Controller
             $doctor->delete();
 
             // Reindirizza alla vista index dei dottori
-            return redirect()->route('admin.doctors.index');
+            return redirect()->route('admin.dashboard.index');
         } else {
             // Se il dottore non è associato all'utente loggato, visualizza una vista di errore
             return view('errors.error');
