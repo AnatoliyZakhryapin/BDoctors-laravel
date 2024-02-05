@@ -18,15 +18,24 @@ class MessageController extends Controller
     {
         // Ottieni l'utente attualmente loggato
         $logged_user = Auth::user();
-        // Recupera il dottore associato all'utente loggato.
-        // Restituisce un array di lunghezza 1 (relazione one-to-one)
-        $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
-        $doctor = $doctors[0];
-        // Recupera i messaggi associati al dottore loggato
-        $messages = Message::where('doctor_id', '=', $doctor->id)->get();
-        // Restituisce la vista dell'elenco dei messaggi per l'amministratore,
-        // passando l'array di messaggi come variabile compatta
-        return view('admin.messages.index', compact('messages', 'doctor'));
+
+
+        // Se utente logato non puoi visualizzare i messaggi
+        if (!$logged_user->doctor) {
+            return redirect()->route('admin.dashboard.index');
+        }
+        // altrimenti visualizza i messaggi associati al dottore
+        else {
+            // Recupera il dottore associato all'utente loggato.
+            // Restituisce un array di lunghezza 1 (relazione one-to-one)
+            $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
+            $doctor = $doctors[0];
+            // Recupera i messaggi associati al dottore loggato
+            $messages = Message::where('doctor_id', '=', $doctor->id)->get();
+            // Restituisce la vista dell'elenco dei messaggi per l'amministratore,
+            // passando l'array di messaggi come variabile compatta
+            return view('admin.messages.index', compact('messages', 'doctor'));
+        }
     }
 
     /**
@@ -53,18 +62,25 @@ class MessageController extends Controller
         // Ottieni l'utente attualmente loggato
         $logged_user = Auth::user();
 
-        // Recupera il dottore associato all'utente loggato.
-        // Restituisce un array di lunghezza 1 (relazione one-to-one)
-        $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
-        $doctor = $doctors[0];
+        if (!$logged_user->doctor) {
+            return redirect()->route('admin.dashboard.index');
+        }
+        // altrimenti visualizza il messaggi associati al dottore
+        else {
 
-        // Verifica se il dottore loggato è il destinatario del messaggio
-        if ($doctor->id == $message->doctor_id) {
-            // Se il dottore loggato è il destinatario, visualizza la vista del singolo messaggio
-            return view('admin.messages.show', compact('message', 'doctor'));
-        } else {
-            // Se il dottore loggato non è il destinatario, visualizza una vista di errore
-            return view('errors.error');
+            // Recupera il dottore associato all'utente loggato.
+            // Restituisce un array di lunghezza 1 (relazione one-to-one)
+            $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
+            $doctor = $doctors[0];
+
+            // Verifica se il dottore loggato è il destinatario del messaggio
+            if ($doctor->id == $message->doctor_id) {
+                // Se il dottore loggato è il destinatario, visualizza la vista del singolo messaggio
+                return view('admin.messages.show', compact('message', 'doctor'));
+            } else {
+                // Se il dottore loggato non è il destinatario, visualizza una vista di errore
+                return view('errors.error');
+            }
         }
     }
 
