@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Doctor;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,9 +17,15 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        // Ottieni l'utente attualmente loggato
+        $logged_user = Auth::user();
+        // Recupera il dottore associato all'utente loggato.
+        // Restituisce un array di lunghezza 1 (relazione one-to-one)
+        $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
+        $doctor = $doctors[0];
+
+        $user = $request->user();
+        return view('profile.edit', compact('user', 'doctor'));
     }
 
     /**

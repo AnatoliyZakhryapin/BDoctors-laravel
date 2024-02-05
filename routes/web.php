@@ -23,25 +23,6 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
 
-    // if (!Auth::guest()) {
-    //     // Ottieni l'utente attualmente loggato
-    //     $logged_user = Auth::user();
-    //     // Recupera il dottore associato all'utente loggato.
-    //     // Restituisce un array di lunghezza 1 (relazione one-to-one)
-    //     $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
-    //     $doctor = $doctors[0];
-    //     return view('welcome');
-    // } else {
-    //     // Ottieni l'utente attualmente loggato
-    //     $logged_user = Auth::user();
-    //     // Recupera il dottore associato all'utente loggato.
-    //     // Restituisce un array di lunghezza 1 (relazione one-to-one)
-    //     $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
-    //     $doctor = $doctors[0];
-
-    //     return view('welcome', compact('doctor', 'logged_user'));
-    // }
-
     if (Auth::check()) {
         // Ottieni l'utente attualmente loggato
         $logged_user = Auth::user();
