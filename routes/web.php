@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\StatisticController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Doctor;
 use Illuminate\Support\Facades\Auth;
@@ -21,13 +22,39 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    // Ottieni l'utente attualmente loggato
-    $logged_user = Auth::user();
-    // Recupera il dottore associato all'utente loggato.
-    // Restituisce un array di lunghezza 1 (relazione one-to-one)
-    $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
-    $doctor = $doctors[0];
-    return view('welcome', compact('doctor'));
+
+    // if (!Auth::guest()) {
+    //     // Ottieni l'utente attualmente loggato
+    //     $logged_user = Auth::user();
+    //     // Recupera il dottore associato all'utente loggato.
+    //     // Restituisce un array di lunghezza 1 (relazione one-to-one)
+    //     $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
+    //     $doctor = $doctors[0];
+    //     return view('welcome');
+    // } else {
+    //     // Ottieni l'utente attualmente loggato
+    //     $logged_user = Auth::user();
+    //     // Recupera il dottore associato all'utente loggato.
+    //     // Restituisce un array di lunghezza 1 (relazione one-to-one)
+    //     $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
+    //     $doctor = $doctors[0];
+
+    //     return view('welcome', compact('doctor', 'logged_user'));
+    // }
+
+    if (Auth::check()) {
+        // Ottieni l'utente attualmente loggato
+        $logged_user = Auth::user();
+        // Recupera il dottore associato all'utente loggato.
+        // Restituisce un array di lunghezza 1 (relazione one-to-one)
+        $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
+        $doctor = $doctors[0];
+
+        return view('welcome', compact('doctor', 'logged_user'));
+    } else {
+        $logged_user = Auth::user();
+        return view('welcome', compact('logged_user'));
+    }
 });
 
 // Route::get('/dashboard', function () {
@@ -45,6 +72,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('messages', MessageController::class);
     Route::resource('reviews', ReviewController::class);
     Route::resource('dashboard', DashboardController::class);
+    Route::resource('statistics', StatisticController::class);
 });
 
 require __DIR__ . '/auth.php';

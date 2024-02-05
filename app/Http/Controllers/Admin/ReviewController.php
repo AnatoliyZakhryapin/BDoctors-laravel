@@ -26,7 +26,7 @@ class ReviewController extends Controller
         $reviews = Review::where('doctor_id', '=', $doctor->id)->get();
         // Restituisce la vista dell'elenco delle recensioni per l'amministratore,
         // passando l'array di recensioni come variabile compatta
-        return view('admin.reviews.index', compact('reviews'));
+        return view('admin.reviews.index', compact('reviews', 'doctor'));
     }
 
     /**
@@ -62,7 +62,7 @@ class ReviewController extends Controller
         // Verifica se la recensione specificata appartiene al medico loggato
         if ($review->doctor_id == $doctor->id) {
             // Se la recensione appartiene al medico loggato, visualizza la vista di dettaglio della recensione
-            return view('admin.reviews.show', compact('review'));
+            return view('admin.reviews.show', compact('review', 'doctor'));
         } else {
             // Se la recensione non appartiene al medico loggato, visualizza una vista di errore
             return view('errors.error');
