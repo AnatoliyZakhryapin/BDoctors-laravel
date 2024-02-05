@@ -13,7 +13,7 @@
         </ul>
         <p>{{ $doctor->medical_services }}</p>
         <div class="d-flex gap-2">
-            <a href="{{route('admin.doctors.edit', $doctor) }}" class="btn btn-primary">Edit</a>
+            <a href="{{route('admin.doctors.edit', $doctor) }}" class="btn btn-primary">Modifica</a>
             <form action="{{ route('admin.doctors.destroy', $doctor) }}" method="POST" onsubmit="return confirm('Sei sicuro di voler eliminare il profilo?');">
                 @csrf
                 @method('DELETE')
