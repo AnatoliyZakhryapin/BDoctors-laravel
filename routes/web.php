@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\StatisticController;
@@ -26,12 +26,17 @@ Route::get('/', function () {
     if (Auth::check()) {
         // Ottieni l'utente attualmente loggato
         $logged_user = Auth::user();
-        // Recupera il dottore associato all'utente loggato.
-        // Restituisce un array di lunghezza 1 (relazione one-to-one)
-        $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
-        $doctor = $doctors[0];
 
-        return view('welcome', compact('doctor', 'logged_user'));
+        if (!$logged_user->doctor) {
+            return view('welcome', compact('logged_user'));
+        } else {
+            // Recupera il dottore associato all'utente loggato.
+            // Restituisce un array di lunghezza 1 (relazione one-to-one)
+            $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
+            $doctor = $doctors[0];
+
+            return view('welcome', compact('doctor', 'logged_user'));
+        }
     } else {
         $logged_user = Auth::user();
         return view('welcome', compact('logged_user'));
