@@ -12,11 +12,11 @@
             @endforeach
         </ul>
         <p>{{ $doctor->medical_services }}</p>
-        <a href="{{ route('admin.doctors.edit', $doctor) }}" class="btn">Modifica profilo</a>
+        <a href="{{ route('admin.doctors.index', $doctor) }}" class="btn">Modifica profilo</a>
         <form action="{{ route('admin.doctors.destroy', $doctor) }}" method="POST">
             @csrf
             @method('DELETE')
-            <input type="submit" value="Elimina profilo">
+            <button type="submit" value="Elimina profilo">Elimina</button>
         </form>
         {{-- <form action="{{ route('admin.users.destroy', $doctor->user) }}" method="POST">
             @csrf

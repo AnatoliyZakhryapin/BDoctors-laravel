@@ -94,17 +94,23 @@ class DoctorController extends Controller
     {
         // Ottieni l'utente attualmente loggato
         $logged_user = Auth::user();
-
-        // Verifica se il dottore fornito come parametro è associato all'utente loggato
+        $doctor = Doctor::find($doctor->id);
+        // Verifica se il dottore è loggato
         if ($doctor->user_id == $logged_user->id) {
-        // Se il dottore è associato all'utente loggato, ottieni tutte le specializzazioni ordinate per nome
-        $specializations = Specialization::orderBy('name', 'ASC')->get();
+            // Elimina anche i messaggi del dottore
+            $doctor->messages()->delete();
+            
+            // Elimina le recensioni del dottore
+            $doctor->reviews()->delete();
 
-       // Visualizza la vista per la modifica del singolo dottore, passando il dottore e le specializzazioni come variabili compatte
-       return view('admin.doctors.edit', compact('doctor', 'specializations'));
+            // Elimina il dottore
+            $doctor->delete();
+
+            // Reindirizza alla vista index dei dottori
+            return redirect()->route('admin.doctors.index');
         } else {
-        // Se il dottore non è associato all'utente loggato, visualizza una vista di errore
-        return view('errors.error');
+            // Se il dottore non è associato all'utente loggato, visualizza una vista di errore
+            return view('errors.error');
         }
     }
 }
