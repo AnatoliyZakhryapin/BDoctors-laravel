@@ -26,11 +26,7 @@ class APIStoreDoctorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'curriculum' => 'nullable|max:2000|min:3',
-            'foto' => 'nullable|max:2000|min:3',
-            'address' => 'required|max:255|min:3',
-            'phone_number' => 'nullable|max:20|min:8',
-            'medical_services' => 'nullable|max:300|min:3',
+            //
         ];
     }
 
