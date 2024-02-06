@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api;
 
-
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 
-class StoreDoctorRequest extends FormRequest
+
+class APIStoreDoctorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,5 +32,16 @@ class StoreDoctorRequest extends FormRequest
             'phone_number' => 'nullable|max:20|min:8',
             'medical_services' => 'nullable|max:300|min:3',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'status'=> false,
+                'message'=> "I dati inseriti non sono corretti!",
+                'errors' => $validator->errors(),
+            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
+        );
     }
 }

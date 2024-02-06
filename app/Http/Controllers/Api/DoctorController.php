@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreDoctorRequest;
+use App\Http\Requests\Api\APIStoreDoctorRequest;
 use App\Models\Doctor;
-use Illuminate\Http\Request;
 
 class DoctorController extends Controller
 {
-    public function index(Request $request)
+    public function index(APIStoreDoctorRequest $request)
     {
         $doctors = Doctor::all();
         
