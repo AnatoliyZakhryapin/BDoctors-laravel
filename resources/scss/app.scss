@@ -2,7 +2,17 @@
 
 
 .logo {
-    img{
+    img {
         width: 150px;
+    }
+}
+
+.dashboard-link a {
+    color: var(--bs-heading-color);
+    text-decoration: none;
+
+    &:hover {
+        color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+        text-decoration: underline;
     }
 }
