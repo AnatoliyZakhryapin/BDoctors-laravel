@@ -62,6 +62,9 @@ class DoctorController extends Controller
    
         $doctor = Doctor::create($data);
 
+        if ($request->has('specializations')) {
+            $doctor->specializations()->sync($request->specializations);
+        }
 
         return redirect()->route('admin.doctors.show', $doctor);
     }
