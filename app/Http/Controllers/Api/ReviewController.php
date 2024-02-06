@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\APIStoreReviewRequest;
 use App\Models\Review;
-use Illuminate\Http\Request;
-use App\Http\Requests\StoreReviewRequest;
 
 class ReviewController extends Controller
 {
-    public function index(Request $request)
+    public function index(APIStoreReviewRequest $request)
     {
         $data = $request->all();
         $reviews =  Review::where('doctor_id', $data)->get();
@@ -20,7 +19,7 @@ class ReviewController extends Controller
         ]);
    }
 
-   public function store(StoreReviewRequest $request)
+   public function store(APIStoreReviewRequest $request)
     {
         $review = Review::create($request->all());
         

@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreMessageRequest;
+use App\Http\Requests\Api\APIStoreDoctorRequest;
 use App\Models\Message;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class MessageController extends Controller
 {
@@ -21,7 +20,7 @@ class MessageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMessageRequest $request)
+    public function store(APIStoreDoctorRequest $request)
     {
         // Salvataggio del nuovo messagio
         $message = Message::create($request->all());
