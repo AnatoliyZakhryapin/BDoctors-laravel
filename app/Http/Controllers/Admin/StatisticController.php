@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Doctor;
 use App\Models\Message;
+use App\Models\Review;
 use Illuminate\Support\Facades\Auth;
 
 class StatisticController extends Controller
@@ -23,9 +24,19 @@ class StatisticController extends Controller
         $doctor = $doctors[0];
         // Recupera i messaggi associati al dottore loggato
         $messages = Message::where('doctor_id', '=', $doctor->id)->get();
+        //Recupera le recensioni associate al dottore loggato
+        $reviews = Review::where('doctor_id', '=', $doctor->id)->get();
+        $reviews_n = count($reviews);
+        $reviews_total_votes = 0;
+
+        foreach ($reviews as $review) {
+            $reviews_total_votes += $review->vote->value;
+        }
+        ;
+        $reviews_average = $reviews_total_votes / $reviews_n;
         // Restituisce la vista dell'elenco dei messaggi per l'amministratore,
         // passando l'array di messaggi come variabile compatta
-        return view('admin.statistics.index', compact('doctor', 'messages'));
+        return view('admin.statistics.index', compact('doctor', 'messages', 'reviews', 'reviews_average'));
     }
 
     /**
@@ -33,7 +44,7 @@ class StatisticController extends Controller
      */
     public function create()
     {
-       //
+        //
     }
 
     /**
