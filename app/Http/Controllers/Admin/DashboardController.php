@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use App\Models\Doctor;
 use App\Models\Message;
@@ -23,14 +24,16 @@ class DashboardController extends Controller
         } else {
             // Recupera il dottore associato all'utente loggato.
             // Restituisce un array di lunghezza 1 (relazione one-to-one)
-            $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
+            $doctors = Doctor::where('user_id', '=', $logged_user->id)->take(3)->get();
             $doctor = $doctors[0];
 
             // Recupera i messaggi associati al dottore loggato
-            $messages = Message::where('doctor_id', '=', $doctor->id)->get();
+            $messages = Message::where('doctor_id', '=', $doctor->id)->take(3)->get();
             // Restituisce la vista dell'elenco dei messaggi per l'amministratore,
             // passando l'array di messaggi come variabile compatta
-            return view('admin/dashboard', compact('doctor', 'messages'));
+
+            $reviews = Review::where('doctor_id', $doctor->id)->get();
+            return view('admin/dashboard', compact('doctor', 'messages', 'reviews'));
         }
     }
 
