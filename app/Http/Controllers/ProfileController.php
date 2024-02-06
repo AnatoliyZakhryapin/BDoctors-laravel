@@ -19,13 +19,19 @@ class ProfileController extends Controller
     {
         // Ottieni l'utente attualmente loggato
         $logged_user = Auth::user();
-        // Recupera il dottore associato all'utente loggato.
-        // Restituisce un array di lunghezza 1 (relazione one-to-one)
-        $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
-        $doctor = $doctors[0];
 
-        $user = $request->user();
-        return view('profile.edit', compact('user', 'doctor'));
+        if (!$logged_user->doctor) {
+            $user = $request->user();
+            return view('profile.edit', compact('user', 'logged_user'));
+        } else {
+            // Recupera il dottore associato all'utente loggato.
+            // Restituisce un array di lunghezza 1 (relazione one-to-one)
+            $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
+            $doctor = $doctors[0];
+
+            $user = $request->user();
+            return view('profile.edit', compact('user', 'doctor'));
+        }
     }
 
     /**
