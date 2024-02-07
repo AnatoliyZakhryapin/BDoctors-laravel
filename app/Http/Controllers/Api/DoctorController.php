@@ -14,7 +14,7 @@ class DoctorController extends Controller
     {
         $data = $request->all();
 
-        $doctors = Doctor::all();
+        $doctors = Doctor::with('specializations')->get();
         
         if(isset($data['specialization_ids'])) {
             
