@@ -26,20 +26,28 @@ class StatisticController extends Controller
         $messages = Message::where('doctor_id', '=', $doctor->id)->get();
         //Recupera le recensioni associate al dottore loggato
         $reviews = Review::where('doctor_id', '=', $doctor->id)->get();
-
-        $selected_year_messages = [];
-
+        // Recupera l'informazione dell'anno selezionato dal form
         $selected_year = $request->input('year');
-
+        // Dichiariamo un array vuoto all'interno del quale, attraverso un controllo, pushamo tutti i messaggi scritti nello stesso anno del $selected_year
+        $selected_year_messages = [];
         foreach ($messages as $message) {
             $message_year = intval(date('Y', strtotime($message->created_at)));
             if ($message_year == $selected_year) {
                 array_push($selected_year_messages, $message);
             }
         }
+        // Dichiariamo un array vuoto all'interno del quale, attraverso un controllo, pushamo tutte le recensioni scritti nello stesso anno del $selected_year
+        $selected_year_reviews = [];
+        foreach ($reviews as $review) {
+            $review_year = intval(date('Y', strtotime($review->created_at)));
+            if ($review_year == $selected_year) {
+                array_push($selected_year_reviews, $review);
+            }
+        }
 
-
+        //contiamo il numero di messaggi e recensioni all'interno dell'array
         $selected_year_messages_n = count($selected_year_messages);
+        $selected_year_reviews_n = count($selected_year_reviews);
         //Contiamo il numero di recensioni associate al dottore
         $reviews_n = count($reviews);
         $reviews_total_votes = 0;
@@ -51,7 +59,7 @@ class StatisticController extends Controller
         $reviews_average = $reviews_total_votes / $reviews_n;
         // Restituisce la vista dell'elenco dei messaggi per l'amministratore,
         // passando l'array di messaggi come variabile compatta
-        return view('admin.statistics.index', compact('doctor', 'selected_year', 'selected_year_messages_n', 'reviews_average'));
+        return view('admin.statistics.index', compact('doctor', 'selected_year', 'selected_year_messages_n', 'selected_year_reviews_n', 'reviews_average'));
     }
 
     /**

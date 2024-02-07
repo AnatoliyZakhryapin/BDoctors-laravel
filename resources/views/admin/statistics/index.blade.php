@@ -13,10 +13,11 @@
                         <option value="2023">2023</option>
                         <option value="2024">2024</option>
                     </select>
-                    <button type="submit">Cambia Valore</button>
+                    <button type="submit">Seleziona</button>
                 </form>
                 @if (isset($selected_year))
-                    <p>Nel {{ $selected_year }} hai ricevuto {{ $selected_year_messages_n }} messaggi</p>
+                    <p>Nel {{ $selected_year }} hai ricevuto {{ $selected_year_messages_n }} messaggi e
+                        {{ $selected_year_reviews_n }} recensioni</p>
                 @else
                     <p>Seleziona un anno dal menu a tendina</p>
                 @endif
