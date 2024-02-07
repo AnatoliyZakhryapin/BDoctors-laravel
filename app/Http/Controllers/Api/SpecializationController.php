@@ -14,7 +14,7 @@ class SpecializationController extends Controller
     public function index()
     {
         // Recuperiamo tutti specializazioni
-        $specializations = Specialization::all();
+        $specializations = Specialization::orderBy('name', 'ASC')->get();
         
         // Assegnamo a $results i valori di $specialization
         $results = $specializations;
