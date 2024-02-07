@@ -16,6 +16,7 @@
                             <th scope="col">Doctor id</th>
                             <th scope="col">Nome</th>
                             <th scope="col">Cognome</th>
+                            <th scope="col">Data</th>
                             <th scope="col"></th>
                             <th scope="col"></th>
                         </tr>
@@ -31,6 +32,7 @@
                                 <th scope="col">{{ $message->doctor_id }}</th>
                                 <th scope="col">{{ $message->doctor->user->name }}</th>
                                 <th scope="col">{{ $message->doctor->user->surname }}</th>
+                                <th scope="col">{{ $message->created_at }}</th>
                                 <th scope="col"></th>
                                 <td><a class="btn btn-primary" href="{{ route('admin.messages.show', $message) }}">Apri</a>
                                 </td>
