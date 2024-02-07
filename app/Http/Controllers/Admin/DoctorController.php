@@ -66,7 +66,7 @@ class DoctorController extends Controller
             $doctor->specializations()->sync($request->specializations);
         }
 
-        return redirect()->route('admin.doctors.show', $doctor);
+        return redirect()->route('admin.dashboard.index');
     }
 
     /**
