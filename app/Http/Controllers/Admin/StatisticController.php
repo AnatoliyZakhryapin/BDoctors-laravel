@@ -26,17 +26,19 @@ class StatisticController extends Controller
         $messages = Message::where('doctor_id', '=', $doctor->id)->get();
         //Recupera le recensioni associate al dottore loggato
         $reviews = Review::where('doctor_id', '=', $doctor->id)->get();
+        //Contiamo il numero di recensioni associate al dottore
         $reviews_n = count($reviews);
         $reviews_total_votes = 0;
-
+        // Cicliamo le reviews associate al dottore per sommare il totale dei voti
         foreach ($reviews as $review) {
             $reviews_total_votes += $review->vote->value;
         }
         ;
+        // Calcoliamo la media
         $reviews_average = $reviews_total_votes / $reviews_n;
         // Restituisce la vista dell'elenco dei messaggi per l'amministratore,
         // passando l'array di messaggi come variabile compatta
-        return view('admin.statistics.index', compact('doctor', 'messages', 'reviews', 'reviews_average'));
+        return view('admin.statistics.index', compact('doctor', 'reviews_average'));
     }
 
     /**
