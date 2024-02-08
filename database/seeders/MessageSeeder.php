@@ -294,7 +294,7 @@ class MessageSeeder extends Seeder
                 $new_message->email = $messageData['email'];
                 $new_message->message = $messageData['message'];
                 $new_message->doctor_id = $messageData['doctor_id'];
-                $new_message->created_at = $faker->dateTimeBetween('-3 years');
+                $new_message->created_at = $faker->dateTimeBetween('-3 years')->format('Y-m-d H:i:s');
                 $new_message->updated_at = $new_message->created_at;
                 $new_message->save();
             }
