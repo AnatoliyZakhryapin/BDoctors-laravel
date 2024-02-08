@@ -22,30 +22,94 @@
 <body>
     <div id="app">
 
+        <nav class="navbar navbar-expand-lg navbar-light bg-middle-green shadow-sm py-2">
+            <div class="container-fluid">
+                <a class="navbar-brand d-flex align-items-center" href="http://localhost:5174">
 
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm py-2">
-            <div class="container">
-                <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
-                    <div class="logo">
-                        <img class="" src="{{ Vite::asset('resources/img/logo-color.png')}}" alt="">
-                    </div>
+                    <img class="logo-small-header d-md-none"
+                        src="{{ Vite::asset('resources/img/logo-small-white.png') }}" alt="">
+                    <img class="logo-full-header d-none d-md-block"
+                        src="{{ Vite::asset('resources/img/logo-white.png') }}" alt="">
                     {{-- config('app.name', 'Laravel') --}}
                 </a>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
+                <div class="dropstart d-lg-none">
+                    <button class="nav-dropstart-btn border-2" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        @if (!Auth::guest())
+                            @if (isset($doctor))
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="{{ route('admin.dashboard.index') }}">{{ __('Dashboard') }}</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('admin.doctors.edit', $doctor) }}">Edit
+                                        Profile</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('admin.messages.index') }}">My Messages</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('admin.reviews.index') }}">My Reviews</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="{{ route('admin.statistics.index') }}">Statistics</a>
+                                </li>
+                            @else
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('admin.doctors.create') }}">Creare
+                                        Profile</a>
+                                </li>
+                            @endif
+                        @endif
+                        <hr>
+                        @guest
+                            <li>
+                                <a class="dropdown-item" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            </li>
+                            @if (Route::has('register'))
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
+                        @else
+                            <li>
+                                <a class="dropdown-item" href="{{ url('profile') }}">{{ __('Profile') }}</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </li>
+                        @endguest
+                    </ul>
+                </div>
+                <div class="collapse navbar-collapse">
                     <ul class="navbar-nav me-auto">
+
+                        @if (!Auth::guest())
+                            @if (isset($doctor))
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('admin.dashboard.index') }}">{{ __('Dashboard') }}</a>
                         </li>
                         @if(!Auth::guest())
                             @if(isset($doctor))
+
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.doctors.edit', $doctor) }}">Edit Profile</a>
+                                    <a class="nav-link"
+                                        href="{{ route('admin.dashboard.index') }}">{{ __('Dashboard') }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.doctors.edit', $doctor) }}">Edit
+                                        Profile</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('admin.messages.index') }}">My Messages</a>
@@ -68,38 +132,40 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                        </li>
-                        @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                        </li>
-                        @endif
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            </li>
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
                         @else
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('admin.dashboard.index') }}">{{__('Dashboard')}}</a>
-                                <a class="dropdown-item" href="{{ url('profile') }}">{{__('Profile')}}</a>
-                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }}
                                 </a>
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ url('profile') }}">{{ __('Profile') }}</a>
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
                         @endguest
                     </ul>
                 </div>
             </div>
         </nav>
+
 
         <main class="">
             @yield('content')
