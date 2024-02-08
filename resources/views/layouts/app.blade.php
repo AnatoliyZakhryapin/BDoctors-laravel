@@ -94,15 +94,14 @@
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav me-auto">
 
-                        @if (!Auth::guest())
+                        {{-- @if (!Auth::guest())
                             @if (isset($doctor))
 
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('admin.dashboard.index') }}">{{ __('Dashboard') }}</a>
-                        </li>
-                        @if(!Auth::guest())
-                            @if(isset($doctor))
-
+                        </li> --}}
+                        @if (!Auth::guest())
+                            @if (isset($doctor))
                                 <li class="nav-item">
                                     <a class="nav-link"
                                         href="{{ route('admin.dashboard.index') }}">{{ __('Dashboard') }}</a>
