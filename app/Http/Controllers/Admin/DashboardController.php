@@ -32,7 +32,7 @@ class DashboardController extends Controller
             // Restituisce la vista dell'elenco dei messaggi per l'amministratore,
             // passando l'array di messaggi come variabile compatta
 
-            $reviews = Review::where('doctor_id', $doctor->id)->get();
+            $reviews = Review::where('doctor_id', $doctor->id)->take(3)->get();
             return view('admin/dashboard', compact('doctor', 'messages', 'reviews'));
         }
     }
