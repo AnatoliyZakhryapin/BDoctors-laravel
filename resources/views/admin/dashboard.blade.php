@@ -23,7 +23,7 @@
                         </ul>
                         <p>{{ $doctor->medical_services }}</p>
                         <div class="d-flex gap-2">
-                            <a href="{{ route('admin.doctors.edit', $doctor) }}" class="btn btn-primary">Modifica</a>
+                            <a href="{{ route('admin.doctors.edit', $doctor) }}" class="btn btn-cust">Modifica</a>
                             {{-- <form action="{{ route('admin.doctors.destroy', $doctor) }}" method="POST"
                                 onsubmit="return confirm('Sei sicuro di voler eliminare il profilo?');">
                                 @csrf
@@ -37,10 +37,10 @@
 
             </div>
             <div class="col-lg-8">
-                <h3 class="my-3 my-lg-2 dashboard-link">
-                    <a href="{{ route('admin.messages.index') }}">Messaggi</a>
-                </h3>
-                <div class="card">
+                <div class="dashboard-card my-5 my-lg-2">
+                    <h3 class="dashboard-link">
+                        <a href="{{ route('admin.messages.index') }}">Messaggi</a>
+                    </h3>
                     <table class="table">
                         <thead>
                             <tr>
@@ -49,7 +49,7 @@
                                 <th scope="col">Indirizzo email</th>
                             </tr>
                         </thead>
-                        <tbody class="table-group-divider">
+                        <tbody>
                             @foreach ($messages as $key => $message)
                                 <tr>
                                     <th scope="row">{{ $key + 1 }} </th>
@@ -61,10 +61,10 @@
                     </table>
                 </div>
 
-                <h3 class="my-3 my-lg-2 dashboard-link">
-                    <a href="{{ route('admin.reviews.index') }}">Recensioni</a>
-                </h3>
-                <div class="card">
+                <div class="dashboard-card my-5 my-lg-2">
+                    <h3 class="dashboard-link">
+                        <a href="{{ route('admin.reviews.index') }}">Recensioni</a>
+                    </h3>
                     <table class="table">
                         <thead>
                             <tr>
@@ -73,7 +73,7 @@
                                 <th scope="col">Voto</th>
                             </tr>
                         </thead>
-                        <tbody class="table-group-divider">
+                        <tbody>
                             @foreach ($reviews as $key => $review)
                                 <tr>
                                     <th scope="row">{{ $key + 1 }} </th>
