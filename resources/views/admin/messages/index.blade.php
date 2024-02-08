@@ -5,11 +5,11 @@
         <div class="row">
             <div class="col">
                 <h1>I miei messaggi</h1>
+                <h5>Hai {{ count($messages) }} messaggi</h5>
                 <div class="green-card">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
                                 <th scope="col">Nome</th>
                                 <th class="d-none d-lg-block" scope="col">Indirizzo mail</th>
                                 <th scope="col">Data</th>
@@ -19,12 +19,10 @@
                         <tbody>
                             @foreach ($messages as $key => $message)
                                 <tr>
-                                    <th scope="row">{{ $key + 1 }} </th>
-                                    <td scope="col">{{ $message->name }} {{ $message->surname }}</td>
-                                    <td class="d-none d-lg-block" scope="col">{{ $message->email }}</td>
-                                    <td scope="col">{{ \Carbon\Carbon::parse($message->created_at)->format('j/m/Y') }}
+                                    <td>{{ $message->name }} {{ $message->surname }}</td>
+                                    <td class="d-none d-lg-block">{{ $message->email }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($message->created_at)->format('j/m/Y') }}
                                     </td>
-                                    <td scope="col"></td>
                                     <td>
                                         <a class="btn-cust" href="{{ route('admin.messages.show', $message) }}">Apri</a>
                                     </td>

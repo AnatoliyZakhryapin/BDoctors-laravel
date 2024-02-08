@@ -37,48 +37,52 @@
 
             </div>
             <div class="col-lg-8">
-                <div class="dashboard-card my-5 my-lg-2">
+                <div class="green-card my-5 my-lg-2">
                     <h3 class="dashboard-link">
                         <a href="{{ route('admin.messages.index') }}">Messaggi</a>
                     </h3>
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
                                 <th scope="col">Nome</th>
                                 <th scope="col">Indirizzo email</th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($messages as $key => $message)
                                 <tr>
-                                    <th scope="row">{{ $key + 1 }} </th>
-                                    <td scope="col">{{ $message->name }} {{ $message->surname }}</td>
-                                    <td scope="col">{{ $message->email }}</td>
+                                    <td scope="row">{{ $message->name }} {{ $message->surname }}</td>
+                                    <td>{{ $message->email }}</td>
+                                    <td><a class="btn-cust" href="{{ route('admin.messages.show', $message) }}">Apri</a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
 
-                <div class="dashboard-card my-5 my-lg-2">
+                <div class="green-card my-5 my-lg-2">
                     <h3 class="dashboard-link">
                         <a href="{{ route('admin.reviews.index') }}">Recensioni</a>
                     </h3>
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
                                 <th scope="col">Nome</th>
+                                <th scope="col">Messaggio</th>
                                 <th scope="col">Voto</th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($reviews as $key => $review)
                                 <tr>
-                                    <th scope="row">{{ $key + 1 }} </th>
-                                    <td scope="col">{{ $review->name }}</td>
-                                    <td scope="col">{{ $review->vote->value }}/5</td>
+                                    <td scope="row">{{ $review->name }}</td>
+                                    <td>{{ $review->vote->value }}/5</td>
+                                    <td>{{ $review->message }}</td>
+                                    <td><a class="btn-cust" href="{{ route('admin.reviews.show', $review) }}">Apri</a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
