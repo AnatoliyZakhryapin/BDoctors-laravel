@@ -22,7 +22,6 @@
 <body>
     <div id="app">
 
-
         <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-2">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="http://localhost:5174">
@@ -31,21 +30,71 @@
                     </div>
                     {{-- config('app.name', 'Laravel') --}}
                 </a>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.dashboard.index') }}">{{ __('Dashboard') }}</a>
-                        </li>
+                <div class="dropstart d-lg-none">
+                    <button class="btn border-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <ul class="dropdown-menu">
                         @if (!Auth::guest())
                             @if (isset($doctor))
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="{{ route('admin.dashboard.index') }}">{{ __('Dashboard') }}</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('admin.doctors.edit', $doctor) }}">Edit
+                                        Profile</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('admin.messages.index') }}">My Messages</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('admin.reviews.index') }}">My Reviews</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('admin.statistics.index') }}">Statistics</a>
+                                </li>
+                            @else
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('admin.doctors.create') }}">Creare
+                                        Profile</a>
+                                </li>
+                            @endif
+                        @endif
+                        <hr>
+                        @guest
+                            <li>
+                                <a class="dropdown-item" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            </li>
+                            @if (Route::has('register'))
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
+                        @else
+                            <li>
+                                <a class="dropdown-item" href="{{ url('profile') }}">{{ __('Profile') }}</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </li>
+                        @endguest
+                    </ul>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav me-auto">
+                        @if (!Auth::guest())
+                            @if (isset($doctor))
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                        href="{{ route('admin.dashboard.index') }}">{{ __('Dashboard') }}</a>
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('admin.doctors.edit', $doctor) }}">Edit
                                         Profile</a>
@@ -104,6 +153,7 @@
                 </div>
             </div>
         </nav>
+
 
         <main class="">
             @yield('content')
