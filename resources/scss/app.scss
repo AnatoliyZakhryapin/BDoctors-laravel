@@ -58,13 +58,11 @@
 .btn-cust-red {
     color: white;
     font-size: 18px;
-    line-height: 20px;
+    text-align: 40px;
     padding: 0px 15px;
     font-weight: bold;
     background-color: rgba(238, 5, 5, 0.747);
-    border: 2px solid black;
     border-radius: 99px;
-    cursor: pointer;
 
     &:hover {
         background-color: rgb(216, 3, 3);
@@ -75,6 +73,11 @@
 a.btn-cust,
 a.btn-cust-red {
     text-decoration: none;
+}
+
+button.btn-cust,
+button.btn-cust-red {
+    border: none;
 }
 
 .dropdown-menu {
