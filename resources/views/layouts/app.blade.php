@@ -40,7 +40,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="http://localhost:5174">{{ __('Home') }}</a>
+                            <a class="nav-link" href="{{ route('admin.dashboard.index') }}">{{ __('Dashboard') }}</a>
                         </li>
                         @if(!Auth::guest())
                             @if(isset($doctor))

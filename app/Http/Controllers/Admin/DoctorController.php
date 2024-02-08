@@ -80,7 +80,7 @@ class DoctorController extends Controller
         // Verifica se il dottore fornito come parametro è associato all'utente loggato
         if ($doctor->user_id == $logged_user->id) {
             // Se il dottore è associato all'utente loggato, visualizza la vista del singolo dottore
-            return view('admin.doctors.show', compact('doctor'));
+            return view('admin.dashboard.index', compact('doctor'));
         } else {
             // Se il dottore non è associato all'utente loggato, visualizza una vista di errore
             return view('errors.error');
@@ -126,33 +126,33 @@ class DoctorController extends Controller
             $doctor->specializations()->detach();
         }
 
-        return redirect()->route('admin.doctors.show', $doctor);
+        return redirect()->route('admin.dashboard.index', $doctor);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Doctor $doctor)
-    {
-        // Ottieni l'utente attualmente loggato
-        $logged_user = Auth::user();
-        $doctor = Doctor::find($doctor->id);
-        // Verifica se il dottore è loggato
-        if ($doctor->user_id == $logged_user->id) {
-            // Elimina anche i messaggi del dottore
-            $doctor->messages()->delete();
+    // public function destroy(Doctor $doctor)
+    // {
+    //     // Ottieni l'utente attualmente loggato
+    //     $logged_user = Auth::user();
+    //     $doctor = Doctor::find($doctor->id);
+    //     // Verifica se il dottore è loggato
+    //     if ($doctor->user_id == $logged_user->id) {
+    //         // Elimina anche i messaggi del dottore
+    //         $doctor->messages()->delete();
 
-            // Elimina le recensioni del dottore
-            $doctor->reviews()->delete();
+    //         // Elimina le recensioni del dottore
+    //         $doctor->reviews()->delete();
 
-            // Elimina il dottore
-            $doctor->delete();
+    //         // Elimina il dottore
+    //         $doctor->delete();
 
-            // Reindirizza alla vista index dei dottori
-            return redirect()->route('admin.dashboard.index');
-        } else {
-            // Se il dottore non è associato all'utente loggato, visualizza una vista di errore
-            return view('errors.error');
-        }
-    }
+    //         // Reindirizza alla vista index dei dottori
+    //         return redirect()->route('admin.dashboard.index');
+    //     } else {
+    //         // Se il dottore non è associato all'utente loggato, visualizza una vista di errore
+    //         return view('errors.error');
+    //     }
+    // }
 }
