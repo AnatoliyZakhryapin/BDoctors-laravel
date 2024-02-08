@@ -22,16 +22,19 @@
 <body>
     <div id="app">
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-2">
-            <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-middle-green shadow-sm py-2">
+            <div class="container-fluid">
                 <a class="navbar-brand d-flex align-items-center" href="http://localhost:5174">
-                    <div class="logo">
-                        <img class="" src="{{ Vite::asset('resources/img/logo-color.png') }}" alt="">
-                    </div>
+
+                    <img class="logo-small-header d-md-none"
+                        src="{{ Vite::asset('resources/img/logo-small-white.png') }}" alt="">
+                    <img class="logo-full-header d-none d-md-block"
+                        src="{{ Vite::asset('resources/img/logo-white.png') }}" alt="">
                     {{-- config('app.name', 'Laravel') --}}
                 </a>
                 <div class="dropstart d-lg-none">
-                    <button class="btn border-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="nav-dropstart-btn border-2" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <ul class="dropdown-menu">
@@ -52,7 +55,8 @@
                                     <a class="dropdown-item" href="{{ route('admin.reviews.index') }}">My Reviews</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('admin.statistics.index') }}">Statistics</a>
+                                    <a class="dropdown-item"
+                                        href="{{ route('admin.statistics.index') }}">Statistics</a>
                                 </li>
                             @else
                                 <li>

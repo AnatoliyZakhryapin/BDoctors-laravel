@@ -55,13 +55,56 @@
 
 }
 
+.dropdown-menu {
+    background-color: #43762b;
 
+    .dropdown-item {
+        color: white;
+        font-weight: 600;
+    }
 
-.logo {
-    img {
-        width: 150px;
+    .dropdown-item:hover {
+        color: #b0e29d;
+        background-color: #43762b;
     }
 }
+
+.logo-small-header {
+    width: 70px;
+}
+
+.logo-full-header {
+    width: 150px;
+}
+
+.header-item {
+    padding: 5px;
+    vertical-align: 5px;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+li:hover {
+    color: white;
+    // font-weight: 700;
+    background-color: #43762b;
+    border-radius: 99px;
+}
+
+.nav-link {
+    color: white;
+    font-weight: bold;
+
+    &:hover {
+        color: white;
+    }
+}
+
+.nav-dropstart-btn {
+    background-color: #73b760;
+    border: none;
+}
+
 
 .dashboard-link a {
     color: var(--bs-heading-color);
