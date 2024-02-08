@@ -55,6 +55,28 @@
 
 }
 
+.btn-cust-red {
+    color: white;
+    font-size: 18px;
+    line-height: 20px;
+    padding: 0px 15px;
+    font-weight: bold;
+    background-color: rgba(238, 5, 5, 0.747);
+    border: 2px solid black;
+    border-radius: 99px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgb(216, 3, 3);
+    }
+
+}
+
+a.btn-cust,
+a.btn-cust-red {
+    text-decoration: none;
+}
+
 .dropdown-menu {
     background-color: #43762b;
 
@@ -116,7 +138,7 @@ li:hover {
     }
 }
 
-.dashboard-card {
+.green-card {
     padding: 10px 10px;
     border: 5px solid #c3e2a5;
     box-shadow: 0px 0px 10px #c3e2a5;

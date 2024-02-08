@@ -5,49 +5,33 @@
         <div class="row">
             <div class="col">
                 <h1>I miei messaggi</h1>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">id messagio</th>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Cognome</th>
-                            <th scope="col">Indirizzo mail</th>
-                            <th scope="col">Doctor id</th>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Cognome</th>
-                            <th scope="col">Data</th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-group-divider">
-                        @foreach ($messages as $key => $message)
+                <div class="green-card">
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <th scope="row">{{ $key + 1 }} </th>
-                                <th scope="col">{{ $message->id }}</th>
-                                <th scope="col">{{ $message->name }}</th>
-                                <th scope="col">{{ $message->surname }}</th>
-                                <th scope="col">{{ $message->email }}</th>
-                                <th scope="col">{{ $message->doctor_id }}</th>
-                                <th scope="col">{{ $message->doctor->user->name }}</th>
-                                <th scope="col">{{ $message->doctor->user->surname }}</th>
-                                <th scope="col">{{ $message->created_at }}</th>
+                                <th scope="col">#</th>
+                                <th scope="col">Nome</th>
+                                <th class="d-none d-lg-block" scope="col">Indirizzo mail</th>
+                                <th scope="col">Data</th>
                                 <th scope="col"></th>
-                                <td><a class="btn btn-primary" href="{{ route('admin.messages.show', $message) }}">Apri</a>
-                                </td>
-                                <td>
-                                    <form action="{{ route('admin.messages.destroy', $message) }}" method="POST">
-                                        @csrf
-                                        @method('delete')
-
-                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                    </form>
-                                </td>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($messages as $key => $message)
+                                <tr>
+                                    <th scope="row">{{ $key + 1 }} </th>
+                                    <td scope="col">{{ $message->name }} {{ $message->surname }}</td>
+                                    <td class="d-none d-lg-block" scope="col">{{ $message->email }}</td>
+                                    <td scope="col">{{ \Carbon\Carbon::parse($message->created_at)->format('j/m/Y') }}
+                                    </td>
+                                    <td scope="col"></td>
+                                    <td>
+                                        <a class="btn-cust" href="{{ route('admin.messages.show', $message) }}">Apri</a>
+                                    </td>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
