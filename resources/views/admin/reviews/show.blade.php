@@ -11,7 +11,7 @@
                         <p><strong>Voto Recensione:</strong> {{ $review->vote->name }}, {{ $review->vote->value }}</p>
                         <div class="d-flex gap-2 justify-content-between">
                             <a href="{{ route('admin.reviews.index') }}">
-                                <button type="button" class="btn-cust">Torna alla lista</button>
+                                <button type="button" class="btn-cust">Chiudi</button>
                             </a>
                             <form action="{{ route('admin.reviews.destroy', $review) }}" method="POST">
                                 @csrf

@@ -14,7 +14,7 @@
                         <p class="card-text">{{ $message->message }}</p>
                         <div class="d-flex gap-2">
                             <a href="{{ route('admin.messages.index') }}">
-                                <button type="button" class="btn-cust">Close</button>
+                                <button type="button" class="btn-cust">Chiudi</button>
                             </a>
                             <form action="{{ route('admin.messages.destroy', $message) }}" method="POST">
                                 @csrf
