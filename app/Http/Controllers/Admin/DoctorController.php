@@ -165,7 +165,7 @@ class DoctorController extends Controller
         } else {
             $doctor->delete();
         }
-        // ritorna alla pagina di registrazione
-        return redirect()->route('register');
+
+        return redirect()->route('admin.dashboard.index');
     }
 }
