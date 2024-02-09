@@ -13,8 +13,8 @@
                                 <th scope="col">Nome</th>
                                 <th class="d-none d-lg-block" scope="col">Indirizzo mail</th>
                                 <th scope="col">Data</th>
-                                <th scope="col">Apri</th>
-                                <th scope="col">Elimina</th>
+                                <th scope="col">Apri <i class="fa-solid fa-envelope"></i></th>
+                                <th scope="col">Elimina <i class="fa-solid fa-trash"></i></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -25,9 +25,12 @@
                                     <td>{{ \Carbon\Carbon::parse($message->created_at)->format('j/m/Y') }}
                                     </td>
                                     <td>
-                                        <a class="btn-cust" href="{{ route('admin.messages.show', $message) }}">Apri</a>
+                                        <a class="ms-3" href="{{ route('admin.messages.show', $message) }}"><i class="fa-solid fa-envelope"></i></a>
                                         {{-- aggiunto btn elimina soft delte  --}}
-                                        <button class="btn-cust-red myBtn btn-danger">Elimina</button>
+                                       
+                                    </td>
+                                    <td>
+                                        <a class="myTrash ms-3"><i class="fa-solid fa-trash"></i></a>
                                     </td>
                                     {{-- aggiunto form conferma  --}}
                                     <div class="bg-form bgForm">
@@ -49,7 +52,7 @@
         </div>
     </div>
     <script>
-        deleteDomEl = document.querySelectorAll('.myBtn');
+        deleteDomEl = document.querySelectorAll('.myTrash');
         noDomEl = document.querySelectorAll('.noBtn');
         formDomEl = document.querySelectorAll('.bgForm');
 
