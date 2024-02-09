@@ -31,7 +31,9 @@ class MessageController extends Controller
             $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
             $doctor = $doctors[0];
             // Recupera i messaggi associati al dottore loggato
-            $messages = Message::where('doctor_id', '=', $doctor->id)->get();
+            $messages = Message::where('doctor_id', '=', $doctor->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
             // Restituisce la vista dell'elenco dei messaggi per l'amministratore,
             // passando l'array di messaggi come variabile compatta
             return view('admin.messages.index', compact('messages', 'doctor'));
