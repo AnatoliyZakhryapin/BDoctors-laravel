@@ -73,6 +73,10 @@
 a.btn-cust,
 a.btn-cust-red {
     text-decoration: none;
+
+    &:hover {
+        color: white;
+    }
 }
 
 button.btn-cust,
@@ -109,7 +113,7 @@ button.btn-cust-red {
     font-weight: 800;
 }
 
-li:hover {
+.navbar li:hover {
     color: white;
     // font-weight: 700;
     background-color: #43762b;
@@ -146,6 +150,14 @@ li:hover {
     border: 5px solid #c3e2a5;
     box-shadow: 0px 0px 10px #c3e2a5;
     border-radius: 20px 20px 20px 20px;
+
+    position: relative;
+
+    .dashboard-link {
+        position: absolute;
+        top: 18px;
+        right: 16px;
+    }
 }
 
 // form soft delete 

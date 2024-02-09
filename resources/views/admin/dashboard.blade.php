@@ -40,15 +40,15 @@
                 </div>
                 <div class="col-lg-8">
                     <div class="green-card my-5 my-lg-2">
-                        <h3 class="dashboard-link">
-                            <a href="{{ route('admin.messages.index') }}">Messaggi</a>
-                        </h3>
+                        <h3>Messaggi</h3>
+                        <a class="btn-cust dashboard-link" href="{{ route('admin.messages.index') }}">Visualizza tutti i
+                            messaggi</a>
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th scope="col">Nome</th>
                                     <th scope="col">Indirizzo email</th>
-                                    <th scope="col"></th>
+                                    <th scope="col">Apri</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -66,16 +66,16 @@
                     </div>
 
                     <div class="green-card my-5 my-lg-2">
-                        <h3 class="dashboard-link">
-                            <a href="{{ route('admin.reviews.index') }}">Recensioni</a>
-                        </h3>
+                        <h3>Recensioni</h3>
+                        <a class="btn-cust dashboard-link" href="{{ route('admin.reviews.index') }}">Visualizza tutte le
+                            recensioni</a>
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th scope="col">Nome</th>
                                     <th scope="col">Messaggio</th>
                                     <th scope="col">Voto</th>
-                                    <th scope="col"></th>
+                                    <th scope="col">Apri</th>
                                 </tr>
                             </thead>
                             <tbody>
