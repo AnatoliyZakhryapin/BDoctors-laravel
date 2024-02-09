@@ -17,12 +17,37 @@
                                 @csrf
                                 @method('delete')
 
-                                <button type="submit" class="btn-cust-red">Delete</button>
+                                <button type="submit" class="btn-cust-red" id="myBtn">Delete</button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div id="bgForm" class="bg-form">
+            <div class="d-flex align-items-center gap-3 delete-form">
+                <h4 class="text-light">Vuoi davvero eliminare questa recensione?</h4>
+                <form action="{{ route('admin.reviews.destroy', $review) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-danger btn-lg">Si</button>
+                </form>
+                <button id="noBtn" class="btn btn-primary btn-lg">No</button>
+            </div>
+        </div>
     </div>
+    
+    <script>
+        deleteDomEl = document.getElementById('myBtn');
+        noDomEl = document.getElementById('noBtn');
+        formDomEl = document.getElementById('bgForm');
+
+        deleteDomEl.addEventListener('click', function() {
+            formDomEl.classList.add('active')
+        })
+
+        noDomEl.addEventListener('click', function() {
+            formDomEl.classList.remove('active')
+        })
+    </script>
 @endsection

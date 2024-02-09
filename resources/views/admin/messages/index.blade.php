@@ -25,7 +25,19 @@
                                     </td>
                                     <td>
                                         <a class="btn-cust" href="{{ route('admin.messages.show', $message) }}">Apri</a>
+                                        <button class="btn-cust-red myBtn btn-danger">Elimina</button>
                                     </td>
+                                    <div class="bg-form bgForm">
+                                        <div class="d-flex align-items-center gap-3 delete-form">
+                                            <h4 class="text-light">Vuoi davvero eliminare questo messaggio?</h4>
+                                            <form action="{{ route('admin.messages.destroy', $message) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-danger btn-lg">Si</button>
+                                            </form>
+                                            <button class="btn btn-primary btn-lg noBtn">No</button>
+                                        </div>
+                                    </div>
                             @endforeach
                         </tbody>
                     </table>
@@ -33,4 +45,22 @@
             </div>
         </div>
     </div>
+    <script>
+        deleteDomEl = document.querySelectorAll('.myBtn');
+        noDomEl = document.querySelectorAll('.noBtn');
+        formDomEl = document.querySelectorAll('.bgForm');
+
+        for (let i = 0; i < deleteDomEl.length; i++) {
+            deleteDomEl[i].addEventListener('click', function() {
+                console.log('ciao')
+                formDomEl[i].classList.add('active')
+            })
+        }
+
+        for (let i = 0; i < deleteDomEl.length; i++) {
+            noDomEl[i].addEventListener('click', function() {
+                formDomEl[i].classList.remove('active')
+            })
+        }
+    </script>
 @endsection
