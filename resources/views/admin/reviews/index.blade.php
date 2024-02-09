@@ -25,8 +25,12 @@
                                         <td>{{ $review->vote->name }}, {{ $review->vote->value }}</td>
                                         <td><a class="btn-cust" href="{{ route('admin.reviews.show', $review) }}">Apri</a>
                                         </td>
-                                        <td><button class="btn-cust-red myBtn btn-danger">Elimina</button></td>
+                                        <td>
+                                            {{-- aggiunto btn elimina soft delte  --}}
+                                            <button class="btn-cust-red myBtn btn-danger">Elimina</button>
+                                        </td>
                                     </tr>
+                                    {{-- aggiunto form conferma  --}}
                                     <div class="bg-form bgForm">
                                         <div class="d-flex align-items-center gap-3 delete-form">
                                             <h4 class="text-light">Vuoi davvero eliminare questa recensione?</h4>
@@ -49,13 +53,13 @@
         deleteDomEl = document.querySelectorAll('.myBtn');
         noDomEl = document.querySelectorAll('.noBtn');
         formDomEl = document.querySelectorAll('.bgForm');
-
+        // aggiunto un event listener a ciascun pulsante "Elimina"
         for (let i = 0; i < deleteDomEl.length; i++) {
             deleteDomEl[i].addEventListener('click', function() {
                 formDomEl[i].classList.add('active')
             })
         }
-
+        // aggiunto un event listener a ciascun pulsante "No"
         for (let i = 0; i < deleteDomEl.length; i++) {
             noDomEl[i].addEventListener('click', function() {
                 formDomEl[i].classList.remove('active')

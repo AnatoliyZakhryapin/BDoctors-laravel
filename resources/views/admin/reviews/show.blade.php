@@ -16,7 +16,7 @@
                             <form action="{{ route('admin.reviews.destroy', $review) }}" method="POST">
                                 @csrf
                                 @method('delete')
-
+                                {{-- aggiunto btn softdelete  --}}
                                 <button type="submit" class="btn-cust-red" id="myBtn">Delete</button>
                             </form>
                         </div>
@@ -24,6 +24,7 @@
                 </div>
             </div>
         </div>
+        {{-- aggiunto form conferma  --}}
         <div id="bgForm" class="bg-form">
             <div class="d-flex align-items-center gap-3 delete-form">
                 <h4 class="text-light">Vuoi davvero eliminare questa recensione?</h4>
@@ -36,7 +37,7 @@
             </div>
         </div>
     </div>
-    
+
     <script>
         deleteDomEl = document.getElementById('myBtn');
         noDomEl = document.getElementById('noBtn');

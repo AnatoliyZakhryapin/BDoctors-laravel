@@ -99,12 +99,15 @@ class MessageController extends Controller
     {
         //
     }
-    
+
     public function restore($message_id)
     {
+        // recupera il messaggio, incluso se è stato eliminato.
         $message = Message::withTrashed()->where('id', $message_id)->first();
 
+        // verifica se il messaggio esiste.
         if (!isset($message)) {
+            //altrimenti restituisce un errore 404.
             abort(404);
         }
 
@@ -120,6 +123,7 @@ class MessageController extends Controller
     public function destroy($message_id)
     {
 
+        // recupera il messaggio
         $message = Message::withTrashed()->where('id', $message_id)->first();
         if (!isset($message)) {
             abort(404);
@@ -130,6 +134,7 @@ class MessageController extends Controller
         } else {
             $message->delete();
         }
+        // torna alla pagina dell'indice dei messaggi.
         return redirect()->route('admin.messages.index');
     }
 }
