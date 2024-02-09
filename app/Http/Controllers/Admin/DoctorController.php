@@ -131,16 +131,18 @@ class DoctorController extends Controller
 
     public function restore($doctor_id)
     {
+        // recuperato dottore incluso quelli eliminati dal database
         $doctor = Doctor::withTrashed()->where('id', $doctor_id)->first();
 
+        // se il dottore non esiste, restituisci errore 404
         if (!isset($doctor)) {
             abort(404);
         }
-
+        // se il dottore è stato eliminato, ripristinalo
         if ($doctor->trashed()) {
             $doctor->restore();
         }
-
+        // ritorna alla pagina precedente
         return back();
     }
     /**
@@ -148,11 +150,13 @@ class DoctorController extends Controller
      */
     public function destroy($doctor_id)
     {
-
+        // recupera il dottore incluso quelli eliminati dal database
         $doctor = Doctor::withTrashed()->where('id', $doctor_id)->first();
+        // se il dottore non esiste, restituisci errore 404
         if (!isset($doctor)) {
             abort(404);
         }
+        // rimuovi le associazioni con specializzazioni e sponsorizzazioni many to many
         $doctor->specializations()->sync([]);
         $doctor->sponsorships()->sync([]);
 
@@ -161,6 +165,7 @@ class DoctorController extends Controller
         } else {
             $doctor->delete();
         }
+        // ritorna alla pagina di registrazione
         return redirect()->route('register');
     }
 }

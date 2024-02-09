@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Review extends Model
 {
+    // aggiunto softdeletes 
     use HasFactory, SoftDeletes;
     protected $fillable = ['name', 'message', 'doctor_id', 'vote_id'];
 

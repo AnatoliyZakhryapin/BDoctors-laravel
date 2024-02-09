@@ -16,14 +16,15 @@
                             <a href="{{ route('admin.messages.index') }}">
                                 <button type="button" class="btn-cust">Chiudi</button>
                             </a>
-                            <button type="submit" id="myBtn" class="btn-cust-red">Delete</button>
+                            {{-- aggiunto btn softdelete  --}}
+                            <button type="submit" id="myBtn" class="btn-cust-red">Elimina</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    {{-- aggiunto form conferma  --}}
     <div id="bgForm" class="bg-form">
         <div class="d-flex align-items-center gap-3 delete-form">
             <h4 class="text-light">Vuoi davvero eliminare questo messaggio?</h4>

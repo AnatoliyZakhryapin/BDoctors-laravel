@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        {{-- evita messaggio errore in caso $doctor non sia definito --}}
         @if (isset($doctor))
             <div class="row">
                 <h1 class="my-2">
