@@ -48,6 +48,8 @@
                                 <tr>
                                     <th scope="col">Nome</th>
                                     <th scope="col">Indirizzo email</th>
+                                    <th scope="col">Data</th>
+                                    <th scope="col">Orario</th>
                                     <th scope="col">Apri</th>
                                 </tr>
                             </thead>
@@ -56,6 +58,9 @@
                                     <tr>
                                         <td scope="row">{{ $message->name }} {{ $message->surname }}</td>
                                         <td>{{ $message->email }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($message->created_at)->format('d/m/Y') }}
+                                        </td>
+                                        <td>{{ $message->created_at->format('H:i')}}</td>
                                         <td><a href="{{ route('admin.messages.show', $message) }}"> <i
                                                     class="fa-solid fa-envelope"></i></a>
                                         </td>
@@ -75,6 +80,8 @@
                                     <th scope="col">Nome</th>
                                     <th scope="col">Messaggio</th>
                                     <th scope="col">Voto</th>
+                                    <th scope="col">Data</th>
+                                    <th scope="col">Orario</th>
                                     <th scope="col">Apri</th>
                                 </tr>
                             </thead>
@@ -83,7 +90,11 @@
                                     <tr>
                                         <td scope="row">{{ $review->name }}</td>
                                         <td>{{ $review->message }}</td>
+
                                         <td>{{ $review->vote->value }}/5</td>
+                                        <td>{{ \Carbon\Carbon::parse($review->created_at)->format('d/m/Y') }}
+                                        </td>
+                                        <td>{{ $review->created_at->format('H:i')}}</td>
                                         <td><a href="{{ route('admin.reviews.show', $review) }}"> <i
                                                     class="fa-solid fa-star"></i></a>
                                         </td>

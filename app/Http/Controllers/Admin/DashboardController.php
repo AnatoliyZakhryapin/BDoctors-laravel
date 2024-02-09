@@ -28,11 +28,17 @@ class DashboardController extends Controller
             $doctor = $doctors[0];
 
             // Recupera i messaggi associati al dottore loggato
-            $messages = Message::where('doctor_id', '=', $doctor->id)->take(3)->get();
+            $messages = Message::where('doctor_id', '=', $doctor->id)
+            ->orderBy('created_at', 'desc')
+            ->take(3)
+            ->get();
             // Restituisce la vista dell'elenco dei messaggi per l'amministratore,
             // passando l'array di messaggi come variabile compatta
 
-            $reviews = Review::where('doctor_id', $doctor->id)->take(3)->get();
+            $reviews = Review::where('doctor_id', $doctor->id)
+            ->orderBy('created_at', 'desc')
+            ->take(3)
+            ->get();
             return view('admin/dashboard', compact('doctor', 'messages', 'reviews'));
         }
     }

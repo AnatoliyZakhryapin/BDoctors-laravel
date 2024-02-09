@@ -7,8 +7,11 @@
                 <div class="green-card">
                     <div class="card-body">
                         <h4 class="card-title mb-3">{{ $message->name }} {{ $message->surname }}</h4>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">
-                            {{ \Carbon\Carbon::parse($message->created_at)->format('d/m/Y') }}</h6>
+                        <div class="d-flex gap-4">
+                            <h6 class="card-subtitle mb-2 text-body-secondary">
+                                {{ \Carbon\Carbon::parse($message->created_at)->format('d/m/Y') }}</h6>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{ $message->created_at->format('H:i') }}</h6>
+                        </div>
                         <h6 class="card-subtitle mb-2 text-body-secondary">{{ $message->phone_number }}</h6>
                         <h6 class="card-subtitle mb-2 text-body-secondary">{{ $message->email }}</h6>
                         <p class="card-text">{{ $message->message }}</p>
