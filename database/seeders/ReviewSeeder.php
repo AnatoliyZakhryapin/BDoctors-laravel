@@ -162,6 +162,42 @@ class ReviewSeeder extends Seeder
                     'doctor_id' => $doctors_ids->random(),
                     'vote_id' => 3,
                 ],
+                [
+                    'name' => 'Luca',
+                    'message' => 'Il dottore è stato molto professionale e attento alle mie esigenze. Mi ha spiegato chiaramente il piano di cura e mi sono sentito molto rassicurato.',
+                    'doctor_id' => $doctors_ids->random(),
+                    'vote_id' => 5,
+                ],
+                [
+                    'name' => 'Alessandro',
+                    'message' => 'Sono rimasta molto delusa dalla visita. Il dottore sembrava poco interessato e non mi ha dato alcuna soluzione ai miei problemi.',
+                    'doctor_id' => $doctors_ids->random(),
+                    'vote_id' => 1,
+                ],
+                [
+                    'name' => 'Nicolas',
+                    'message' => 'Consiglio vivamente questo dottore! Competente, gentile e disponibile. Mi ha aiutato tantissimo.',
+                    'doctor_id' => $doctors_ids->random(),
+                    'vote_id' => 5,
+                ],
+                [
+                    'name' => 'Paola',
+                    'message' => 'Non ho avuto una buona esperienza con questo dottore. Mi ha dato una diagnosi sbagliata e mi sono trovato peggio dopo la visita.',
+                    'doctor_id' => $doctors_ids->random(),
+                    'vote_id' => 2,
+                ],
+                [
+                    'name' => 'Alfredo',
+                    'message' => 'Il dottore è stato molto disponibile e competente. Ha risolto il mio problema in poco tempo e con molta gentilezza.',
+                    'doctor_id' => $doctors_ids->random(),
+                    'vote_id' => 4,
+                ],
+                [
+                    'name' => 'Giovanna',
+                    'message' => 'Non posso che lodare questo dottore. Ha un approccio umano e empatico e si prende cura veramente dei suoi pazienti.',
+                    'doctor_id' => $doctors_ids->random(),
+                    'vote_id' => 5,
+                ],
             ];
 
             foreach ($reviewsData as $reviewData) {

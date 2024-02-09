@@ -23,8 +23,12 @@
                                 @foreach ($reviews as $review)
                                     <tr>
                                         <td scope="row">{{ $review->name }}</td>
-                                        <td class="d-none d-lg-block">{{ $review->message }}</td>
-                                        <td>{{ $review->vote->name }}, {{ $review->vote->value }}</td>
+                                        @if (strlen($review->message > 60))
+                                            <td class="d-none d-lg-block">{{ substr($review->message, 0, 60) }}...</td>
+                                        @else
+                                            <td class="d-none d-lg-block">{{ $review->message }}</td>
+                                        @endif
+                                        <td>{{ $review->vote->value }}/5</td>
 
                                         <td>{{ \Carbon\Carbon::parse($review->created_at)->format('d/m/Y') }}</td>
                                         <td>{{ $review->created_at->format('H:i') }}</td>
