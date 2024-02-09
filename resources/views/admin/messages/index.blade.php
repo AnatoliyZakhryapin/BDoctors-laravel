@@ -14,8 +14,8 @@
                                 <th class="d-none d-lg-block" scope="col">Indirizzo mail</th>
                                 <th scope="col">Data</th>
                                 <th scope="col">Orario</th>
-                                <th scope="col">Apri <i class="fa-solid fa-envelope"></i></th>
-                                <th scope="col">Elimina <i class="fa-solid fa-trash"></i></th>
+                                <th scope="col">Apri</th>
+                                <th scope="col">Elimina</th>
                             </tr>
                         </thead>
                         <tbody>
