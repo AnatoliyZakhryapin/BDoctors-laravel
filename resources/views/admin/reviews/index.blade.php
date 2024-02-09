@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container margin-top">
+    <div class="container">
         <div class="row">
             <div class="col">
                 <h1>Le mie recensioni</h1>

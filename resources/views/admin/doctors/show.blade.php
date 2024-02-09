@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container margin-top">
+    <div class="container">
         <h1>Dott. {{ $doctor->user->name }} {{ $doctor->user->surname }}</h1>
         <img style="width: 200px; height: 200px" src="{{ asset($doctor->photo) }}" alt="">
         <p>{{ $doctor->address }}</p>

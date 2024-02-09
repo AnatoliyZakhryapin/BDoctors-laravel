@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container margin-top">
+    <div class="container">
         {{-- evita messaggio errore in caso $doctor non sia definito --}}
         @if (isset($doctor))
             <div class="row">
