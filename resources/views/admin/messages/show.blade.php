@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container margin-top">
+    <div class="container">
         <div class="row justify-content-center my-5">
             <div class="col-4">
                 <div class="green-card">

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container margin-top">
+    <div class="container">
         <form action="{{ route('admin.doctors.update', $doctor) }}" method="POST">
             @csrf
             @METHOD('PUT')

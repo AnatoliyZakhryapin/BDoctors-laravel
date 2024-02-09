@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container margin-top">
+    <div class="container">
         <h1>Dottori</h1>
         <div class="card my-2">
             <table class="table">
