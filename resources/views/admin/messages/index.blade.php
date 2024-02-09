@@ -13,6 +13,7 @@
                                 <th scope="col">Nome</th>
                                 <th class="d-none d-lg-block" scope="col">Indirizzo mail</th>
                                 <th scope="col">Data</th>
+                                <th scope="col">Orario</th>
                                 <th scope="col">Apri <i class="fa-solid fa-envelope"></i></th>
                                 <th scope="col">Elimina <i class="fa-solid fa-trash"></i></th>
                             </tr>
@@ -24,6 +25,7 @@
                                     <td class="d-none d-lg-block">{{ $message->email }}</td>
                                     <td>{{ \Carbon\Carbon::parse($message->created_at)->format('d/m/Y') }}
                                     </td>
+                                    <td>{{ $message->created_at->format('H:i')}}</td>
                                     <td>
                                         <a class="ms-3" href="{{ route('admin.messages.show', $message) }}"><i class="fa-solid fa-envelope"></i></a>
                                         {{-- aggiunto btn elimina soft delte  --}}
