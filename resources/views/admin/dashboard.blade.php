@@ -82,8 +82,8 @@
                                 @foreach ($reviews as $key => $review)
                                     <tr>
                                         <td scope="row">{{ $review->name }}</td>
-                                        <td>{{ $review->vote->value }}/5</td>
                                         <td>{{ $review->message }}</td>
+                                        <td>{{ $review->vote->value }}/5</td>
                                         <td><a class="btn-cust" href="{{ route('admin.reviews.show', $review) }}">Apri</a>
                                         </td>
                                     </tr>
