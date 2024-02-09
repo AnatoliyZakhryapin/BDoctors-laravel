@@ -23,7 +23,7 @@
 <body>
     <div id="app">
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-middle-green shadow-sm py-2">
+        <nav class="navbar navbar-expand-lg navbar-light bg-middle-green shadow-sm py-2 fixed-top">
             <div class="container-fluid">
                 <a class="navbar-brand d-flex align-items-center" href="http://localhost:5174">
 
