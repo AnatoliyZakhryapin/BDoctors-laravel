@@ -26,7 +26,8 @@ class ReviewController extends Controller
             $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
             $doctor = $doctors[0];
             // Recupera le recensioni associate al dottore loggato
-            $reviews = Review::where('doctor_id', '=', $doctor->id)->get();
+            $reviews = Review::where('doctor_id', '=', $doctor->id)
+            ->orderBy('created_at', 'desc')->get();
             // Restituisce la vista dell'elenco delle recensioni per l'amministratore,
             // passando l'array di recensioni come variabile compatta
             return view('admin.reviews.index', compact('reviews', 'doctor'));
