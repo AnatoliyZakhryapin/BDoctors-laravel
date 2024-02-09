@@ -56,8 +56,8 @@
                                     <tr>
                                         <td scope="row">{{ $message->name }} {{ $message->surname }}</td>
                                         <td>{{ $message->email }}</td>
-                                        <td><a class="btn-cust"
-                                                href="{{ route('admin.messages.show', $message) }}">Apri</a>
+                                        <td><a href="{{ route('admin.messages.show', $message) }}"> <i
+                                                    class="fa-solid fa-envelope"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -84,7 +84,8 @@
                                         <td scope="row">{{ $review->name }}</td>
                                         <td>{{ $review->message }}</td>
                                         <td>{{ $review->vote->value }}/5</td>
-                                        <td><a class="btn-cust" href="{{ route('admin.reviews.show', $review) }}">Apri</a>
+                                        <td><a href="{{ route('admin.reviews.show', $review) }}"> <i
+                                                    class="fa-solid fa-star"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

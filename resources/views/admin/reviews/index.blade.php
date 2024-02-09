@@ -13,8 +13,8 @@
                                     <th scope="col">Nome</th>
                                     <th scope="col" class="d-none d-lg-block">Messaggio</th>
                                     <th scope="col">Voto</th>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
+                                    <th scope="col">Apri</th>
+                                    <th scope="col">Elimina</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -23,11 +23,12 @@
                                         <td scope="row">{{ $review->name }}</td>
                                         <td class="d-none d-lg-block">{{ $review->message }}</td>
                                         <td>{{ $review->vote->name }}, {{ $review->vote->value }}</td>
-                                        <td><a class="btn-cust" href="{{ route('admin.reviews.show', $review) }}">Apri</a>
+                                        <td><a href="{{ route('admin.reviews.show', $review) }}"><i
+                                                    class="fa-solid fa-star"></i></a>
                                         </td>
                                         <td>
                                             {{-- aggiunto btn elimina soft delte  --}}
-                                            <button class="btn-cust-red myBtn btn-danger">Elimina</button>
+                                            <a class="myBtn"><i class="fa-solid fa-trash"></i></a>
                                         </td>
                                     </tr>
                                     {{-- aggiunto form conferma  --}}
