@@ -10,13 +10,14 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-
+    <link href="{{ asset('scss/app.scss') }}" rel="stylesheet">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Usando Vite -->
     @vite(['resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body>

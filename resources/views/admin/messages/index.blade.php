@@ -13,7 +13,8 @@
                                 <th scope="col">Nome</th>
                                 <th class="d-none d-lg-block" scope="col">Indirizzo mail</th>
                                 <th scope="col">Data</th>
-                                <th scope="col"></th>
+                                <th scope="col">Apri</th>
+                                <th scope="col">Elimina</th>
                             </tr>
                         </thead>
                         <tbody>
