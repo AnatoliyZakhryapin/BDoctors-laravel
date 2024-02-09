@@ -22,7 +22,7 @@
                                 <tr>
                                     <td>{{ $message->name }} {{ $message->surname }}</td>
                                     <td class="d-none d-lg-block">{{ $message->email }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($message->created_at)->format('j/m/Y') }}
+                                    <td>{{ \Carbon\Carbon::parse($message->created_at)->format('d/m/Y') }}
                                     </td>
                                     <td>
                                         <a class="ms-3" href="{{ route('admin.messages.show', $message) }}"><i class="fa-solid fa-envelope"></i></a>

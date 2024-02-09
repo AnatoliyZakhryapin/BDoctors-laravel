@@ -13,6 +13,7 @@
                                     <th scope="col">Nome</th>
                                     <th scope="col" class="d-none d-lg-block">Messaggio</th>
                                     <th scope="col">Voto</th>
+                                    <th scope="col">Data</th>
                                     <th scope="col">Apri</th>
                                     <th scope="col">Elimina</th>
                                 </tr>
@@ -23,6 +24,8 @@
                                         <td scope="row">{{ $review->name }}</td>
                                         <td class="d-none d-lg-block">{{ $review->message }}</td>
                                         <td>{{ $review->vote->name }}, {{ $review->vote->value }}</td>
+                                        
+                                        <td>{{ \Carbon\Carbon::parse($review->created_at)->format('d/m/Y') }}
                                         <td><a href="{{ route('admin.reviews.show', $review) }}"><i
                                                     class="fa-solid fa-star"></i></a>
                                         </td>
