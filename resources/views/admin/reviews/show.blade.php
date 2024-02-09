@@ -7,6 +7,8 @@
                 <div class="green-card">
                     <div class="card-body">
                         <p><strong>Nome:</strong> {{ $review->name }}</p>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">
+                            {{ \Carbon\Carbon::parse($review->created_at)->format('d/m/Y') }}</h6>
                         <p><strong>Messaggio:</strong> {{ $review->message }}</p>
                         <p><strong>Voto Recensione:</strong> {{ $review->vote->name }}, {{ $review->vote->value }}</p>
                         <div class="d-flex gap-2 justify-content-between">
