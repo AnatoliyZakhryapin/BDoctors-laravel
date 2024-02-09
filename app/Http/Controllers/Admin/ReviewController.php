@@ -57,7 +57,7 @@ class ReviewController extends Controller
      * Display the specified resource.
      */
     public function show(Review $review)
-    {  
+    {
         // Ottieni l'utente attualmente loggato
         $logged_user = Auth::user();
 
@@ -99,14 +99,37 @@ class ReviewController extends Controller
     {
         //
     }
+    
+    public function restore($review_id)
+    {
+        $review = Review::withTrashed()->where('id', $review_id)->first();
 
+        if (!isset($review)) {
+            abort(404);
+        }
+
+        if ($review->trashed()) {
+            $review->restore();
+        }
+
+        return back();
+    }
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Review $review)
+    public function destroy($review_id)
     {
-        $review->delete();
 
+        $review = Review::withTrashed()->where('id', $review_id)->first();
+        if (!isset($review)) {
+            abort(404);
+        }
+
+        if ($review->trashed()) {
+            $review->forceDelete();
+        } else {
+            $review->delete();
+        }
         return redirect()->route('admin.reviews.index');
     }
 }

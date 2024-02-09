@@ -99,14 +99,37 @@ class MessageController extends Controller
     {
         //
     }
+    
+    public function restore($message_id)
+    {
+        $message = Message::withTrashed()->where('id', $message_id)->first();
 
+        if (!isset($message)) {
+            abort(404);
+        }
+
+        if ($message->trashed()) {
+            $message->restore();
+        }
+
+        return back();
+    }
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Message $message)
+    public function destroy($message_id)
     {
-        $message->delete();
 
+        $message = Message::withTrashed()->where('id', $message_id)->first();
+        if (!isset($message)) {
+            abort(404);
+        }
+
+        if ($message->trashed()) {
+            $message->forceDelete();
+        } else {
+            $message->delete();
+        }
         return redirect()->route('admin.messages.index');
     }
 }

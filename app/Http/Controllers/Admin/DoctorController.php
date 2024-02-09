@@ -59,7 +59,7 @@ class DoctorController extends Controller
         $logged_user_id = $logged_user->id;
 
         $data['user_id'] = $logged_user_id;
-   
+
         $doctor = Doctor::create($data);
 
         if ($request->has('specializations')) {
@@ -129,30 +129,38 @@ class DoctorController extends Controller
         return redirect()->route('admin.dashboard.index', $doctor);
     }
 
+    public function restore($doctor_id)
+    {
+        $doctor = Doctor::withTrashed()->where('id', $doctor_id)->first();
+
+        if (!isset($doctor)) {
+            abort(404);
+        }
+
+        if ($doctor->trashed()) {
+            $doctor->restore();
+        }
+
+        return back();
+    }
     /**
      * Remove the specified resource from storage.
      */
-    // public function destroy(Doctor $doctor)
-    // {
-    //     // Ottieni l'utente attualmente loggato
-    //     $logged_user = Auth::user();
-    //     $doctor = Doctor::find($doctor->id);
-    //     // Verifica se il dottore è loggato
-    //     if ($doctor->user_id == $logged_user->id) {
-    //         // Elimina anche i messaggi del dottore
-    //         $doctor->messages()->delete();
+    public function destroy($doctor_id)
+    {
 
-    //         // Elimina le recensioni del dottore
-    //         $doctor->reviews()->delete();
+        $doctor = Doctor::withTrashed()->where('id', $doctor_id)->first();
+        if (!isset($doctor)) {
+            abort(404);
+        }
+        $doctor->specializations()->sync([]);
+        $doctor->sponsorships()->sync([]);
 
-    //         // Elimina il dottore
-    //         $doctor->delete();
-
-    //         // Reindirizza alla vista index dei dottori
-    //         return redirect()->route('admin.dashboard.index');
-    //     } else {
-    //         // Se il dottore non è associato all'utente loggato, visualizza una vista di errore
-    //         return view('errors.error');
-    //     }
-    // }
+        if ($doctor->trashed()) {
+            $doctor->forceDelete();
+        } else {
+            $doctor->delete();
+        }
+        return redirect()->route('register');
+    }
 }
