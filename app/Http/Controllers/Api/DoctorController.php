@@ -16,7 +16,7 @@ class DoctorController extends Controller
         $data = $request->all();
 
         //Prepariamo collection di dottori
-        $doctors = Doctor::with('specializations', 'reviews')
+        $doctors = Doctor::with('specializations', 'reviews', 'user')
             ->withCount('reviews');
 
         //Filtriamo il resultato dei dottori con ASC o DESC uttilizando il parametro arrivato da API
