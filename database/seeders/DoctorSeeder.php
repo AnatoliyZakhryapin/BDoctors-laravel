@@ -6,6 +6,7 @@ use App\Models\Doctor;
 use App\Models\Specialization;
 use App\Models\User;
 use App\Models\Sponsorship;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -97,15 +98,30 @@ class DoctorSeeder extends Seeder
             $new_doctor->address = $addresses[$i];
             $new_doctor->phone_number = $phoneNumbers[$i];
             $new_doctor->medical_services = $medicalServices[$i];
-            
+
             // Assegna l'ID di un utente specifico a un nuovo dottore
             $new_doctor->user_id = $userIds[$i];
 
             $new_doctor->save();
+            //seleziona casualmente un ID di sponsorizzazione.
+            $sponsorshipId = $faker->randomElement($sponsorships_id);
+            // trova la sponsorizzazione corrispondente all'ID casuale.
+            $sponsorship = Sponsorship::find($sponsorshipId);
+            // ottiene il prezzo totale della sponsorizzazione selezionata.
+            $totalPrice = $sponsorship->price;
 
-            $new_doctor->sponsorships()->attach($faker->randomElements($sponsorships_id, null));
+            $duration = $sponsorship->duration;
 
-            $new_doctor->specializations()->attach($specializations_id->random(5));;
+            
+            //genera una data casuale
+            $start_date = Carbon::now()->subDays(rand(0,1095))->addSeconds(rand(0, 86400));
+            // $start_date = $faker->dateTimeBetween('-3 years');
+            // $start_date_carbon = \Carbon\Carbon::parse($start_date->format('Y-m-d H:i:s'));
+            $end_date = $start_date->addHours(3)->toDateTimeString();
+            // allega la sponsorizzazione al dottore corrente con l'ID della sponsorizzazione casuale insieme alla data di inizio e al prezzo totale.
+            $new_doctor->sponsorships()->attach($sponsorshipId, ['start_date' => $start_date, 'total' => $totalPrice, 'end_date' => $end_date]);
+
+            $new_doctor->specializations()->attach($specializations_id->random(5));
         }
     }
 }
