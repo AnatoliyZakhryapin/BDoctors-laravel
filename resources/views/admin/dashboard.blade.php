@@ -8,6 +8,11 @@
                 <h1 class="my-2">
                     Dott. {{ $doctor->user->name }} {{ $doctor->user->surname }}
                 </h1>
+
+                    @if ($end_date > $current_date)
+                        <h4>Sponsorizzato fino al {{\Carbon\Carbon::parse($end_date)->format('d/m/Y') }} ore: {{\Carbon\Carbon::parse($end_date)->format('H:i') }} </h4>
+                    @endif
+               
                 <div class="col-lg-4">
                     <div class="row">
                         <div class="col-md-6 col-lg-12">
@@ -16,6 +21,7 @@
                             </figure>
                             <p>{{ $doctor->address }}</p>
                             <p>{{ $doctor->phone_number }}</p>
+                            {{-- <p>Data inizio: {{ $start_date }}</p> --}}
                         </div>
                         <div class="col-md-6 col-lg-12 align-self-md-end">
                             <ul>
@@ -60,7 +66,7 @@
                                         <td>{{ $message->email }}</td>
                                         <td>{{ \Carbon\Carbon::parse($message->created_at)->format('d/m/Y') }}
                                         </td>
-                                        <td>{{ $message->created_at->format('H:i')}}</td>
+                                        <td>{{ $message->created_at->format('H:i') }}</td>
                                         <td><a href="{{ route('admin.messages.show', $message) }}"> <i
                                                     class="fa-solid fa-envelope"></i></a>
                                         </td>
@@ -94,7 +100,7 @@
                                         <td>{{ $review->vote->value }}/5</td>
                                         <td>{{ \Carbon\Carbon::parse($review->created_at)->format('d/m/Y') }}
                                         </td>
-                                        <td>{{ $review->created_at->format('H:i')}}</td>
+                                        <td>{{ $review->created_at->format('H:i') }}</td>
                                         <td><a href="{{ route('admin.reviews.show', $review) }}"> <i
                                                     class="fa-solid fa-star"></i></a>
                                         </td>

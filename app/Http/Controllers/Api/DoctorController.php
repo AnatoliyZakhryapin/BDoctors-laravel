@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\APIStoreDoctorRequest;
 use App\Models\Doctor;
+use Carbon\Carbon;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
@@ -34,7 +35,7 @@ class DoctorController extends Controller
                 $query->where('specialization_id', $specialization_id);
             });
         };
-    
+
         //Colleghiamo tabella doctors con review e raggruppiamo per id dottore 
         $doctors->select('doctors.*', DB::raw('IFNULL(CAST(AVG(reviews.vote_id) AS UNSIGNED), 0) as media_voti'))
             ->leftJoin('reviews', 'doctors.id', '=', 'reviews.doctor_id')
@@ -46,12 +47,19 @@ class DoctorController extends Controller
             $doctors->havingRaw('CAST(IFNULL(AVG(reviews.vote_id), 0) AS UNSIGNED) = ?', [$data['avg_vote']]);
         };
 
+        $current_time = Carbon::now();
+
+        $doctors_sponsorships = Doctor::whereHas('sponsorships', function (Builder $query) use ($current_time) {
+            $query->where('end_date', '>', $current_time);
+        })->with('sponsorships')->get();
         //Creamo la variabile per uttillizzarla nella risposta ad API
         $results = $doctors->get();
 
+
         return response()->json([
             'status' => true,
-            'results' => $results
+            'results' => $results,
+            'doctors_sponsorships' => $doctors_sponsorships
         ]);
     }
 }
