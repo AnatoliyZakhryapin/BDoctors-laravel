@@ -110,15 +110,16 @@ class DoctorSeeder extends Seeder
             // ottiene il prezzo totale della sponsorizzazione selezionata.
             $totalPrice = $sponsorship->price;
 
-            $duration = $sponsorship->duration;
+           
 
             
-            //genera una data casuale
-            $start_date = Carbon::now()->subDays(rand(0,1095))->addSeconds(rand(0, 86400));
-            // $start_date = $faker->dateTimeBetween('-3 years');
-            // $start_date_carbon = \Carbon\Carbon::parse($start_date->format('Y-m-d H:i:s'));
-            $end_date = $start_date->addHours(3)->toDateTimeString();
-            // allega la sponsorizzazione al dottore corrente con l'ID della sponsorizzazione casuale insieme alla data di inizio e al prezzo totale.
+            //genera data inizio abbonamento, data random ultimi 10 gg
+            $start_date = Carbon::now()->subDays(rand(0,10))->addSeconds(rand(0, 86400));
+            // recupero durata da sposorship
+            $duration = $sponsorship->duration;
+            // calcola end_date tramite start_date e durata 
+            $end_date = $start_date->copy()->addHours($duration);
+            // allega la sponsorizzazione al dottore corrente con l'ID della sponsorizzazione casuale insieme alla data di inizio e al prezzo totale e end_date.
             $new_doctor->sponsorships()->attach($sponsorshipId, ['start_date' => $start_date, 'total' => $totalPrice, 'end_date' => $end_date]);
 
             $new_doctor->specializations()->attach($specializations_id->random(5));
