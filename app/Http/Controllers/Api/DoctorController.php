@@ -17,7 +17,7 @@ class DoctorController extends Controller
         $data = $request->all();
 
         //Prepariamo collection di dottori
-        $doctors = Doctor::with('specializations', 'reviews', 'user')
+        $doctors = Doctor::with('specializations', 'reviews', 'user', 'sponsorships')
             ->withCount('reviews');
 
         //Filtriamo il resultato dei dottori con ASC o DESC uttilizando il parametro arrivato da API
@@ -47,19 +47,27 @@ class DoctorController extends Controller
             $doctors->havingRaw('CAST(IFNULL(AVG(reviews.vote_id), 0) AS UNSIGNED) = ?', [$data['avg_vote']]);
         };
 
+        //Recuperiamo il tempo corrente
         $current_time = Carbon::now();
 
+        //Prendiamo solo i dottori che non hanno sponsorships scaduto
         $doctors_sponsorships = Doctor::whereHas('sponsorships', function (Builder $query) use ($current_time) {
             $query->where('end_date', '>', $current_time);
         })->with('sponsorships')->get();
+
+        //Prendiamo i dottori che non hanno sponsorship o quelli che l`hanno scaduto
+        $doctors_not_sponsorships = $doctors->whereDoesntHave('sponsorships')->orWhereHas('sponsorships', function (Builder $query) use ($current_time) {
+            $query->where('end_date', '<', $current_time);
+        })->with('sponsorships');
+
         //Creamo la variabile per uttillizzarla nella risposta ad API
-        $results = $doctors->get();
+        $results = $doctors_not_sponsorships->get();
 
 
         return response()->json([
             'status' => true,
             'results' => $results,
-            'doctors_sponsorships' => $doctors_sponsorships
+            'doctors_sponsorships' => $doctors_sponsorships,
         ]);
     }
 }
