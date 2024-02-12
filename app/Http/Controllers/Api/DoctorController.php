@@ -54,7 +54,7 @@ class DoctorController extends Controller
         //Prendiamo solo i dottori che non hanno sponsorships scaduto
         $doctors_sponsorships = Doctor::whereHas('sponsorships', function (Builder $query) use ($current_time) {
             $query->where('end_date', '>', $current_time);
-        })->with('sponsorships')->get();
+        })->with('specializations', 'reviews', 'user', 'sponsorships')->get();
 
         //Prendiamo i dottori che non hanno sponsorship o quelli che l`hanno scaduto
         $doctors_not_sponsorships = $doctors->whereDoesntHave('sponsorships')->orWhereHas('sponsorships', function (Builder $query) use ($current_time) {
