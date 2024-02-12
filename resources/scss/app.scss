@@ -199,3 +199,10 @@ button.btn-cust-red {
     cursor: pointer;
     font-size: 20px;
 }
+.password-error {
+    display: none;
+}
+
+.password-error.error-visible {
+    display: block;
+}
