@@ -29,5 +29,6 @@ Route::get('/reviews', [ReviewController::class, 'index']);
 Route::post('/reviews', [ReviewController::class, 'store']);
 
 Route::get('/doctors', [DoctorController::class, 'index']);
+Route::get('/doctors/{id}', [DoctorController::class, 'show']);
 
 Route::get('/specializations', [SpecializationController::class, 'index']);
