@@ -8,6 +8,7 @@ use App\Models\Doctor;
 use Carbon\Carbon;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class DoctorController extends Controller
@@ -68,6 +69,16 @@ class DoctorController extends Controller
             'status' => true,
             'results' => $results,
             'doctors_sponsorships' => $doctors_sponsorships,
+        ]);
+    }
+
+    public function show($id) {
+        
+        $doctor = Doctor::with('specializations', 'reviews', 'user', 'sponsorships')->where('id', $id)->get();
+
+        return response()->json([
+            'results' => $doctor ,
+            'success' => true,
         ]);
     }
 }
