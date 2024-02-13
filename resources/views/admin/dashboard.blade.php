@@ -21,6 +21,13 @@
                             </figure>
                             <p>{{ $doctor->address }}</p>
                             <p>{{ $doctor->phone_number }}</p>
+                              <div class="card w-50">
+                                <div class="card-body">
+                                  <h5 class="card-title">Apri il mio Curriculum</h5>
+                                  <a  class="btn btn-primary" href="{{ asset('pdf/cv9.pdf') }}" target="_blank">Vai al pdf</a>
+                                </div>
+                              </div>
+
                             {{-- <p>Data inizio: {{ $start_date }}</p> --}}
                         </div>
                         <div class="col-md-6 col-lg-12 align-self-md-end">
