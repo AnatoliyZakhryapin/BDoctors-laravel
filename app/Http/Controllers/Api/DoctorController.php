@@ -119,7 +119,7 @@ class DoctorController extends Controller
 
     public function show($id) {
         
-        $doctor = Doctor::with('specializations', 'reviews', 'user', 'sponsorships')->where('id', $id)->get();
+        $doctor = Doctor::with('specializations', 'reviews', 'user', 'sponsorships')->where('id', $id)->first();
 
         return response()->json([
             'results' => $doctor ,
