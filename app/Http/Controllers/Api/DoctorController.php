@@ -26,9 +26,10 @@ class DoctorController extends Controller
          * 
          */
 
-        //Prepariamo collection di dottori
-        $doctors = Doctor::with('specializations', 'reviews', 'user', 'sponsorships')
-            ->withCount('reviews');
+        //Prendiamo i dottori che non hanno sponsorship o quelli che l`hanno scaduto
+        $doctors = Doctor::whereDoesntHave('sponsorships')->orWhereHas('sponsorships', function (Builder $query) use ($current_time) {
+            $query->where('end_date', '<', $current_time);
+        })->with('specializations', 'reviews', 'user', 'sponsorships')->withCount('reviews');
 
         //Filtriamo il resultato dei dottori con ASC o DESC uttilizando il parametro arrivato da API
         if (isset($data['order'])) {
@@ -41,7 +42,7 @@ class DoctorController extends Controller
             $specialization_id = $data['specialization_id'];
 
             //Cerchiamo i dottori che hanno una specifica specializzazione 
-            $doctors->whereHAs('specializations', function (Builder $query)  use ($specialization_id) {
+            $doctors->whereHas('specializations', function (Builder $query)  use ($specialization_id) {
                 $query->where('specialization_id', $specialization_id);
             });
         };
@@ -57,28 +58,28 @@ class DoctorController extends Controller
             $doctors->havingRaw('CAST(IFNULL(AVG(reviews.vote_id), 0) AS UNSIGNED) = ?', [$data['avg_vote']]);
         };
 
-         //Prendiamo i dottori che non hanno sponsorship o quelli che l`hanno scaduto
-         $doctors_not_sponsorships = $doctors->whereDoesntHave('sponsorships')->orWhereHas('sponsorships', function (Builder $query) use ($current_time) {
-            $query->where('end_date', '<', $current_time);
-        });
+        //  //Prendiamo i dottori che non hanno sponsorship o quelli che l`hanno scaduto
+        //  $doctors->whereDoesntHave('sponsorships')->orWhereHas('sponsorships', function (Builder $query) use ($current_time) {
+        //     $query->where('end_date', '<', $current_time);
+        // });
 
-         //Creamo la variabile per uttillizzarla nella risposta ad API
-         $results = $doctors_not_sponsorships->get();
+        //Creamo la variabile per uttillizzarla nella risposta ad API
+        $results = $doctors->get();
 
-         /**
+        /**
          * 
          *             DOCTORI CON SPONSORIZAZZIONE
          * 
          */
 
-        // //Prepariamo collection di dottori
-        // $doctors_sponsorships = Doctor::with('specializations', 'reviews', 'user', 'sponsorships')
-        //     ->withCount('reviews');
-
         //Prendiamo solo i dottori che non hanno sponsorships scaduto
         $doctors_sponsorships = Doctor::whereHas('sponsorships', function (Builder $query) use ($current_time) {
             $query->where('end_date', '>', $current_time);
         })->with('specializations', 'reviews', 'user', 'sponsorships')->withCount('reviews');
+
+        // //Prepariamo collection di dottori
+        // $doctors_sponsorships = Doctor::with('specializations', 'reviews', 'user', 'sponsorships')
+        //     ->withCount('reviews');
 
         //Filtriamo il resultato dei dottori con ASC o DESC uttilizando il parametro arrivato da API
         if (isset($data['order'])) {
@@ -95,7 +96,7 @@ class DoctorController extends Controller
                 $query->where('specialization_id', $specialization_id);
             });
         };
-        
+
         //Colleghiamo tabella doctors con review e raggruppiamo per id dottore 
         $doctors_sponsorships->select('doctors.*', DB::raw('IFNULL(CAST(AVG(reviews.vote_id) AS UNSIGNED), 0) as media_voti'))
             ->leftJoin('reviews', 'doctors.id', '=', 'reviews.doctor_id')
@@ -112,17 +113,18 @@ class DoctorController extends Controller
 
         return response()->json([
             'status' => true,
-            'results' => $results,
+            // 'results' => $results,
             'doctors_sponsorships' => $doctors_sponsorships,
         ]);
     }
 
-    public function show($id) {
-        
+    public function show($id)
+    {
+
         $doctor = Doctor::with('specializations', 'reviews', 'user', 'sponsorships')->where('id', $id)->first();
 
         return response()->json([
-            'results' => $doctor ,
+            'results' => $doctor,
             'success' => true,
         ]);
     }
