@@ -113,7 +113,7 @@ class DoctorController extends Controller
 
         return response()->json([
             'status' => true,
-            // 'results' => $results,
+            'results' => $results,
             'doctors_sponsorships' => $doctors_sponsorships,
         ]);
     }
