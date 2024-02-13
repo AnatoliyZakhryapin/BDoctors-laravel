@@ -46,23 +46,21 @@
                                         href="{{ route('admin.dashboard.index') }}">{{ __('Dashboard') }}</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('admin.doctors.edit', $doctor) }}">Edit
-                                        Profile</a>
+                                    <a class="dropdown-item" href="{{ route('admin.doctors.edit', $doctor) }}">Modifica Profilo</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('admin.messages.index') }}">My Messages</a>
+                                    <a class="dropdown-item" href="{{ route('admin.messages.index') }}">I Miei Messaggi</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('admin.reviews.index') }}">My Reviews</a>
+                                    <a class="dropdown-item" href="{{ route('admin.reviews.index') }}">Le Mie Recensioni</a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item"
-                                        href="{{ route('admin.statistics.index') }}">Statistics</a>
+                                        href="{{ route('admin.statistics.index') }}">Le Mie Statistiche</a>
                                 </li>
                             @else
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('admin.doctors.create') }}">Creare
-                                        Profile</a>
+                                    <a class="dropdown-item" href="{{ route('admin.doctors.create') }}">Crea Profilo</a>
                                 </li>
                             @endif
                         @endif
@@ -108,21 +106,20 @@
                                         href="{{ route('admin.dashboard.index') }}">{{ __('Dashboard') }}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.doctors.edit', $doctor) }}">Edit
-                                        Profile</a>
+                                    <a class="nav-link" href="{{ route('admin.doctors.edit', $doctor) }}">Modifica Profilo</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.messages.index') }}">My Messages</a>
+                                    <a class="nav-link" href="{{ route('admin.messages.index') }}">Messaggi</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.reviews.index') }}">My Reviews</a>
+                                    <a class="nav-link" href="{{ route('admin.reviews.index') }}">Recensioni</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.statistics.index') }}">Statistics</a>
+                                    <a class="nav-link" href="{{ route('admin.statistics.index') }}">Statistiche</a>
                                 </li>
                             @else
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.doctors.create') }}">Creare Profile</a>
+                                    <a class="nav-link" href="{{ route('admin.doctors.create') }}">Crea Il Tuo Profilo</a>
                                 </li>
                             @endif
                         @endif
