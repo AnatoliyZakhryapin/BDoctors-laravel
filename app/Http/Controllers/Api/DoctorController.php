@@ -110,7 +110,7 @@ class DoctorController extends Controller
 
         //Se non arriva da API un valore allore ti restitusce tutti dottori
         if (isset($data['avg_vote'])) {
-            $doctors_sponsorships->havingRaw('CAST(IFNULL(AVG(reviews.vote_id), 0) AS UNSIGNED) = ?', [$data['avg_vote']]);
+            $doctors_sponsorships->havingRaw('CAST(IFNULL(AVG(reviews.vote_id), 0) AS UNSIGNED) >= ?', [$data['avg_vote']]);
         }
         ;
 
