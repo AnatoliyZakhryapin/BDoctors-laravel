@@ -11,7 +11,12 @@
 
                     @if ($end_date > $current_date)
                         <div class="d-flex align-items-center gap-3 py-3">
-                            <span><a class="btn btn-cust" href="{{ route('admin.sponsorship.index') }}">Abbonamenti</a></span> <h4>Sponsorizzato fino al {{\Carbon\Carbon::parse($end_date)->format('d/m/Y') }} ore: {{\Carbon\Carbon::parse($end_date)->format('H:i') }} </h4>
+                            <span><a class="btn btn-cust" href="{{ route('admin.sponsorship.index') }}">Gestisci abbonamento</a></span> <h4>Sponsorizzato fino al {{\Carbon\Carbon::parse($end_date)->format('d/m/Y') }} ore: {{\Carbon\Carbon::parse($end_date)->format('H:i') }} </h4>
+                        </div>
+
+                    @else
+                        <div class="d-flex align-items-center gap-3 py-3">
+                            <span><a class="btn btn-cust" href="{{ route('admin.sponsorship.index') }}">Scegli abbonamento</a></span> <h4> Non sei ancora abbonato </h4>
                         </div>
                        
                     @endif
@@ -27,7 +32,7 @@
                               <div class="card w-50">
                                 <div class="card-body">
                                   <h5 class="card-title">Apri il mio Curriculum</h5>
-                                  <a  class="btn btn-primary" href="{{ asset('pdf/cv9.pdf') }}" target="_blank">Vai al pdf</a>
+                                  <a  class="btn btn-cust" href="{{ asset('pdf/cv9.pdf') }}" target="_blank">Vai al pdf</a>
                                 </div>
                               </div>
 
