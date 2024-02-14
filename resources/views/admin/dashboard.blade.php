@@ -10,7 +10,7 @@
                 </h1>
 
                     @if ($end_date > $current_date)
-                        <h4>Sponsorizzato fino al {{\Carbon\Carbon::parse($end_date)->format('d/m/Y') }} ore: {{\Carbon\Carbon::parse($end_date)->format('H:i') }} </h4>
+                       <span><a class="btn btn-primary" href="{{ route('admin.sponsorship.index') }}">attiva sposnsor</a></span> <h4>Sponsorizzato fino al {{\Carbon\Carbon::parse($end_date)->format('d/m/Y') }} ore: {{\Carbon\Carbon::parse($end_date)->format('H:i') }} </h4>
                     @endif
                
                 <div class="col-lg-4">

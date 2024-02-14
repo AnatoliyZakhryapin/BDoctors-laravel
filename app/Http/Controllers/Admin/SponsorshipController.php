@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Sponsorship;
+use App\Models\Doctor;
 use App\Http\Requests\StoreSponsorshipRequest;
 use App\Http\Requests\UpdateSponsorshipRequest;
+use Illuminate\Support\Facades\Auth;
 
 class SponsorshipController extends Controller
 {
@@ -13,7 +16,21 @@ class SponsorshipController extends Controller
      */
     public function index()
     {
-        //
+        $logged_user = Auth::user();
+
+        // Se utente logato ha il profilo 
+        if ($logged_user->doctor) {
+            // restituisce il dottore collegato allo user loggato 
+            // resituisce array di lunghezza 1 (relazione one to one)
+            $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
+            $doctor = $doctors[0];
+            return view('admin.sponsorship', compact('doctor'));
+        }
+        // Altrimenti ti riporta sul Dashboard
+        else {
+            return redirect()->route('admin.dashboard.index');
+        }
+        
     }
 
     /**

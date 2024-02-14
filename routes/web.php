@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\StatisticController;
+use App\Http\Controllers\Admin\SponsorshipController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Doctor;
 use Illuminate\Support\Facades\Auth;
@@ -59,6 +60,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('reviews', ReviewController::class);
     Route::resource('dashboard', DashboardController::class);
     Route::resource('statistics', StatisticController::class);
+    Route::resource('sponsorship', SponsorshipController::class);
 });
 
 require __DIR__ . '/auth.php';
