@@ -8,7 +8,10 @@ use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\StatisticController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Doctor;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Braintree\Gateway;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +23,62 @@ use Illuminate\Support\Facades\Auth;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/welcome', function () {
+    $gateway = new Braintree\Gateway([
+        'environment' => config('services.braintree.environment'),
+        'merchantId' => config('services.braintree.merchantId'),
+        'publicKey' => config('services.braintree.publicKey'),
+        'privateKey' => config('services.braintree.privateKey')
+    ]);
+
+    $token = $gateway->ClientToken()->generate();
+
+    return view('welcome', [
+        'token' => $token
+    ]);
+});
+
+Route::post('/checkout', function (Request $request) {
+    $gateway = new Braintree\Gateway([
+        'environment' => config('services.braintree.environment'),
+        'merchantId' => config('services.braintree.merchantId'),
+        'publicKey' => config('services.braintree.publicKey'),
+        'privateKey' => config('services.braintree.privateKey')
+    ]);
+
+    $amount = $request->amount;
+    $nonce = $request->payment_method_nonce;
+
+
+    $result = $gateway->transaction()->sale([
+        'amount' => $amount,
+        'paymentMethodNonce' => $nonce,
+        'options' => [
+            'submitForSettlement' => true
+        ]
+    ]);
+
+    if ($result->success) {
+        $transaction = $result->transaction;
+        // header("Location: " . $baseUrl . "transaction.php?id=" . $transaction->id);
+        return back()->with('success_message', 'Transaction successful. The ID is:'. $transaction->id);
+    } else {
+        $errorString = "";
+
+        foreach ($result->errors->deepAll() as $error) {
+            $errorString .= 'Error: ' . $error->code . ": " . $error->message . "\n";
+        }
+
+        // $_SESSION["errors"] = $errorString;
+        // header("Location: " . $baseUrl . "index.php");
+        return back()->withErrors('An error occurred with the message: '.$result->message);
+    }
+});
+
+Route::get('/transaction', function(){
+    return view('transaction');
+});
 
 Route::get('/', function () {
 
