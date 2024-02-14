@@ -42,6 +42,10 @@
     background-color: #274b16;
 }
 
+.bg-dark-yellow{
+    background-color: #daa520;
+}
+
 //BUTTON
 .btn-cust {
     color: white;
@@ -54,6 +58,21 @@
 
     &:hover {
         background-color: #43762b;
+    }
+
+}
+
+.btn-cust-yellow {
+    color: white;
+    font-size: 18px;
+    text-align: 40px;
+    padding: 0px 15px;
+    font-weight: bold;
+    background-color: #f1b620;
+    border-radius: 99px;
+
+    &:hover {
+        background-color: #d1a331;
     }
 
 }
@@ -74,7 +93,8 @@
 }
 
 a.btn-cust,
-a.btn-cust-red {
+a.btn-cust-red,
+a.btn-cust-yellow {
     text-decoration: none;
 
     &:hover {
@@ -266,3 +286,8 @@ button.btn-cust-red {
     text-align: center;
     font-weight: bold;
 }
+
+.crown{
+    color: #e3af2b;
+}
+
