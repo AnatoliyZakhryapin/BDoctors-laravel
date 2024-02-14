@@ -58,6 +58,12 @@
                                     <a class="dropdown-item"
                                         href="{{ route('admin.statistics.index') }}">Le Mie Statistiche</a>
                                 </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('admin.sponsorship.index') }}">
+                                        
+                                        Abbonamenti
+                                    </a>
+                                </li>
                             @else
                                 <li>
                                     <a class="dropdown-item" href="{{ route('admin.doctors.create') }}">Crea Profilo</a>
@@ -116,6 +122,9 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('admin.statistics.index') }}">Statistiche</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.sponsorship.index') }}">Abbonamenti</a>
                                 </li>
                             @else
                                 <li class="nav-item">
