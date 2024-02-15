@@ -61,7 +61,7 @@ class TransactionController extends Controller
                 }
             }
 
-            return view('admin.transaction', compact('header', 'icon', 'message', 'transaction', 'doctor'));
+            return view('admin.transaction', compact('header', 'icon', 'message', 'transaction', 'transactionSuccessStatuses', 'doctor'));
         }
         // Altrimenti ti riporta sul Dashboard
         else {

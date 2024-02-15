@@ -20,13 +20,25 @@
 
             </div>
             <div class="col-12 col-lg-6">
-                <div class="green-card p-3">
-                    <h3>Dati di pagamento</h3>
-                    <p><strong>Carta</strong>:
-                        {{ $transaction->creditCardDetails->bin . '** **** ' . $transaction->creditCardDetails->last4 }}</p>
-                    <p><strong>Scadenza</strong>: {{ $transaction->creditCardDetails->expirationDate }}</p>
-                    <p><strong>Nome intestatario</strong>: {{ $doctor->user->name . ' ' . $doctor->user->surname }}</p>
-                </div>
+                @if (in_array($transaction->status, $transactionSuccessStatuses))
+                    <div class="green-card p-3">
+                        <h3>Dati di pagamento</h3>
+                        <p><strong>Carta</strong>:
+                            {{ $transaction->creditCardDetails->bin . '** **** ' . $transaction->creditCardDetails->last4 }}
+                        </p>
+                        <p><strong>Scadenza</strong>: {{ $transaction->creditCardDetails->expirationDate }}</p>
+                        <p><strong>Nome intestatario</strong>: {{ $doctor->user->name . ' ' . $doctor->user->surname }}</p>
+                    </div>
+                @else
+                    <div class="red-card p-3">
+                        <h3>Dati di pagamento</h3>
+                        <p><strong>Carta</strong>:
+                            {{ $transaction->creditCardDetails->bin . '** **** ' . $transaction->creditCardDetails->last4 }}
+                        </p>
+                        <p><strong>Scadenza</strong>: {{ $transaction->creditCardDetails->expirationDate }}</p>
+                        <p><strong>Nome intestatario</strong>: {{ $doctor->user->name . ' ' . $doctor->user->surname }}</p>
+                    </div>
+                @endif
             </div>
         </div>
 
