@@ -24,14 +24,19 @@
                             <div class="d-flex justify-content-center fs-4">
                                 <p><strong>{{ $sponsorship->price }}&euro;</strong></p>
                             </div>
+                            
                             <div class="d-flex justify-content-center h-100 ">
-                                <a class="btn btn-cust" href="{{ route('admin.payments.index') }}">Abbonati ora <i
-                                        class="fa-solid fa-crown"></i></a>
+                                <a class="btn btn-cust" href="{{ route('admin.payments.index', ['sponsorship_id' => $sponsorship->id]) }}">
+                                    Abbonati ora 
+                                    <i class="fa-solid fa-crown"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             @endforeach
+
+           
         </div>
     </div>
     <div class="d-flex justify-content-center pt-5">

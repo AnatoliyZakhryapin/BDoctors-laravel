@@ -30,14 +30,18 @@
             @endif
 
             <h3>Form</h3>
-
-            <form method="POST" id="payment-form" action="">
+         
+            <form method="POST" id="payment-form" action="{{ route('admin.payments.store', ['doctor_id' => $doctor->id,'sponsorship' => $sponsorship]) }}">
                 @csrf
                 <section>
                     <label for="amount">
                         <span class="input-label">Amount</span>
                         <div class="input-wrapper amount-wrapper">
-                            <input id="amount" name="amount" type="tel" min="1" placeholder="Amount" value="10">
+                            <input id="amount" hidden name="amount" type="tel" min="1" placeholder="Amount" value="10">
+                            Prezzo abbonamento: {{ $price }}
+                        </div>
+                        <div>
+                            {{$sponsorship }}
                         </div>
                     </label>
 
@@ -59,6 +63,7 @@
 <script>
     var form = document.querySelector('#payment-form');
     var client_token = "{{ $token }}";
+    var sponsorshipPrice = {{ $price }};
 
     braintree.dropin.create({
         authorization: client_token
@@ -79,6 +84,8 @@
                     console.log('Request Payment Method Error', err);
                     return;
                 }
+
+                document.querySelector('#amount').value = sponsorshipPrice;
 
                 // Add the nonce to the form and submit
                 document.querySelector('#nonce').value = payload.nonce;
