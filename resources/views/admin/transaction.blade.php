@@ -1,158 +1,34 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="container pt-5">
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <div class="d-flex  flex-column align-items-center">
+                    <div class="icon">
+                        <img src="{{ Vite::asset('resources/img/' . $icon . '.svg') }}" alt="">
+                    </div>
+                    <div class="d-flex flex-column">
+                        <h1>{{ $header }}</h1>
+                        <p>{{ $message }}</p>
+                    </div>
+                    <div>
+                        <a class="btn btn-cust" href="{{ route('admin.dashboard.index') }}">Torna alla Dashboard</a>
+                    </div>
+                </div>
 
-<div class="wrapper">
-    <div class="response container">
-        <div class="content">
-            <div class="icon">
-                {{-- <img src="/images/<?php echo($icon)?>.svg" alt=""> --}}
+
             </div>
-
-            <h1>{{ $header }}</h1>
-            <section>
-                <p>{{ $message }}</p>
-            </section>
-            <section>
-                <a class="button primary back" href="/index.php">
-                    <span>Test Another Transaction</span>
-                </a>
-            </section>
+            <div class="col-12 col-lg-6">
+                <div class="green-card p-3">
+                    <h3>Dati di pagamento</h3>
+                    <p><strong>Carta</strong>:
+                        {{ $transaction->creditCardDetails->bin . '** **** ' . $transaction->creditCardDetails->last4 }}</p>
+                    <p><strong>Scadenza</strong>: {{ $transaction->creditCardDetails->expirationDate }}</p>
+                    <p><strong>Nome intestatario</strong>: {{ $doctor->user->name . ' ' . $doctor->user->surname }}</p>
+                </div>
+            </div>
         </div>
+
     </div>
-</div>
-
-
-<aside class="drawer dark">
-    <header>
-        <div class="content compact">
-            <a href="https://developers.braintreepayments.com" class="braintree" target="_blank">Braintree</a>
-            <h3>API Response</h3>
-        </div>
-    </header>
-
-    <article class="content compact">
-        <section>
-            <h5>Transaction</h5>
-            <table cellpadding="0" cellspacing="0">
-                <tbody>
-                    <tr>
-                        <td>id</td>
-                        <td>{{ $transaction->id }}</td>
-                    </tr>
-                    <tr>
-                        <td>type</td>
-                        <td>{{ $transaction->type }}</td>
-                    </tr>
-                    <tr>
-                        <td>amount</td>
-                        <td>{{ $transaction->amount }}</td>
-                    </tr>
-                    <tr>
-                        <td>status</td>
-                        <td>{{ $transaction->status }}</td>
-                    </tr>
-                    <tr>
-                        <td>created_at</td>
-                        <td>{{ $transaction->createdAt->format('Y-m-d H:i:s') }}</td>
-                    </tr>
-                    <tr>
-                        <td>updated_at</td>
-                        <td>{{ $transaction->updatedAt->format('Y-m-d H:i:s') }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <section>
-            <h5>Payment</h5>
-
-            <table cellpadding="0" cellspacing="0">
-                <tbody>
-                    <tr>
-                        <td>token</td>
-                        <td>{{ $transaction->creditCardDetails->token }}</td>
-                    </tr>
-                    <tr>
-                        <td>bin</td>
-                        <td>{{ $transaction->creditCardDetails->bin }}</td>
-                    </tr>
-                    <tr>
-                        <td>last_4</td>
-                        <td>{{ $transaction->creditCardDetails->last4 }}</td>
-                    </tr>
-                    <tr>
-                        <td>card_type</td>
-                        <td>{{ $transaction->creditCardDetails->cardType }}</td>
-                    </tr>
-                    <tr>
-                        <td>expiration_date</td>
-                        <td>{{ $transaction->creditCardDetails->expirationDate }}</td>
-                    </tr>
-                    <tr>
-                        <td>cardholder_name</td>
-                        <td>{{ $transaction->creditCardDetails->cardholderName }}</td>
-                    </tr>
-                    <tr>
-                        <td>customer_location</td>
-                        <td>{{ $transaction->creditCardDetails->customerLocation }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <?php if (!is_null($transaction->customerDetails->id)) : ?>
-        <section>
-            <h5>Customer Details</h5>
-            <table cellpadding="0" cellspacing="0">
-                <tbody>
-                    <tr>
-                        <td>id</td>
-                        <td>{{ $transaction->customerDetails->id }}</td>
-                    </tr>
-                    <tr>
-                        <td>first_name</td>
-                        <td>{{ $transaction->customerDetails->firstName }}</td>
-                    </tr>
-                    <tr>
-                        <td>last_name</td>
-                        <td>{{ $transaction->customerDetails->lastName }}</td>
-                    </tr>
-                    <tr>
-                        <td>email</td>
-                        <td>{{ $transaction->customerDetails->email }}</td>
-                    </tr>
-                    <tr>
-                        <td>company</td>
-                        <td>{{ $transaction->customerDetails->company }}</td>
-                    </tr>
-                    <tr>
-                        <td>website</td>
-                        <td>{{ $transaction->customerDetails->website }}</td>
-                    </tr>
-                    <tr>
-                        <td>phone</td>
-                        <td>{{ $transaction->customerDetails->phone }}</td>
-                    </tr>
-                    <tr>
-                        <td>fax</td>
-                        <td>{{ $transaction->customerDetails->fax }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>i
-        <?php endif; ?>
-
-        <section>
-            <p class="center small">Integrate with the Braintree SDK for a secure and seamless checkout</p>
-        </section>
-
-        <section>
-            <a class="button secondary full" href="https://developers.braintreepayments.com/guides/drop-in" target="_blank">
-                <span>See the Docs</span>
-            </a>
-        </section>
-    </article>
-</aside>
-
 @endsection
