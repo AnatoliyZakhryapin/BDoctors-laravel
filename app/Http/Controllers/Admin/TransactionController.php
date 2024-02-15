@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Braintree;
 use Illuminate\Http\Request;
+use App\Models\Doctor;
+use Illuminate\Support\Facades\Auth;
 use Braintree\Gateway;
+
 class TransactionController extends Controller
 {
     /**
@@ -13,44 +16,57 @@ class TransactionController extends Controller
      */
     public function index(Request $request)
     {
-        $id = $request->input('id');
+        $logged_user = Auth::user();
 
-        $transaction = $request;
+        if ($logged_user->doctor) {
+            // restituisce il dottore collegato allo user loggato 
+            // resituisce array di lunghezza 1 (relazione one to one)
+            $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
+            $doctor = $doctors[0];
 
-        if (isset($id)) {
+            $id = $request->input('id');
 
-            $gateway = new Braintree\Gateway([
-                'environment' => config('services.braintree.environment'),
-                'merchantId' => config('services.braintree.merchantId'),
-                'publicKey' => config('services.braintree.publicKey'),
-                'privateKey' => config('services.braintree.privateKey')
-            ]);
+            $transaction = $request;
 
-            $transaction = $gateway->transaction()->find($id);
-    
-            $transactionSuccessStatuses = [
-                Braintree\Transaction::AUTHORIZED,
-                Braintree\Transaction::AUTHORIZING,
-                Braintree\Transaction::SETTLED,
-                Braintree\Transaction::SETTLING,
-                Braintree\Transaction::SETTLEMENT_CONFIRMED,
-                Braintree\Transaction::SETTLEMENT_PENDING,
-                Braintree\Transaction::SUBMITTED_FOR_SETTLEMENT
-            ];
+            if (isset($id)) {
 
-            if (in_array($transaction->status, $transactionSuccessStatuses)) {
-                $header = "Sweet Success!";
-                $icon = "success";
-                $message = "Your test transaction has been successfully processed. See the Braintree API response and try again.";
-                
-            } else {
-                $header = "Transaction Failed";
-                $icon = "fail";
-                $message = "Your test transaction has a status of " . $transaction->status . ". See the Braintree API response and try again.";
+                $gateway = new Braintree\Gateway([
+                    'environment' => config('services.braintree.environment'),
+                    'merchantId' => config('services.braintree.merchantId'),
+                    'publicKey' => config('services.braintree.publicKey'),
+                    'privateKey' => config('services.braintree.privateKey')
+                ]);
+
+                $transaction = $gateway->transaction()->find($id);
+
+                $transactionSuccessStatuses = [
+                    Braintree\Transaction::AUTHORIZED,
+                    Braintree\Transaction::AUTHORIZING,
+                    Braintree\Transaction::SETTLED,
+                    Braintree\Transaction::SETTLING,
+                    Braintree\Transaction::SETTLEMENT_CONFIRMED,
+                    Braintree\Transaction::SETTLEMENT_PENDING,
+                    Braintree\Transaction::SUBMITTED_FOR_SETTLEMENT
+                ];
+
+                if (in_array($transaction->status, $transactionSuccessStatuses)) {
+                    $header = "Transazione approvata!";
+                    $icon = "success";
+                    $message = "La tua transazione di prova è stata elaborata con successo.";
+
+                } else {
+                    $header = "Transazione fallitta";
+                    $icon = "fail";
+                    $message = "La tua transazione di prova ha uno stato di " . $transaction->status . ". Riprova più tardi.";
+                }
             }
+
+            return view('admin.transaction', compact('header', 'icon', 'message', 'transaction', 'transactionSuccessStatuses', 'doctor'));
         }
-       
-        return view('admin.transaction', compact('header', 'icon', 'message', 'transaction'));
+        // Altrimenti ti riporta sul Dashboard
+        else {
+            return redirect()->route('admin.dashboard.index');
+        }
     }
 
     /**
