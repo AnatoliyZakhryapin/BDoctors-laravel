@@ -80,8 +80,12 @@ class PaymentController extends Controller
             $transaction = $result->transaction;
             // header("Location: " . $baseUrl . "transaction.php?id=" . $transaction->id);
             // return back()->with('success_message', 'Transaction successful. The ID is:'. $transaction->id);
-            // dd($transaction);
-            return redirect()->route('admin.transaction.index', $transaction);
+           
+            // $transactionArray = $transaction->toArray();
+
+            // dd($transactionArray);
+           
+            return redirect()->route('admin.transaction.index', ['id' => $transaction->id]);
         } else {
             $errorString = "";
 
