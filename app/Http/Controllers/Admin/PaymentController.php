@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Braintree;
 use Illuminate\Http\Request;
+use App\Models\Doctor;
+use Illuminate\Support\Facades\Auth;
 use Braintree\Gateway;
 
 class PaymentController extends Controller
@@ -14,18 +16,32 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $gateway = new Braintree\Gateway([
-            'environment' => config('services.braintree.environment'),
-            'merchantId' => config('services.braintree.merchantId'),
-            'publicKey' => config('services.braintree.publicKey'),
-            'privateKey' => config('services.braintree.privateKey')
-        ]);
-    
-        $token = $gateway->ClientToken()->generate();
-    
-        return view('admin.payments', [
-            'token' => $token
-        ]);
+        $logged_user = Auth::user();
+
+        // Se utente logato ha il profilo 
+        if ($logged_user->doctor) {
+            // restituisce il dottore collegato allo user loggato 
+            // resituisce array di lunghezza 1 (relazione one to one)
+            $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
+            $doctor = $doctors[0];
+
+
+
+            $gateway = new Braintree\Gateway([
+                'environment' => config('services.braintree.environment'),
+                'merchantId' => config('services.braintree.merchantId'),
+                'publicKey' => config('services.braintree.publicKey'),
+                'privateKey' => config('services.braintree.privateKey')
+            ]);
+
+            $token = $gateway->ClientToken()->generate();
+
+            return view('admin.payments', compact('token', 'doctor'));
+        }
+        // Altrimenti ti riporta sul Dashboard
+        else {
+            return redirect()->route('admin.dashboard.index');
+        }
     }
 
     /**
@@ -47,11 +63,11 @@ class PaymentController extends Controller
             'publicKey' => config('services.braintree.publicKey'),
             'privateKey' => config('services.braintree.privateKey')
         ]);
-    
+
         $amount = $request->amount;
         $nonce = $request->payment_method_nonce;
-    
-    
+
+
         $result = $gateway->transaction()->sale([
             'amount' => $amount,
             'paymentMethodNonce' => $nonce,
@@ -59,7 +75,7 @@ class PaymentController extends Controller
                 'submitForSettlement' => true
             ]
         ]);
-    
+
         if ($result->success) {
             $transaction = $result->transaction;
             // header("Location: " . $baseUrl . "transaction.php?id=" . $transaction->id);
@@ -68,14 +84,14 @@ class PaymentController extends Controller
             return redirect()->route('admin.transaction.index', $transaction);
         } else {
             $errorString = "";
-    
+
             foreach ($result->errors->deepAll() as $error) {
                 $errorString .= 'Error: ' . $error->code . ": " . $error->message . "\n";
             }
-    
+
             // $_SESSION["errors"] = $errorString;
             // header("Location: " . $baseUrl . "index.php");
-            return back()->withErrors('An error occurred with the message: '.$result->message);
+            return back()->withErrors('An error occurred with the message: ' . $result->message);
         }
     }
 
