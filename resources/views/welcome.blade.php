@@ -2,15 +2,15 @@
 
 @section('content')
 
-<div class="container">
+{{-- <div class="container">
     <div class="row justify-content-center pt-5">
         <div class="col-auto">
-            {{-- @if($logged_user)
+            @if($logged_user)
                     <h1>Benvenuto {{ $logged_user->name}} {{ $logged_user->surname}} </h1>
             @else
             <h1>Benvenuto a BDoctors</h1>
             <h3>Registra il tuo nuovo account o fai Login</h3>
-            @endif --}}
+            @endif
             <h1> Prova pagamento</h1>
 
             @if (session('success_message'))
@@ -51,11 +51,11 @@
             </form>
         </div>
     </div>
-</div>
+</div> --}}
 
 
 {{-- JS CODE --}}
-<script src="https://js.braintreegateway.com/web/dropin/1.13.0/js/dropin.min.js"></script>
+{{-- <script src="https://js.braintreegateway.com/web/dropin/1.13.0/js/dropin.min.js"></script>
 <script>
     var form = document.querySelector('#payment-form');
     var client_token = "{{ $token }}";
@@ -87,5 +87,6 @@
         });
     });
 
-</script>
+</script> --}}
+
 @endsection
