@@ -24,13 +24,16 @@ class SponsorshipController extends Controller
             // resituisce array di lunghezza 1 (relazione one to one)
             $doctors = Doctor::where('user_id', '=', $logged_user->id)->get();
             $doctor = $doctors[0];
-            return view('admin.sponsorship', compact('doctor'));
+
+            $sponsorships = Sponsorship::all();
+
+            return view('admin.sponsorship', compact('doctor', 'sponsorships'));
         }
         // Altrimenti ti riporta sul Dashboard
         else {
             return redirect()->route('admin.dashboard.index');
         }
-        
+
     }
 
     /**
