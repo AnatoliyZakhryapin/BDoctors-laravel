@@ -127,7 +127,15 @@ class DoctorController extends Controller
     public function show($id)
     {
 
-        $doctor = Doctor::with('specializations', 'reviews', 'user', 'sponsorships')->where('id', $id)->first();
+        // $doctor = Doctor::with('specializations', 'reviews', 'user', 'sponsorships')->where('id', $id)->first();
+        $today = Carbon::today();
+        
+        $doctor = Doctor::with('specializations', 'reviews', 'user', 'sponsorships:end_date,duration')
+        ->where('id', $id)
+        ->whereHas('sponsorships', function (Builder $query) use ($today) {
+           $query->where('end_date', '>=', $today); 
+        })
+        ->first();
 
         return response()->json([
             'results' => $doctor,
