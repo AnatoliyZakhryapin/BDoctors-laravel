@@ -4,14 +4,16 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\Admin\SponsorshipController;
+use App\Http\Controllers\Admin\TransactionController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Doctor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Braintree\Gateway;
+
 
 
 /*
@@ -24,59 +26,59 @@ use Braintree\Gateway;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/welcome', function () {
-    $gateway = new Braintree\Gateway([
-        'environment' => config('services.braintree.environment'),
-        'merchantId' => config('services.braintree.merchantId'),
-        'publicKey' => config('services.braintree.publicKey'),
-        'privateKey' => config('services.braintree.privateKey')
-    ]);
-
-    $token = $gateway->ClientToken()->generate();
-
-    return view('welcome', [
-        'token' => $token
-    ]);
-});
-
-Route::post('/checkout', function (Request $request) {
-    $gateway = new Braintree\Gateway([
-        'environment' => config('services.braintree.environment'),
-        'merchantId' => config('services.braintree.merchantId'),
-        'publicKey' => config('services.braintree.publicKey'),
-        'privateKey' => config('services.braintree.privateKey')
-    ]);
-
-    $amount = $request->amount;
-    $nonce = $request->payment_method_nonce;
+    // Route::get('/payments', function () {
+    //     $gateway = new Braintree\Gateway([
+    //         'environment' => config('services.braintree.environment'),
+    //         'merchantId' => config('services.braintree.merchantId'),
+    //         'publicKey' => config('services.braintree.publicKey'),
+    //         'privateKey' => config('services.braintree.privateKey')
+    //     ]);
+    
+    //     $token = $gateway->ClientToken()->generate();
+    
+    //     return view('admin.payments', [
+    //         'token' => $token
+    //     ]);
+    // });
 
 
-    $result = $gateway->transaction()->sale([
-        'amount' => $amount,
-        'paymentMethodNonce' => $nonce,
-        'options' => [
-            'submitForSettlement' => true
-        ]
-    ]);
 
-    if ($result->success) {
-        $transaction = $result->transaction;
-        // header("Location: " . $baseUrl . "transaction.php?id=" . $transaction->id);
-        return back()->with('success_message', 'Transaction successful. The ID is:'. $transaction->id);
-    } else {
-        $errorString = "";
-
-        foreach ($result->errors->deepAll() as $error) {
-            $errorString .= 'Error: ' . $error->code . ": " . $error->message . "\n";
-        }
-
-        // $_SESSION["errors"] = $errorString;
-        // header("Location: " . $baseUrl . "index.php");
-        return back()->withErrors('An error occurred with the message: '.$result->message);
-    }
-});
-
+    // Route::post('/checkout', function (Request $request) {
+    //     $gateway = new Braintree\Gateway([
+    //         'environment' => config('services.braintree.environment'),
+    //         'merchantId' => config('services.braintree.merchantId'),
+    //         'publicKey' => config('services.braintree.publicKey'),
+    //         'privateKey' => config('services.braintree.privateKey')
+    //     ]);
+    
+    //     $amount = $request->amount;
+    //     $nonce = $request->payment_method_nonce;
+    
+    
+    //     $result = $gateway->transaction()->sale([
+    //         'amount' => $amount,
+    //         'paymentMethodNonce' => $nonce,
+    //         'options' => [
+    //             'submitForSettlement' => true
+    //         ]
+    //     ]);
+    
+    //     if ($result->success) {
+    //         $transaction = $result->transaction;
+    //         // header("Location: " . $baseUrl . "transaction.php?id=" . $transaction->id);
+    //         return back()->with('success_message', 'Transaction successful. The ID is:'. $transaction->id);
+    //     } else {
+    //         $errorString = "";
+    
+    //         foreach ($result->errors->deepAll() as $error) {
+    //             $errorString .= 'Error: ' . $error->code . ": " . $error->message . "\n";
+    //         }
+    
+    //         // $_SESSION["errors"] = $errorString;
+    //         // header("Location: " . $baseUrl . "index.php");
+    //         return back()->withErrors('An error occurred with the message: '.$result->message);
+    //     }
+    // });
 Route::get('/transaction', function(){
     return view('transaction');
 });
@@ -120,6 +122,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('dashboard', DashboardController::class);
     Route::resource('statistics', StatisticController::class);
     Route::resource('sponsorship', SponsorshipController::class);
+    Route::resource('payments', PaymentController::class);
+    Route::resource('transaction', TransactionController::class);
 });
 
 require __DIR__ . '/auth.php';
