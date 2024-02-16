@@ -40,9 +40,9 @@
                             <input id="amount" hidden name="amount" type="tel" min="1" placeholder="Amount" value="10">
                             Prezzo abbonamento: {{ $price }}
                         </div>
-                        <div>
+                        {{-- <div>
                             {{$sponsorship }}
-                        </div>
+                        </div> --}}
                     </label>
 
                     <div class="bt-drop-in-wrapper">
