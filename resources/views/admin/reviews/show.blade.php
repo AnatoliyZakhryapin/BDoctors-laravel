@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center my-5">
-            <div class="col-4">
+            <div class="col-md-6">
                 <div class="green-card">
                     <div class="card-body">
                         <p><strong>Nome:</strong> {{ $review->name }}</p>
