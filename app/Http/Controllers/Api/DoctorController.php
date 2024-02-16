@@ -34,8 +34,7 @@ class DoctorController extends Controller
         //Filtriamo il resultato dei dottori con ASC o DESC uttilizando il parametro arrivato da API
         if (isset($data['order'])) {
             $doctors->orderBy('reviews_count', $data['order']);
-        }
-        ;
+        };
 
         //Filtriamo il resultato dei dottori in base a specializzazione scelta
         if (isset($data['specialization_id'])) {
@@ -46,8 +45,7 @@ class DoctorController extends Controller
             $doctors->whereHas('specializations', function (Builder $query) use ($specialization_id) {
                 $query->where('specialization_id', $specialization_id);
             });
-        }
-        ;
+        };
 
         //Colleghiamo tabella doctors con review e raggruppiamo per id dottore 
         $doctors->select('doctors.*', DB::raw('IFNULL(CAST(AVG(reviews.vote_id) AS UNSIGNED), 0) as media_voti'))
@@ -58,8 +56,7 @@ class DoctorController extends Controller
         //Se non arriva da API un valore allore ti restitusce tutti dottori
         if (isset($data['avg_vote'])) {
             $doctors->havingRaw('CAST(IFNULL(AVG(reviews.vote_id), 0) AS UNSIGNED) >= ?', [$data['avg_vote']]);
-        }
-        ;
+        };
 
         //  //Prendiamo i dottori che non hanno sponsorship o quelli che l`hanno scaduto
         //  $doctors->whereDoesntHave('sponsorships')->orWhereHas('sponsorships', function (Builder $query) use ($current_time) {
@@ -87,8 +84,7 @@ class DoctorController extends Controller
         //Filtriamo il resultato dei dottori con ASC o DESC uttilizando il parametro arrivato da API
         if (isset($data['order'])) {
             $doctors_sponsorships->orderBy('reviews_count', $data['order']);
-        }
-        ;
+        };
 
         //Filtriamo il resultato dei dottori in base a specializzazione scelta
         if (isset($data['specialization_id'])) {
@@ -99,8 +95,7 @@ class DoctorController extends Controller
             $doctors_sponsorships->whereHAs('specializations', function (Builder $query) use ($specialization_id) {
                 $query->where('specialization_id', $specialization_id);
             });
-        }
-        ;
+        };
 
         //Colleghiamo tabella doctors con review e raggruppiamo per id dottore 
         $doctors_sponsorships->select('doctors.*', DB::raw('IFNULL(CAST(AVG(reviews.vote_id) AS UNSIGNED), 0) as media_voti'))
@@ -111,11 +106,18 @@ class DoctorController extends Controller
         //Se non arriva da API un valore allore ti restitusce tutti dottori
         if (isset($data['avg_vote'])) {
             $doctors_sponsorships->havingRaw('CAST(IFNULL(AVG(reviews.vote_id), 0) AS UNSIGNED) >= ?', [$data['avg_vote']]);
-        }
-        ;
+        };
 
         //Creamo la variabile per uttillizzarla nella risposta ad API
         $doctors_sponsorships = $doctors_sponsorships->get();
+
+        // Creiamo un array di id dei dottori in $doctors_sponsorship
+        $doctorsSponsorshipIds = collect($doctors_sponsorships)->pluck('id');
+
+        // Filtriamo gli elementi in $results escludendo quelli presenti in $doctorsSponsorshipIds
+        $results = collect($results)->reject(function ($result) use ($doctorsSponsorshipIds) {
+            return in_array($result['id'], $doctorsSponsorshipIds->toArray());
+        })->values();
 
         return response()->json([
             'status' => true,
