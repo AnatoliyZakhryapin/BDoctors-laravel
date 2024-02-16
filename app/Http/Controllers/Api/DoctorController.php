@@ -129,11 +129,34 @@ class DoctorController extends Controller
     public function show($id)
     {
 
-        $doctor = Doctor::with('specializations', 'reviews', 'user', 'sponsorships')->where('id', $id)->first();
+       /*  $doctor = Doctor::with('specializations', 'reviews', 'user', 'sponsorships')->where('id', $id)->first();
 
         return response()->json([
             'results' => $doctor,
             'success' => true,
-        ]);
+        ]); */
+
+        $current_time = Carbon::now();
+        
+        $doctor = Doctor::with('specializations', 'reviews', 'user', 'sponsorships')
+        ->where('id', $id)->first();
+        $purchase_end_dates = $doctor->sponsorships()->withPivot('end_date')->get();
+        foreach ($purchase_end_dates as $purchase_end_date) {
+            $end_date = $purchase_end_date->pivot->end_date;
+            }
+
+        if ($current_time <= $end_date) {
+            return response()->json([
+                'results' => $doctor,
+                'is_sponsored' => true,
+                'success' => true,
+            ]);
+        } else {
+            return response()->json([
+                'results' => $doctor,
+                'is_sponsored' => false,
+                'success' => true,
+            ]);
+        }
     }
 }
