@@ -19,7 +19,7 @@ return new class extends Migration
             $table->float('total')->nullable();
             $table->foreign('doctor_id')->references('id')->on('doctors')->cascadeOnDelete();
             $table->foreign('sponsorship_id')->references('id')->on('sponsorships')->cascadeOnDelete();
-            $table->primary(['doctor_id', 'sponsorship_id']); // Use an array for primary key columns
+            //\$table->primary(['doctor_id', 'sponsorship_id']); // Use an array for primary key columns
         });
     }
 

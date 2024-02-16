@@ -66,19 +66,15 @@ class PaymentController extends Controller
     {
         $current_time = Carbon::now();
 
-        $doctor_id =  $request->input('doctor_id');
-
+        // Recuperiamo i dati di sponsorship
         $sponsorship =  $request->input('sponsorship');
-
         $sponsorship = Sponsorship::find($sponsorship);
-
-        // recupero durata da sposorship
         $duration = $sponsorship->duration;
-
         $price = $sponsorship->price;
-
         $sponsorship_id = $sponsorship->id;
 
+        // Recuperiamo i dati del dottore
+        $doctor_id =  $request->input('doctor_id');
         $doctor = Doctor::with('sponsorships', 'user')->find($doctor_id);
 
         $gateway = new Braintree\Gateway([
@@ -114,20 +110,40 @@ class PaymentController extends Controller
 
             // dd($transactionArray);
             // dd($result);
+            $current_date = Carbon::now();
 
+            $latest_sponsorship_end_date = $doctor->sponsorships()
+                ->withPivot('end_date')
+                ->latest('pivot_end_date')
+                ->first();
 
-            // calcola end_date tramite start_date e durata 
-            $end_date = $current_time->copy()->addHours($duration);
+            if ($latest_sponsorship_end_date && $latest_sponsorship_end_date->pivot->end_date > $current_date) {
+                $end_date = $latest_sponsorship_end_date->pivot->end_date;
+                $start_date_to_save = $end_date;
+                $end_date_to_save = Carbon::parse($start_date_to_save)->copy()->addHours($duration);
 
-            $data = [
-                $sponsorship_id => [
-                    'start_date' => $current_time,
-                    'end_date' => $end_date,
-                    'total' => $price,
-                ],
-            ];
+                $data = [
+                    $sponsorship_id => [
+                        'start_date' => $start_date_to_save,
+                        'end_date' =>  $end_date_to_save,
+                        'total' => $price,
+                    ],
+                ];
+            } else {
+                $end_date_to_save = $current_time->copy()->addHours($duration);
+                $start_date_to_save = $current_time;
+            
+                $data = [
+                    $sponsorship_id => [
+                        'start_date' => $start_date_to_save,
+                        'end_date' =>  $end_date_to_save,
+                        'total' => $price,
+                    ],
+                ];
+            }
 
             $doctor->sponsorships()->attach($data);
+            
 
             return redirect()->route('admin.transaction.index', ['id' => $transaction->id]);
         } else {
