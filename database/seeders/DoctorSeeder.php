@@ -121,7 +121,7 @@ class DoctorSeeder extends Seeder
             $end_date = $start_date->copy()->addHours($duration);
             // allega la sponsorizzazione al dottore corrente con l'ID della sponsorizzazione casuale insieme alla data di inizio e al prezzo totale e end_date.
             $new_doctor->sponsorships()->attach($sponsorshipId, ['start_date' => $start_date, 'total' => $totalPrice, 'end_date' => $end_date]);
-            $new_doctor->specializations()->attach($specializations_id->random(mt_rand(1, min(5, $specializations->count()))));
+            $new_doctor->specializations()->attach($specializations_id->random(mt_rand(1, min(3, $specializations->count()))));
         }
     }
 }
