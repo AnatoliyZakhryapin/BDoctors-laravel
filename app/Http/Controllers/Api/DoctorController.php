@@ -129,8 +129,17 @@ class DoctorController extends Controller
     public function show($id)
     {
 
-        $doctor = Doctor::with('specializations', 'reviews', 'user', 'sponsorships')->where('id', $id)->first();
-
+        // $doctor = Doctor::with('specializations', 'reviews', 'user', 'sponsorships')->where('id', $id)->first();
+        
+        $doctor = Doctor::with([
+            'specializations', 
+            'reviews' => function ($query) {
+                $query->with('vote'); // includi la relazione 'votes' dentro 'reviews'
+            },
+            'user', 
+            'sponsorships'
+        ])->where('id', $id)->first();
+        
         return response()->json([
             'results' => $doctor,
             'success' => true,
