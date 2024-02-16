@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container pb-3">
         {{-- evita messaggio errore in caso $doctor non sia definito --}}
         @if (isset($doctor))
             <div class="row">
-                <div class="d-flex gap-3 align-items-center">
-                    <h1 class="my-2">
+                <div class="text d-flex gap-3 align-items-center">
+                    <h1 class="my-md-2">
                         Dott. {{ $doctor->user->name }} {{ $doctor->user->surname }}
                     </h1>
                     @if ($end_date > $current_date)
@@ -16,12 +16,12 @@
                 
 
                     @if ($end_date > $current_date)
-                        <div class="d-block d-md-flex align-items-center gap-3 py-3">
+                        <div class="d-block d-md-flex align-items-center gap-3 py-md-2">
                             <span><a class="btn-cust-yellow" href="{{ route('admin.sponsorship.index') }}">Gestisci abbonamento</a></span> <h4>Sponsorizzato fino al {{\Carbon\Carbon::parse($end_date)->format('d/m/Y') }} ore: {{\Carbon\Carbon::parse($end_date)->format('H:i') }} </h4>
                         </div>
 
                     @else
-                        <div class="d-block d-md-flex align-items-center gap-3 py-3">
+                        <div class="d-block d-md-flex align-items-center gap-3 py-md-2">
                             <span><a class=" btn-cust-yellow " href="{{ route('admin.sponsorship.index') }}">Scegli abbonamento</a></span> <h4> Non sei ancora abbonato </h4>
                         </div>
                        
@@ -30,25 +30,26 @@
                 <div class="col-lg-4">
                     <div class="green-card mt-5 mt-lg-2">
                     <div class="row">
-                        <div class="col-md-6 col-lg-12">
+                        <div class="col-md-6 col-lg-12 mb-3">
                             <figure>
                                 <img src="{{ asset($doctor->photo) }}" alt="" class="h-100 rounded img-thumbnails">
                             </figure>
-                            <p>{{ $doctor->address }}</p>
-                            <p>{{ $doctor->phone_number }}</p>
-                              
-                                  <a  class="btn-cust" href="{{ asset('pdf/cv9.pdf') }}" target="_blank">Apri il curriculum</a>
+                            <p><strong>Indirizzo:</strong> {{ $doctor->address }}</p>
+                            <p><strong>Numero di teleofono:</strong> {{ $doctor->phone_number }}</p>
+                            
+                            
+                            <a  class="btn-cust" href="{{ asset('pdf/cv9.pdf') }}" target="_blank">Apri il curriculum</a>
                                 
-
                             {{-- <p>Data inizio: {{ $start_date }}</p> --}}
                         </div>
                         <div class="col-md-6 col-lg-12 align-self-md-end">
+                            <p class="mb-1"><strong>le tue specializzazioni:</strong></p>
                             <ul>
                                 @foreach ($doctor->specializations as $specialization)
                                     <li>{{ $specialization->name }}</li>
                                 @endforeach
                             </ul>
-                            <p>{{ $doctor->medical_services }}</p>
+                            <p><strong>le tue prestazioni:</strong> {{ $doctor->medical_services }}</p>
                             <div class="d-flex gap-2">
                                 <a href="{{ route('admin.doctors.edit', $doctor) }}" class="btn btn-cust">Modifica</a>
                                 {{-- <form action="{{ route('admin.doctors.destroy', $doctor) }}" method="POST"
