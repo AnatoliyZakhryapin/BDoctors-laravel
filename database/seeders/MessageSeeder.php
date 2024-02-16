@@ -18,7 +18,7 @@ class MessageSeeder extends Seeder
         $doctors = Doctor::all();
         $doctors_ids = $doctors->pluck('id');
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $messagesData = [
                 [
                     'name' => 'Mario',
