@@ -18,6 +18,14 @@
                 @if (isset($selected_year))
                     <p>Nel {{ $selected_year }} hai ricevuto {{ $selected_year_messages_n }} messaggi e
                         {{ $selected_year_reviews_n }} recensioni</p>
+                    <h4>Messaggi ricevute per mese nel {{ $selected_year }}</h4>
+                    @foreach ($messages_per_month as $key => $messages_n)
+                        <p><strong>{{ $key }}</strong>: {{ $messages_n }}</p>
+                    @endforeach
+                    <h4>Recensioni ricevute per mese nel {{ $selected_year }}</h4>
+                    @foreach ($reviews_per_month as $key => $reviews_n)
+                        <p><strong>{{ $key }}</strong>: {{ $reviews_n }}</p>
+                    @endforeach
                 @else
                     <p>Seleziona un anno dal menu a tendina</p>
                 @endif

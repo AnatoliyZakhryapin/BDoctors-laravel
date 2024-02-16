@@ -30,18 +30,51 @@ class StatisticController extends Controller
         $selected_year = $request->input('year');
         // Dichiariamo un array vuoto all'interno del quale, attraverso un controllo, pushamo tutti i messaggi scritti nello stesso anno del $selected_year
         $selected_year_messages = [];
+        $selected_year_messages = [];
+        $messages_per_month = [
+            'January' => 0,
+            'February' => 0,
+            'March' => 0,
+            'April' => 0,
+            'May' => 0,
+            'June' => 0,
+            'July' => 0,
+            'August' => 0,
+            'September' => 0,
+            'October' => 0,
+            'November' => 0,
+            'December' => 0,
+        ];
         foreach ($messages as $message) {
             $message_year = intval(date('Y', strtotime($message->created_at)));
+            $message_month = date('F', strtotime($message->created_at));
             if ($message_year == $selected_year) {
-                array_push($selected_year_messages, $message);
+                $messages_per_month[$message_month]++;
+                array_push($selected_year_messages, $message->id);
             }
         }
         // Dichiariamo un array vuoto all'interno del quale, attraverso un controllo, pushamo tutte le recensioni scritti nello stesso anno del $selected_year
         $selected_year_reviews = [];
+        $reviews_per_month = [
+            'January' => 0,
+            'February' => 0,
+            'March' => 0,
+            'April' => 0,
+            'May' => 0,
+            'June' => 0,
+            'July' => 0,
+            'August' => 0,
+            'September' => 0,
+            'October' => 0,
+            'November' => 0,
+            'December' => 0,
+        ];
         foreach ($reviews as $review) {
             $review_year = intval(date('Y', strtotime($review->created_at)));
+            $review_month = date('F', strtotime($review->created_at));
             if ($review_year == $selected_year) {
-                array_push($selected_year_reviews, $review);
+                $reviews_per_month[$review_month]++;
+                array_push($selected_year_reviews, $review->id);
             }
         }
 
@@ -59,7 +92,7 @@ class StatisticController extends Controller
         $reviews_average = $reviews_total_votes / $reviews_n;
         // Restituisce la vista dell'elenco dei messaggi per l'amministratore,
         // passando l'array di messaggi come variabile compatta
-        return view('admin.statistics.index', compact('doctor', 'selected_year', 'selected_year_messages_n', 'selected_year_reviews_n', 'reviews_average'));
+        return view('admin.statistics.index', compact('doctor', 'selected_year', 'selected_year_messages_n', 'selected_year_reviews_n', 'reviews_per_month', 'messages_per_month', 'reviews_average'));
     }
 
     /**

@@ -22,7 +22,7 @@ class ReviewSeeder extends Seeder
         $votes = Vote::all();
         $votes_ids = $votes->pluck('id');
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $reviewsData = [
                 [
                     'name' => 'Mario',
