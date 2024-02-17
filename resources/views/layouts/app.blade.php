@@ -56,7 +56,7 @@
                                 </li>
                                 <li>
                                     <a class="dropdown-item"
-                                        href="{{ route('admin.statistics.index') }}">Le Mie Statistiche</a>
+                                        href="{{ route('admin.statistics', ['year'=>2024]) }}">Le Mie Statistiche</a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="{{ route('admin.sponsorship.index') }}">
@@ -121,7 +121,7 @@
                                     <a class="nav-link" href="{{ route('admin.reviews.index') }}">Recensioni</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.statistics.index') }}">Statistiche</a>
+                                    <a class="nav-link" href="{{ route('admin.statistics', ['year'=>2024]) }}">Statistiche</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('admin.sponsorship.index') }}">Abbonamenti</a>
