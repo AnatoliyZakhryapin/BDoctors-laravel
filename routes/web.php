@@ -120,7 +120,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('messages', MessageController::class);
     Route::resource('reviews', ReviewController::class);
     Route::resource('dashboard', DashboardController::class);
-    Route::resource('statistics', StatisticController::class);
+    Route::get('/statistics/{year}', [StatisticController::class, 'index'])->name('statistics');
+    // Route::resource('statistics', StatisticController::class);
     Route::resource('sponsorship', SponsorshipController::class);
     Route::resource('payments', PaymentController::class);
     Route::resource('transaction', TransactionController::class);
