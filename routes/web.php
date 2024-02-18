@@ -84,7 +84,7 @@ Route::get('/transaction', function(){
 });
 
 Route::get('/', function () {
-
+    return redirect()->route('login');
     if (Auth::check()) {
         // Ottieni l'utente attualmente loggato
         $logged_user = Auth::user();
