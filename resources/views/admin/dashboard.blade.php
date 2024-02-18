@@ -43,13 +43,13 @@
                             {{-- <p>Data inizio: {{ $start_date }}</p> --}}
                         </div>
                         <div class="col-md-6 col-lg-12 align-self-md-end">
-                            <p class="mb-1"><strong>le tue specializzazioni:</strong></p>
+                            <p class="mb-1"><strong>Le tue specializzazioni:</strong></p>
                             <ul>
                                 @foreach ($doctor->specializations as $specialization)
                                     <li>{{ $specialization->name }}</li>
                                 @endforeach
                             </ul>
-                            <p><strong>le tue prestazioni:</strong> {{ $doctor->medical_services }}</p>
+                            <p><strong>Le tue prestazioni:</strong> {{ $doctor->medical_services }}</p>
                             <div class="d-flex gap-2">
                                 <a href="{{ route('admin.doctors.edit', $doctor) }}" class="btn btn-cust">Modifica</a>
                                 {{-- <form action="{{ route('admin.doctors.destroy', $doctor) }}" method="POST"
