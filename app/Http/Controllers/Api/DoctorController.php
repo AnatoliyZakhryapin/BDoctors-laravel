@@ -34,7 +34,8 @@ class DoctorController extends Controller
         //Filtriamo il resultato dei dottori con ASC o DESC uttilizando il parametro arrivato da API
         if (isset($data['order'])) {
             $doctors->orderBy('reviews_count', $data['order']);
-        };
+        }
+        ;
 
         //Filtriamo il resultato dei dottori in base a specializzazione scelta
         if (isset($data['specialization_id'])) {
@@ -45,7 +46,8 @@ class DoctorController extends Controller
             $doctors->whereHas('specializations', function (Builder $query) use ($specialization_id) {
                 $query->where('specialization_id', $specialization_id);
             });
-        };
+        }
+        ;
 
         //Colleghiamo tabella doctors con review e raggruppiamo per id dottore 
         $doctors->select('doctors.*', DB::raw('IFNULL(CAST(AVG(reviews.vote_id) AS UNSIGNED), 0) as media_voti'))
@@ -56,7 +58,8 @@ class DoctorController extends Controller
         //Se non arriva da API un valore allore ti restitusce tutti dottori
         if (isset($data['avg_vote'])) {
             $doctors->havingRaw('CAST(IFNULL(AVG(reviews.vote_id), 0) AS UNSIGNED) >= ?', [$data['avg_vote']]);
-        };
+        }
+        ;
 
         //  //Prendiamo i dottori che non hanno sponsorship o quelli che l`hanno scaduto
         //  $doctors->whereDoesntHave('sponsorships')->orWhereHas('sponsorships', function (Builder $query) use ($current_time) {
@@ -84,7 +87,8 @@ class DoctorController extends Controller
         //Filtriamo il resultato dei dottori con ASC o DESC uttilizando il parametro arrivato da API
         if (isset($data['order'])) {
             $doctors_sponsorships->orderBy('reviews_count', $data['order']);
-        };
+        }
+        ;
 
         //Filtriamo il resultato dei dottori in base a specializzazione scelta
         if (isset($data['specialization_id'])) {
@@ -95,7 +99,8 @@ class DoctorController extends Controller
             $doctors_sponsorships->whereHAs('specializations', function (Builder $query) use ($specialization_id) {
                 $query->where('specialization_id', $specialization_id);
             });
-        };
+        }
+        ;
 
         //Colleghiamo tabella doctors con review e raggruppiamo per id dottore 
         $doctors_sponsorships->select('doctors.*', DB::raw('IFNULL(CAST(AVG(reviews.vote_id) AS UNSIGNED), 0) as media_voti'))
@@ -106,7 +111,8 @@ class DoctorController extends Controller
         //Se non arriva da API un valore allore ti restitusce tutti dottori
         if (isset($data['avg_vote'])) {
             $doctors_sponsorships->havingRaw('CAST(IFNULL(AVG(reviews.vote_id), 0) AS UNSIGNED) >= ?', [$data['avg_vote']]);
-        };
+        }
+        ;
 
         //Creamo la variabile per uttillizzarla nella risposta ad API
         $doctors_sponsorships = $doctors_sponsorships->get();
@@ -130,33 +136,33 @@ class DoctorController extends Controller
     {
 
         // $doctor = Doctor::with('specializations', 'reviews', 'user', 'sponsorships')->where('id', $id)->first();
-        
+
         $doctor = Doctor::with([
-            'specializations', 
+            'specializations',
             'reviews' => function ($query) {
                 $query->with('vote'); // includi la relazione 'votes' dentro 'reviews'
             },
-            'user', 
+            'user',
             'sponsorships'
         ])->where('id', $id)->first();
-        
+
         $current_time = Carbon::now();
-        
+
         // $doctor = Doctor::with('specializations', 'reviews', 'user', 'sponsorships')->where('id', $id)->first();
-        
+
         $doctor = Doctor::with([
-            'specializations', 
+            'specializations',
             'reviews' => function ($query) {
-                $query->with('vote'); // includi la relazione 'votes' dentro 'reviews'
+                $query->orderBy('created_at', 'desc')->with('vote'); // includi la relazione 'votes' dentro 'reviews'
             },
-            'user', 
+            'user',
             'sponsorships'
         ])->where('id', $id)->first();
-        
+
         $purchase_end_dates = $doctor->sponsorships()->withPivot('end_date')->get();
         foreach ($purchase_end_dates as $purchase_end_date) {
             $end_date = $purchase_end_date->pivot->end_date;
-            }
+        }
 
         if ($current_time <= $end_date) {
             return response()->json([
