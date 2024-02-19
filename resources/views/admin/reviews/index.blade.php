@@ -11,12 +11,12 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Nome</th>
-                                    <th scope="col" class="d-none d-lg-block">Messaggio</th>
+                                    <th class="d-none d-lg-block" scope="col">Messaggio</th>
                                     <th scope="col">Voto</th>
                                     <th scope="col">Data</th>
-                                    <th scope="col">Orario</th>
+                                    <th class="d-none d-lg-block" scope="col">Orario</th>
                                     <th scope="col">Apri</th>
-                                    <th scope="col">Elimina</th>
+                                    <th class="d-none d-lg-block" scope="col">Elimina</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -31,12 +31,12 @@
                                         <td>{{ $review->vote->value }}/5</td>
 
                                         <td>{{ \Carbon\Carbon::parse($review->created_at)->format('d/m/Y') }}</td>
-                                        <td>{{ $review->created_at->format('H:i') }}</td>
+                                        <td class="d-none d-lg-block">{{ $review->created_at->format('H:i') }}</td>
 
                                         <td><a href="{{ route('admin.reviews.show', $review) }}"><i
                                                     class="fa-solid fa-star"></i></a>
                                         </td>
-                                        <td>
+                                        <td class="d-none d-lg-block">
                                             {{-- aggiunto btn elimina soft delte  --}}
                                             <a class="myBtn"><i class="fa-solid fa-trash"></i></a>
                                         </td>
