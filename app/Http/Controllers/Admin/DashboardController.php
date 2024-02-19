@@ -35,12 +35,22 @@ class DashboardController extends Controller
             $doctors = Doctor::where('user_id', '=', $logged_user->id)->take(3)->get();
             $doctor = $doctors[0];
 
-            $purchase_end_dates = $doctor->sponsorships()->withPivot('end_date')->get();
+            
+
+            // quantita di relazioni
+            $sponsorships = $doctor->sponsorships();
+
             $current_date = Carbon::now();
-            foreach ($purchase_end_dates  as $purchase_end_date) {
-                // $start_date = $sponsorship->pivot->start_date;
-                $end_date = $purchase_end_date->pivot->end_date;
-                // dd($end_date);
+          
+            if($sponsorships->count() > 0) {
+                $purchase_end_dates = $doctor->sponsorships()->withPivot('end_date')->get();
+                foreach ($purchase_end_dates  as $purchase_end_date) {
+                    // $start_date = $sponsorship->pivot->start_date;
+                    $end_date = $purchase_end_date->pivot->end_date;
+                    // dd($end_date);
+                }
+            } else {
+                $end_date = '';
             }
 
             // Recupera i messaggi associati al dottore loggato
