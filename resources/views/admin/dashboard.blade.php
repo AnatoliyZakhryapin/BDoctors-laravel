@@ -13,61 +13,64 @@
                         <i class="fa-solid fa-crown crown fs-3"></i>
                     @endif
                 </div>
-                
 
-                    @if ($end_date > $current_date)
-                        <div class="d-block d-md-flex align-items-center gap-3 py-md-2">
-                            <span><a class="btn-cust-yellow" href="{{ route('admin.sponsorship.index') }}">Gestisci abbonamento</a></span> <h4>Sponsorizzato fino al {{\Carbon\Carbon::parse($end_date)->format('d/m/Y') }} ore: {{\Carbon\Carbon::parse($end_date)->format('H:i') }} </h4>
-                        </div>
 
-                    @else
-                        <div class="d-block d-md-flex align-items-center gap-3 py-md-2">
-                            <span><a class=" btn-cust-yellow " href="{{ route('admin.sponsorship.index') }}">Scegli abbonamento</a></span> <h4> Non sei ancora abbonato </h4>
-                        </div>
-                       
-                    @endif
-               
+                @if ($end_date > $current_date)
+                    <div class="d-block d-md-flex align-items-center gap-3 py-md-2">
+                        <span><a class="btn-cust-yellow" href="{{ route('admin.sponsorship.index') }}">Gestisci
+                                abbonamento</a></span>
+                        <h4>Sponsorizzato fino al {{ \Carbon\Carbon::parse($end_date)->format('d/m/Y') }} ore:
+                            {{ \Carbon\Carbon::parse($end_date)->format('H:i') }} </h4>
+                    </div>
+                @else
+                    <div class="d-block d-md-flex align-items-center gap-3 py-md-2">
+                        <span><a class=" btn-cust-yellow " href="{{ route('admin.sponsorship.index') }}">Scegli
+                                abbonamento</a></span>
+                        <h4> Non sei ancora abbonato </h4>
+                    </div>
+                @endif
+
                 <div class="col-lg-4">
                     <div class="green-card mt-5 mt-lg-2">
-                    <div class="row">
-                        <div class="col-md-6 col-lg-12 mb-3">
-                            <figure>
-                                <img src="{{ asset($doctor->photo) }}" alt="" class="h-100 rounded img-thumbnails">
-                            </figure>
-                            <p><strong>Indirizzo:</strong> {{ $doctor->address }}</p>
-                            <p><strong>Numero di teleofono:</strong> {{ $doctor->phone_number }}</p>
-                            
-                            
-                            <a  class="btn-cust" href="{{ asset('pdf/cv9.pdf') }}" target="_blank">Apri il curriculum</a>
-                                
-                            {{-- <p>Data inizio: {{ $start_date }}</p> --}}
-                        </div>
-                        <div class="col-md-6 col-lg-12 align-self-md-end">
-                            <p class="mb-1"><strong>Le tue specializzazioni:</strong></p>
-                            <ul>
-                                @foreach ($doctor->specializations as $specialization)
-                                    <li>{{ $specialization->name }}</li>
-                                @endforeach
-                            </ul>
-                            <p><strong>Le tue prestazioni:</strong> {{ $doctor->medical_services }}</p>
-                            <div class="d-flex gap-2">
-                                <a href="{{ route('admin.doctors.edit', $doctor) }}" class="btn btn-cust">Modifica</a>
-                                {{-- <form action="{{ route('admin.doctors.destroy', $doctor) }}" method="POST"
+                        <div class="row">
+                            <div class="col-md-6 col-lg-12 mb-3">
+                                <figure>
+                                    <img src="{{ asset($doctor->photo) }}" alt=""
+                                        class="h-100 rounded img-thumbnails">
+                                </figure>
+                                <p><strong>Indirizzo:</strong> {{ $doctor->address }}</p>
+                                <p><strong>Numero di teleofono:</strong> {{ $doctor->phone_number }}</p>
+
+
+                                <a class="btn-cust" href="{{ asset('pdf/cv9.pdf') }}" target="_blank">Apri il curriculum</a>
+
+                                {{-- <p>Data inizio: {{ $start_date }}</p> --}}
+                            </div>
+                            <div class="col-md-6 col-lg-12 align-self-md-end">
+                                <p class="mb-1"><strong>Le tue specializzazioni:</strong></p>
+                                <ul>
+                                    @foreach ($doctor->specializations as $specialization)
+                                        <li>{{ $specialization->name }}</li>
+                                    @endforeach
+                                </ul>
+                                <p><strong>Le tue prestazioni:</strong> {{ $doctor->medical_services }}</p>
+                                <div class="d-flex gap-2">
+                                    <a href="{{ route('admin.doctors.edit', $doctor) }}" class="btn btn-cust">Modifica</a>
+                                    {{-- <form action="{{ route('admin.doctors.destroy', $doctor) }}" method="POST"
                                 onsubmit="return confirm('Sei sicuro di voler eliminare il profilo?');">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger" type="submit" value="Elimina profilo">Elimina</button>
                             </form> --}}
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
                 <div class="col-lg-8">
                     <div class="green-card mt-5 mt-lg-2">
                         <h3>Messaggi</h3>
-                        <a class="btn-cust dashboard-link" href="{{ route('admin.messages.index') }}">Visualizza tutti i
-                            messaggi</a>
+                        <a class="btn-cust dashboard-link" href="{{ route('admin.messages.index') }}">Visualizza tutti</a>
                         <table class="table">
                             <thead>
                                 <tr>
@@ -97,8 +100,7 @@
 
                     <div class="green-card mt-5 mt-lg-2">
                         <h3>Recensioni</h3>
-                        <a class="btn-cust dashboard-link" href="{{ route('admin.reviews.index') }}">Visualizza tutte le
-                            recensioni</a>
+                        <a class="btn-cust dashboard-link" href="{{ route('admin.reviews.index') }}">Visualizza tutte</a>
                         <table class="table">
                             <thead>
                                 <tr>

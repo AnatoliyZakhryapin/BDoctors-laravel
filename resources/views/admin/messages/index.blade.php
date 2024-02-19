@@ -15,7 +15,7 @@
                                 <th scope="col">Data</th>
                                 <th scope="col">Orario</th>
                                 <th scope="col">Apri</th>
-                                <th scope="col">Elimina</th>
+                                <th class="d-none d-lg-block" scope="col">Elimina</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -25,13 +25,14 @@
                                     <td class="d-none d-lg-block">{{ $message->email }}</td>
                                     <td>{{ \Carbon\Carbon::parse($message->created_at)->format('d/m/Y') }}
                                     </td>
-                                    <td>{{ $message->created_at->format('H:i')}}</td>
+                                    <td>{{ $message->created_at->format('H:i') }}</td>
                                     <td>
-                                        <a class="ms-3" href="{{ route('admin.messages.show', $message) }}"><i class="fa-solid fa-envelope"></i></a>
+                                        <a class="ms-3" href="{{ route('admin.messages.show', $message) }}"><i
+                                                class="fa-solid fa-envelope"></i></a>
                                         {{-- aggiunto btn elimina soft delte  --}}
-                                       
+
                                     </td>
-                                    <td>
+                                    <td class="d-none d-lg-block">
                                         <a class="myTrash ms-3"><i class="fa-solid fa-trash"></i></a>
                                     </td>
                                     {{-- aggiunto form conferma  --}}
