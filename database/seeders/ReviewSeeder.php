@@ -206,7 +206,7 @@ class ReviewSeeder extends Seeder
                 $new_review->message = $reviewData['message'];
                 $new_review->doctor_id = $reviewData['doctor_id'];
                 $new_review->vote_id = $reviewData['vote_id'];
-                $new_review->created_at = $faker->dateTimeBetween('-3 years');
+                $new_review->created_at = $faker->dateTimeBetween('-3 years')->format('Y-m-d H:i:s');
                 $new_review->updated_at = $new_review->created_at;
                 $new_review->save();
             }
