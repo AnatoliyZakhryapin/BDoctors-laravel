@@ -11,18 +11,18 @@ class ReviewController extends Controller
     public function index(APIStoreReviewRequest $request)
     {
         $data = $request->all();
-        $reviews =  Review::where('doctor_id', $data)->get();
+        $reviews = Review::where('doctor_id', $data)->get();
 
         return response()->json([
             'success' => true,
             'results' => $reviews,
         ]);
-   }
+    }
 
-   public function store(APIStoreReviewRequest $request)
+    public function store(APIStoreReviewRequest $request)
     {
         $review = Review::create($request->all());
-        
+
         return response()->json([
             'status' => true,
             'message' => "Review send successfully!",
